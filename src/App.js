@@ -1,25 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Layout from './hoc/Layout/Layout';
+
+import Login from './containers/Auth/Login/Login';
+import Signup from './containers/Auth/Singup/Signup';
+import Logout from './containers/Auth/Logout/Logout';
 
 class App extends Component {
+  state = {
+    isAuth: false
+  }
+
   render() {
+
+    let routes = (
+      <Switch>
+        <Route path='/login' component={Login} />
+        <Route path='/signup' component={Signup} />
+      </Switch>
+    );
+
+    if(this.state.isAuth) {
+      routes = (
+        <Switch>
+          <Route path='/logout' component={Logout} />
+        </Switch>
+      );
+    };
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Layout>{routes}</Layout>
       </div>
     );
   }
