@@ -5,7 +5,7 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 const Toolbar = (props) => {
   return (
     <div className={classes.Toolbar}>
-      <nav><NavigationItems /></nav>
+      <nav><NavigationItems isAuth={props.isAuth}/></nav>
     </div>
   )
 }

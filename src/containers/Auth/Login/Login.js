@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import Input from '../../../components/UI/Input/Input';
+import Input from '../../../components/UI/Forms/Input/Input';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import classes from './Login.module.css';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import { checkValidity } from '../../../shared/checkValidity';
+import Button from '../../../components/UI/Button/Button';
+
+import * as actions from '../../../store/actions/index';
 
 class Login extends Component {
   state = {
@@ -37,38 +44,10 @@ class Login extends Component {
         valid: false
       }
     },
-    formValid: false
+    formIsValid: false
   };
 
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (!rules) {
-      return true;
-    }
-
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    if (rules.isEmail) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid;
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid;
-    }
-    return isValid;
+  componentDidUpdate() {
   }
 
   inputChangedHanlder = (event, inputName) => {
@@ -77,18 +56,38 @@ class Login extends Component {
       [inputName]: {
         ...this.state.controls[inputName],
         value: event.target.value,
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.controls[inputName].validators
         ),
         touched: true
       }
     };
-    this.setState({ controls: updatedControls });
+
+    let formIsValid = true;
+
+    for (let inputIdentifire in updatedControls) {
+      formIsValid = updatedControls[inputIdentifire].valid && formIsValid;
+    }
+
+    this.setState({ controls: updatedControls, formIsValid: formIsValid });
+  };
+
+  onSubmitHandler = event => {
+    event.preventDefault();
+    this.props.onLogin(
+      this.state.controls.email.value,
+      this.state.controls.password.value
+    );
   };
 
   render() {
-    console.log(this.state.controls)
+    const redirect = this.props.isAuth ? <Redirect to="/" /> : null;
+
+    if (this.props.message) {
+      alert(this.props.message);
+    }
+
     let formElementArr = [];
     for (let el in this.state.controls) {
       formElementArr.push({
@@ -113,11 +112,34 @@ class Login extends Component {
 
     return (
       <div className={classes.LoginWrapper}>
+      {redirect}
         <h1>Login</h1>
-        <form>{formElements}</form>
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <form onSubmit={this.onSubmitHandler}>
+            {formElements}
+            <Button btnType='Success' disabled={!this.state.formIsValid}>SUBMIT</Button>
+          </form>
+        )}
       </div>
     );
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  message: state.auth.message,
+  isAuth: state.auth.fakeToken
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onLogin: (email, password) => dispatch(actions.login(email, password))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
