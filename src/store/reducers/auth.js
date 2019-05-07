@@ -1,13 +1,14 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  isAuth: false,
-  email: null,
-  password: null,
-  name: null,
-  fakeToken: null,
+  isAuthenticated: true,
+  email: 'alex@gmail.com',
+  password: 12345,
+  name: 'Alex',
+  fakeToken: 12345678,
   loading: false,
-  message: null
+  message: null,
+  userId: '1'
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -25,7 +26,8 @@ export default (state = initialState, { type, payload }) => {
           .toString(36)
           .substr(2),
         message: 'Login was Successfull',
-        isAuth: true
+        isAuthenticated: true,
+        userId: 'UserId1'
       };
 
     case actionTypes.LOGIN_FAIL:
@@ -46,7 +48,8 @@ export default (state = initialState, { type, payload }) => {
           .toString(36)
           .substr(2),
         message: 'Login was Successfull',
-        isAuth: true
+        isAuthenticated: true,
+        userId: '1'
       };
 
     case actionTypes.SIGNUP_FAIL:
