@@ -15,7 +15,7 @@ const Layout = props => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.fakeToken !== null
+  isAuth: state.auth.token !== null
 })
 
 const mapDispatchToProps = dispatch => {

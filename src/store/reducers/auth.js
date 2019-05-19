@@ -2,13 +2,13 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
   isAuthenticated: true,
-  email: 'alex@gmail.com',
-  password: 12345,
-  name: 'Alex',
-  fakeToken: 12345678,
+  email: null,
+  password: null,
+  nickname: null,
+  token: null,
   loading: false,
   message: null,
-  userId: '1'
+  userId: null
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -20,14 +20,12 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
+        userId: payload.userId,
         email: payload.email,
-        password: payload.password,
-        fakeToken: Math.random()
-          .toString(36)
-          .substr(2),
+        nickname: payload.nickname,
+        token: payload.token,
         message: 'Login was Successfull',
-        isAuthenticated: true,
-        userId: 'UserId1'
+        isAuthenticated: true
       };
 
     case actionTypes.LOGIN_FAIL:
@@ -41,15 +39,12 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
+        userId: payload.id,
         email: payload.email,
-        password: payload.password,
-        name: payload.name,
-        fakeToken: Math.random()
-          .toString(36)
-          .substr(2),
+        nickname: payload.nickname,
+        token: payload.token,
         message: 'Login was Successfull',
-        isAuthenticated: true,
-        userId: '1'
+        isAuthenticated: true
       };
 
     case actionTypes.SIGNUP_FAIL:
@@ -65,7 +60,7 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
         email: null,
         password: null,
-        fakeToken: null,
+        token: null,
         message: null
       };
 

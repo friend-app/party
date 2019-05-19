@@ -5,14 +5,14 @@
     "eventName": "Party 1",
     "eventTime": "18-11-2019",
     "eventFoodChoice": "Burger",
-    "eventFoodIngredients": {
-      "cheese": 0,
-      "meat": 0,
-      "bacon": 0,
-      "salad": 0,
-      "ananas": 0,
-      "potato": 0
-    },
+    "eventFoodIngredients": [
+      "cheese",
+      "meat",
+      "bacon",
+      "salad",
+      "ananas",
+      "potato"
+    ],
     "eventUsers": [
       {
         "userId": 1,
@@ -20,50 +20,34 @@
           "email": "alex@gmail.com",
           "name": "Alex"
         },
-        "userChoices": {
-          "bacon": 2,
-          "cheese": 3,
-          "meat": 1,
-          "salad": 2,
-          "potato": 1
-        }
+        "userChoices": [
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          },
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          }
+        ]
       },
       {
         "userId": 2,
         "userData": {
           "email": "Vityok@gmail.com",
           "name": "Vityok"
-        },
-        "userChoices": {
-          "bacon": 1,
-          "cheese": 2,
-          "meat": 2,
-          "salad": 1,
-          "potato": 2
-        }
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "eventCreatorId": 12,
-    "eventName": "Party 2",
-    "eventTime": "18-11-2019",
-    "eventFoodChoice": "Pizza",
-    "eventFoodIngredients": {
-      "cheese": 0,
-      "meat": 0,
-      "bacon": 0,
-      "salad": 0,
-      "ananas": 0,
-      "potato": 0
-    },
-    "eventUsers": [
-      {
-        "userId": 1,
-        "userData": {
-          "email": "alex@gmail.com",
-          "name": "Alex"
         },
         "userChoices": [
           {
@@ -78,6 +62,52 @@
           },
           {
             "choiseId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "eventCreatorId": 12,
+    "eventName": "Party 2",
+    "eventTime": "18-11-2019",
+    "eventFoodChoice": "Pizza",
+    "eventFoodIngredients": [
+      "cheese",
+      "meat",
+      "bacon",
+      "salad",
+      "ananas",
+      "potato"
+    ],
+    "eventUsers": [
+      {
+        "userId": 1,
+        "userData": {
+          "email": "alex@gmail.com",
+          "name": "Alex"
+        },
+        "userChoices": [
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          },
+          {
+            "choiceId": 123,
             "choiceOptions": {
               "bacon": 2,
               "cheese": 3,

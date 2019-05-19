@@ -15,7 +15,10 @@ const NavigationItems = props => {
             <NavigationItem link='/signup'>Signup</NavigationItem>
           </Aux>
         ) : (
+          <Aux>
           <NavigationItem link='/logout'>Logout</NavigationItem>
+          <NavigationItem link='/events/create-event'>Create Event</NavigationItem>
+          </Aux>
         )}
       </ul>
     </div>

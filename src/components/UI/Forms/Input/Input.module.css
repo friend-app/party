@@ -2,9 +2,11 @@
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+
 }
 
 .Label {
+  margin-top: 15px;
   font-weight: 600;
   display: block;
   margin-bottom: 8px;
@@ -30,4 +32,8 @@
 .Invalid:focus{
   border: 1px solid red;
   background-color:#fda492;
+}
+
+.InputFieldWidth{
+  width: 100%;
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Event from '../../components/Event/Event';
+import Event from '../../components/EventSwitcher/EventForCreator/EventForCreator';
 import { Redirect } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
@@ -9,7 +9,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 class PartyEvents extends Component {
   componentDidMount() {
-    if(this.props.fakeToken)  {
+    if(this.props.token)  {
        this.props.onFetchEvents('123')
     }
   }
@@ -19,7 +19,7 @@ class PartyEvents extends Component {
   }
 
   render() {
-    if(!this.props.fakeToken) {
+    if(!this.props.token) {
      return (<Redirect to='/login' />)
     }
 
@@ -35,7 +35,7 @@ class PartyEvents extends Component {
 const mapStateToProps = state => ({
   loading: state.party.loading,
   events: state.party.events,
-  fakeToken: state.auth.fakeToken !== null
+  token: state.auth.token !== null
 });
 
 const mapDispatchToProps = dispatch => {

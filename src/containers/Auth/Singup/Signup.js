@@ -138,7 +138,9 @@ class Signup extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.fakeToken !== null
+  loading: state.auth.loading,
+  message: state.auth.message,
+  isAuth: state.auth.token !== null
 })
 
 const mapDispatchToProps = dispatch => {

@@ -27,6 +27,14 @@
   color: #944317;
 }
 
+.Remove{
+  color: #000;
+}
+
+.RemoveDivButton{
+  margin-left: 15px;
+}
+
 .CheckOutContinue {
   color: #5c9210;
   font-weight: 600;

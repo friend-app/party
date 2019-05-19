@@ -26,5 +26,9 @@ export function checkValidity(value, rules) {
     const pattern = /^\d+$/;
     isValid = pattern.test(value) && isValid;
   }
+
+  if (rules.isDate) {
+    isValid = value instanceof Date && isValid;
+  }
   return isValid;
 }
