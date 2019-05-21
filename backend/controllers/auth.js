@@ -50,6 +50,7 @@ module.exports.register = async function(req, res) {
   const candidate = await User.findOne({
     email: req.body.email
   })
+
   if (candidate){
     //пользователь сушествует, отдать ошибку
     res.status(409).json({
@@ -68,13 +69,20 @@ module.exports.register = async function(req, res) {
     try {
       //пробуем сохранить пользователя
       await await user.save();
+
+      const token = jwt.sign({
+        email: user.email,
+        userId: user._id,
+      }, keys.jwt, {expiresIn: 3600});
+
       res.status(201).json({
         message: "User was created!",
+        token:  `Bearer ${token}`,
         user: user
       });
     } catch (e) {
       //обрабатываем возможную ошибку
-      console.log(e)
+      console.log(e.message)
     }
   }
 
