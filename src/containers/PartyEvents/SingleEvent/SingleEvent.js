@@ -10,31 +10,33 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 
 class PartyEvent extends Component {
   componentWillMount() {
-    if (this.props.match.params.eventId) {
-      this.props.onFetchSingleEvent(this.props.match.params.eventId);
+    if (this.props.location.state.eventId) {
+      this.props.onFetchSingleEvent(this.props.location.state.eventId);
     }
   }
 
   render() {
+
     if (!this.props.token) {
       return <Redirect to='/login' />;
     }
 
     let witchEvent = <Spinner />;
     if (this.props.event) {
-      const userDataById = this.props.event.eventUsers.find(
-        user => user.userId === 1
-      );
+      // const userDataById = this.props.event.users.find(
+      //   user => user.userId === this.props.location.state.eventId
+      // );
 
-      if (this.props.userId === this.props.event.eventCreatorId) {
+      console.log(this.props.userId, this.props.event.creatorId)
+      if (this.props.userId === this.props.event.creatorId) {
         witchEvent = (
           <EventForCreator showUserInfo={true} eventInfo={this.props.event} />
         );
       } else {
         witchEvent = (
           <EventForUser
-            userData={userDataById}
-            EventControls={this.props.event.eventFoodIngredients}
+            // userData={userDataById}
+            EventControls={this.props.event.ingredients}
           />
         );
       }

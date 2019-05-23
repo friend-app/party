@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userChoices = new Schema({
-  userChoices: {
-    type: Object
-  }
+  type: Array
 });
+
+mongoose.model('userChoices', userChoices);
 
 const eventSchema = new Schema({
   title: {
@@ -37,7 +37,12 @@ const eventSchema = new Schema({
     type: String,
     required: true
   },
-  Users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users', userChoices: userChoices }]
+  users: [
+    {
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
+      userChoices: []
+    }
+  ]
 });
 
 module.exports = mongoose.model('event', eventSchema);

@@ -23,17 +23,14 @@ export const fetchEventFail = error => ({
 export const fetchSignleEvent = eventId => {
   return dispatch => {
     dispatch(fetchEventStart());
-    setTimeout(() => {
-      axios
-        .get('/events/' + eventId + '.json')
-        .then(response => {
-          dispatch(fetchEventSuccess(response.data));
-
-        })
-        .catch(error => {
-          dispatch(fetchEventFail(error));
-        });
-    }, 0);
+    axios
+      .get('fetchSingleEvent/' + eventId)
+      .then(response => {
+        console.log(response.data);
+        dispatch(fetchEventSuccess(response.data.event));
+      })
+      .catch(error => {
+        dispatch(fetchEventFail(error));
+      });
   };
 };
-

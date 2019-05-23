@@ -1,46 +1,63 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Event from '../../components/EventSwitcher/EventForCreator/EventForCreator';
+import AllEventsPage from '../../components/EventSwitcher/AllEventsPage/AllEventsPage';
 import { Redirect } from 'react-router-dom';
 
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
-
 class PartyEvents extends Component {
   componentDidMount() {
-    if(this.props.token)  {
-       this.props.onFetchEvents('123')
+    if (this.props.token) {
+      this.props.onFetchCreatedEvents();
+      this.props.onFetchUserEvents();
     }
   }
 
-  eventSelectedHandler = id => {
-    this.props.history.push({pathname: '/events/' + id})
-  }
+  eventSelectedHandler = (id, creatorId) => {
+    this.props.history.push({
+      pathname: '/events/singleEvent',
+      state: { eventId: id, creatorId: creatorId }
+    });
+  };
 
   render() {
-    if(!this.props.token) {
-     return (<Redirect to='/login' />)
+    console.log(this.props.userEvents);
+    if (!this.props.token) {
+      return <Redirect to='/login' />;
+    }
+    let createdEvents = <Spinner />;
+
+    if (this.props.createdEvents) {
+      createdEvents = this.props.createdEvents.map(event => (
+        <AllEventsPage
+          key={event._id}
+          eventInfo={event}
+          clicked={() => this.eventSelectedHandler(event._id, event.creatorId)}
+        />
+      ));
     }
 
-    const events = this.props.events.map(event => (
-      <Event key={event.id} eventInfo={event} clicked={() => this.eventSelectedHandler(event.id)} />
-    ));
-
-
-    return <div>{this.props.events.length !== 0 ? events : <Spinner />}</div>;
+    return (
+      <div>
+        <h3>Created Events</h3>
+        {createdEvents}
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => ({
   loading: state.party.loading,
-  events: state.party.events,
+  createdEvents: state.party.createdEvents,
+  userEvents: state.party.userEvents,
   token: state.auth.token !== null
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchEvents: userId => dispatch(actions.fetchEvents(userId))
+    onFetchCreatedEvents: () => dispatch(actions.fetchCreatedEvents()),
+    onFetchUserEvents: () => dispatch(actions.fetchUserEvents())
   };
 };
 

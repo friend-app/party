@@ -74,6 +74,10 @@ export class CreateEvent extends Component {
     formIsValid: false
   };
 
+  componentDidMount() {
+    this.props.onCreateEventInit();
+  }
+
   inputChangedHanlder = (event, inputName) => {
     if (event === null) {
       return;
@@ -123,7 +127,23 @@ export class CreateEvent extends Component {
       address: this.state.controls.address.value,
       date: this.state.controls.date.value,
       description: this.state.controls.description.value,
-      creatorId: localStorage.getItem('userId')
+      creatorId: localStorage.getItem('userId'),
+      nickname: localStorage.getItem('nickname'),
+      users: [
+        {
+          user: '5ce28889af9d59226c38008e',
+          userChoices: [
+            { 
+              bacon: 1,
+              cheese: 3
+            },
+            {
+              bread: 44,
+              tomato: 33
+            }
+          ]
+        }
+      ]
     };
     this.props.onCreateEvent(eventDetails);
   };
@@ -196,6 +216,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onCreateEvent: eventDetails => {
       dispatch(actions.createEvent(eventDetails));
+    },
+    onCreateEventInit: () => {
+      dispatch(actions.createEventInit());
     }
   };
 };

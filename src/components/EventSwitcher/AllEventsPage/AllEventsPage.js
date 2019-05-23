@@ -1,9 +1,8 @@
 import React from 'react';
-import classes from './EventForCreator.module.css';
-// import EventUserInfo from './EventUserInfo/EventUserInfo';
+import classes from './AllEventPage.module.css';
 import Aux from '../../../hoc/Auxillary/Auxillary';
 
-const eventForCreator = props => {
+const allEventsPage = props => {
   let eventUsers = null;
   // if(props.showUserInfo){
   //   eventUsers = props.eventInfo.eventUsers.map(event => (
@@ -13,16 +12,16 @@ const eventForCreator = props => {
   
   // {props.eventInfo.eventFoodChoice} -{' '}
   return (
-    <div className={classes.EventWrapper} onClick={props.clicked}>
+    <div className={classes.AllEventsPageWrapper} onClick={props.clicked}>
       <h2>
         {props.eventInfo.title} - {new Date(props.eventInfo.date).toLocaleDateString("he-He")}
       </h2>
       <p>Creator: {props.eventInfo.nickname}</p>
-      <div className={classes.EventInside}>
+      <div className={classes.AllEventsPageInside}>
        {props.showUserInfo ? <Aux> {eventUsers} </Aux> : null}
       </div>
     </div>
   );
 };
 
-export default eventForCreator;
+export default allEventsPage;

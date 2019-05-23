@@ -11,6 +11,7 @@ import PartyEvents from './containers/PartyEvents/PartyEvents';
 import SingleEvent from './containers/PartyEvents/SingleEvent/SingleEvent';
 import CreateEvent from './containers/PartyEvents/CreateEvent/CreateEvent';
 import AddIngredientsToEvent from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent';
+// import AddIngredientsToEvent1 from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent.1/AddIngredientsToEvent';
 
 class App extends Component {
   state = {
@@ -30,6 +31,11 @@ class App extends Component {
           path='/events/create-event/add-ingredients'
           component={AddIngredientsToEvent}
         />
+        {/* <Route
+          exact
+          path='/events/create-event/add-ingredients1'
+          component={AddIngredientsToEvent1}
+        /> */}
         <Route exact path='/events/:eventId' component={SingleEvent} />
         <Route exact path='/' component={FrontPage} />
       </Switch>

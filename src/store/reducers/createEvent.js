@@ -8,6 +8,9 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case actionTypes.CREATE_EVENT_INIT:
+      return { ...state, event: null };
+
     case actionTypes.CREATE_EVENT_START:
       return { ...state, event: null, loading: true };
 
@@ -21,7 +24,7 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: true };
 
     case actionTypes.ADD_INGREDEINTS_TO_EVENT_SUCCESS:
-      return { ...state, ingredients: payload.ingredients, loading: false };
+      return { ...state, event: payload.event,  ingredients: payload.event.ingredients, loading: false };
 
     case actionTypes.ADD_INGREDEINTS_TO_EVENT_FAIL:
       return { ...state, ...payload };

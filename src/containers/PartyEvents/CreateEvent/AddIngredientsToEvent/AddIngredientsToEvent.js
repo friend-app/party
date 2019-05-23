@@ -96,7 +96,7 @@ class AddIngredientsToEvent extends Component {
     this.state.controls.forEach(input => {
       inputs.push(input.value);
     });
-    this.props.onAddIngredients(inputs);
+    this.props.onAddIngredients(inputs, this.props.event._id);
   };
 
   render() {
@@ -146,8 +146,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddIngredients: ingredients =>
-      dispatch(actions.addIngredients(ingredients))
+    onAddIngredients: (ingredients, eventId) =>
+      dispatch(actions.addIngredients(ingredients, eventId))
   };
 };
 

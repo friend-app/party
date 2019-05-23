@@ -1,44 +1,71 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-events';
 
-export const fetchEventStart = payload => ({
-  type: actionTypes.FETCH_EVENTS_START,
+export const fetchCreatedEventsStart = payload => ({
+  type: actionTypes.FETCH_CREATED_EVENTS_START,
   payload
 });
 
-export const fetchEventsSuccess = data => ({
-  type: actionTypes.FETCH_EVENTS_SUCCESS,
+export const fetchCreatedEventsSuccess = data => ({
+  type: actionTypes.FETCH_CREATED_EVENTS_SUCCESS,
   payload: {
     data: data
   }
 });
 
-export const fetchEventSuccess = data => ({
-  type: actionTypes.FETCH_EVENTS_SUCCESS,
-  payload: {
-    data: data
-  }
-});
-
-export const fetchEventFail = error => ({
-  type: actionTypes.FETCH_EVENTS_FAIL,
+export const fetchCreatedEventFail = error => ({
+  type: actionTypes.FETCH_CREATED_EVENTS_FAIL,
   payload: {
     error: error
   }
 });
 
-export const fetchEvents = userId => {
+export const fetchUserEventsStart = payload => ({
+  type: actionTypes.FETCH_USER_EVENTS_START,
+  payload
+});
+
+export const fetchUserEventsSuccess = data => ({
+  type: actionTypes.FETCH_USER_EVENTS_SUCCESS,
+  payload: {
+    data: data
+  }
+});
+
+export const fetchUserEventFail = error => ({
+  type: actionTypes.FETCH_USER_EVENTS_FAIL,
+  payload: {
+    error: error
+  }
+});
+
+export const fetchCreatedEvents = () => {
   return dispatch => {
-    dispatch(fetchEventStart());
+    dispatch(fetchCreatedEventsStart());
     setTimeout(() => {
       axios
-        .get('/events.json')
+        .get('/fetchCreatedEvents')
         .then(response => {
-          dispatch(fetchEventsSuccess(response.data));
-
+          dispatch(fetchCreatedEventsSuccess(response.data.events));
         })
         .catch(error => {
-          dispatch(fetchEventFail(error));
+          dispatch(fetchCreatedEventFail(error));
+        });
+    }, 0);
+  };
+};
+
+export const fetchUserEvents = () => {
+  return dispatch => {
+    dispatch(fetchUserEventsStart());
+    setTimeout(() => {
+      axios
+        .get('/fetchUserEvents')
+        .then(response => {
+          dispatch(fetchUserEventsSuccess(response.data.events));
+        })
+        .catch(error => {
+          dispatch(fetchUserEventFail(error));
         });
     }, 0);
   };
@@ -46,16 +73,16 @@ export const fetchEvents = userId => {
 
 export const fetchSignleEvent = eventId => {
   return dispatch => {
-    dispatch(fetchEventStart());
+    dispatch(fetchCreatedEventsStart());
     setTimeout(() => {
       axios
-        .get('/events/' + eventId + '.json')
+        .get('/events/' + eventId)
         .then(response => {
-          dispatch(fetchEventSuccess(response.data));
-
+          console.log(response.data.event);
+          dispatch(fetchCreatedEventsSuccess(response.data.event));
         })
         .catch(error => {
-          dispatch(fetchEventFail(error));
+          dispatch(fetchCreatedEventFail(error));
         });
     }, 0);
   };

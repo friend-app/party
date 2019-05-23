@@ -39,7 +39,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        userId: payload.id,
+        userId: payload.userId,
         email: payload.email,
         nickname: payload.nickname,
         token: payload.token,
