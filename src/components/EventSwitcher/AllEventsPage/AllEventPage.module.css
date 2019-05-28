@@ -1,0 +1,13 @@
+.AllEventsPageWrapper{
+  width: 800px;
+  margin: 25px auto 15px auto;
+  background: #713674;
+  color: #fff;
+  padding: 10px 25px;
+  cursor: pointer;
+}
+
+.AllEventsPageInside{
+  color: #fff;
+  font-size: 16px;
+}

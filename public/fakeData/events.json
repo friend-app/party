@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "eventCreatorId": 11,
+    "eventName": "Party 1",
+    "eventTime": "18-11-2019",
+    "eventFoodChoice": "Burger",
+    "eventFoodIngredients": [
+      "cheese",
+      "meat",
+      "bacon",
+      "salad",
+      "ananas",
+      "potato"
+    ],
+    "eventUsers": [
+      {
+        "userId": 1,
+        "userData": {
+          "email": "alex@gmail.com",
+          "name": "Alex"
+        },
+        "userChoices": [
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          },
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          }
+        ]
+      },
+      {
+        "userId": 2,
+        "userData": {
+          "email": "Vityok@gmail.com",
+          "name": "Vityok"
+        },
+        "userChoices": [
+          {
+            "choiseId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          },
+          {
+            "choiseId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "eventCreatorId": 12,
+    "eventName": "Party 2",
+    "eventTime": "18-11-2019",
+    "eventFoodChoice": "Pizza",
+    "eventFoodIngredients": [
+      "cheese",
+      "meat",
+      "bacon",
+      "salad",
+      "ananas",
+      "potato"
+    ],
+    "eventUsers": [
+      {
+        "userId": 1,
+        "userData": {
+          "email": "alex@gmail.com",
+          "name": "Alex"
+        },
+        "userChoices": [
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          },
+          {
+            "choiceId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          }
+        ]
+      },
+      {
+        "userId": 2,
+        "userData": {
+          "email": "Vityok@gmail.com",
+          "name": "Vityok"
+        },
+        "userChoices": [
+          {
+            "choiseId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          },
+          {
+            "choiseId": 123,
+            "choiceOptions": {
+              "bacon": 2,
+              "cheese": 3,
+              "meat": 1,
+              "salad": 2,
+              "potato": 1
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

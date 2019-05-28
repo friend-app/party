@@ -1,0 +1,74 @@
+{
+  "id": 2,
+  "eventCreatorId": 2,
+  "eventTime": "18-11-2019",
+  "eventFoodChoice": "Pizza",
+  "eventFoodIngredients": [
+    "cheese",
+    "meat",
+    "bacon",
+    "salad",
+    "ananas",
+    "potato"
+  ],
+  "eventUsers": [
+    {
+      "userId": 1,
+      "userData": {
+        "email": "alex@gmail.com",
+        "name": "Alex"
+      },
+      "userChoices": [
+        {
+          "choiceId": 1,
+          "choiceOptions": {
+            "bacon": 2,
+            "cheese": 3,
+            "meat": 1,
+            "salad": 2,
+            "potato": 1
+          }
+        },
+        {
+          "choiceId": 2,
+          "choiceOptions": {
+            "bacon": 2,
+            "cheese": 3,
+            "meat": 1,
+            "salad": 2,
+            "potato": 1
+          }
+        }
+      ]
+    },
+    {
+      "userId": 2,
+      "userData": {
+        "email": "Vityok@gmail.com",
+        "name": "Vityok"
+      },
+      "userChoices": [
+        {
+          "choiceId": 1,
+          "choiceOptions": {
+            "bacon": 2,
+            "cheese": 3,
+            "meat": 1,
+            "salad": 2,
+            "potato": 1
+          }
+        },
+        {
+          "choiceId": 2,
+          "choiceOptions": {
+            "bacon": 2,
+            "cheese": 3,
+            "meat": 1,
+            "salad": 2,
+            "potato": 1
+          }
+        }
+      ]
+    }
+  ]
+}
