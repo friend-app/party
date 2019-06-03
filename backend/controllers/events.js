@@ -1,5 +1,6 @@
 const Event = require('../models/Event');
-const userChoices = require('../models/Event');
+const Link = require('../models/Link');
+const uniqid = require('uniqid');
 
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
@@ -63,6 +64,39 @@ module.exports.createEvent = function(req, res) {
       console.log(error);
     });
 };
+
+module.exports.createLinkEvent = function(req, res) {
+    const link = new Link({
+        link: uniqid(),
+        eventId: req.body.eventId
+    });
+    link.save()
+        .then(link => {
+            res.status(201).json({
+                message: 'Link Created!',
+                link: link
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+module.exports.getLinkEvent = function(req, res) {
+    Link.findOne({
+        link: req.body.link
+    }).then(
+        link => {
+            res.status(201).json({
+                link: link
+            });
+        }
+    ).catch(
+        error => {
+            console.log(error);
+        }
+    );
+}
 
 module.exports.addIngredientsToEvent = function(req, res) {
   console.log(req.body);
