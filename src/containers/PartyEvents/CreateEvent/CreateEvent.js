@@ -75,7 +75,23 @@ export class CreateEvent extends Component {
   };
 
   componentDidMount() {
-    this.props.onCreateEventInit();
+    if (!this.props.event) {
+      this.props.onCreateEventInit();
+    } else {
+      this.parseEventAndAddToState();
+    }
+  }
+
+  parseEventAndAddToState() {
+    let updateControls = { ...this.state.controls };
+    for (let key in this.state.controls) {
+      if (key === 'date') {
+        updateControls[key].value = new Date(this.props.event[key]);
+      } else {
+        updateControls[key].value = this.props.event[key];
+      }
+    }
+    this.setState({ controls: updateControls });
   }
 
   inputChangedHanlder = (event, inputName) => {
@@ -132,16 +148,11 @@ export class CreateEvent extends Component {
       users: [
         {
           user: '5ce28889af9d59226c38008e',
-          userChoices: [
-            { 
-              bacon: 1,
-              cheese: 3
-            },
-            {
-              bread: 44,
-              tomato: 33
-            }
-          ]
+          userChoices: []
+        },
+        {
+          user: localStorage.getItem('userId'),
+          userChoices: []
         }
       ]
     };

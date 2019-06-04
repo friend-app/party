@@ -82,7 +82,7 @@ class Login extends Component {
   };
 
   render() {
-    const redirect = this.props.isAuth ? <Redirect to="/" /> : null;
+    const redirect = this.props.isAuth ? <Redirect to="/events" /> : null;
 
     if (this.props.message) {
       // alert(this.props.message);
@@ -130,7 +130,7 @@ class Login extends Component {
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   message: state.auth.message,
-  isAuth: state.auth.token
+  isAuth: state.auth.token !== null
 });
 
 const mapDispatchToProps = dispatch => {

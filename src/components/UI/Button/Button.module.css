@@ -46,3 +46,12 @@
   font-weight: 600;
   font-size: 25px;
 }
+
+.SubmitUserChoice{
+  color: #fff;
+  font-weight: 600;
+  font-size: 25px;
+  padding: 5px 15px !important;
+  border: 3px solid #fff;
+  margin: auto;
+}

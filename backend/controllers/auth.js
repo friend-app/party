@@ -21,10 +21,11 @@ module.exports.login = async function(req, res) {
 
       res.status(200).json({
         token:  `Bearer ${token}`,
+        expirationDate: 3600,
         user: {
         userId: candidate._id,
         email: candidate.email,
-        nickname:candidate.nickname
+        nickname:candidate.nickname,
       }})
 
     } else {
@@ -78,6 +79,7 @@ module.exports.register = async function(req, res) {
       res.status(201).json({
         message: "User was created!",
         token:  `Bearer ${token}`,
+        expirationDate: 3600,
         user: user
       });
     } catch (e) {

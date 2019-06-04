@@ -1,0 +1,51 @@
+.EventControlsWrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  padding: 10px 0;
+  color: #fff;
+  width: 80%;
+  margin: auto;
+}
+
+.Submit {
+  margin-top: 20px;
+  background-color: #cf1b01;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.2em;
+  padding: 10px 30px;
+  font-weight: 600;
+  box-sizing: border-box;
+  border: none;
+}
+
+.Submit:hover, .OrderButton:active {
+  background-color: #f11e00;
+  color: #fff;
+}
+
+.Submit:disabled {
+  background-color: #C7C6C6;
+  cursor: not-allowed;
+  color: #888888;
+}
+
+.Submit:not(:disabled) {
+  animation: enable 0.3s linear;
+}
+
+@keyframes enable {
+  0% {
+      transform: scale(1);
+  }
+  60% {
+      transform: scale(1.1);
+  }
+  100% {
+      transform: scale(1);
+  }
+}

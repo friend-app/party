@@ -7,8 +7,6 @@ const Input = props => {
 
   let inputClasses = [classes.InputElement];
 
-  // console.log(props.invalid, typeof(props.shouldValidate), props.touched);
-
   if (props.invalid && props.shouldValidate && props.touched) {
     inputClasses.push(classes.Invalid);
   }
@@ -42,6 +40,7 @@ const Input = props => {
           onChange={props.changed}
           value={props.value}
           clearIcon={null}
+          minDate={new Date()}
           />
       );
       break;

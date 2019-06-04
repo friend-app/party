@@ -30,7 +30,7 @@ export const createEvent = (eventDetails) => {
     .then(response => {
       dispatch(createEventSuccess(response.data.event))
     }).catch(error => {
-      console.log(error);
+      dispatch(createEventFail(error.response.data.message))
     })
 
 
@@ -41,11 +41,9 @@ export const addIngredientsStart = () => ({
   type: actionTypes.ADD_INGREDEINTS_TO_EVENT_START,
 })
 
-export const addIngredientsSuccess = (ingredients) => ({
+export const addIngredientsSuccess = () => ({
   type: actionTypes.ADD_INGREDEINTS_TO_EVENT_SUCCESS,
-  payload: {
-    ingredients: ingredients
-  }
+  payload: {}
 })
 
 export const addIngredientsFail = (payload) => ({
@@ -53,20 +51,20 @@ export const addIngredientsFail = (payload) => ({
   payload
 })
 
-export const addIngredients = (ingredients, eventId) => {
+export const addIngredients = (ingredients, additionalItems, eventId) => {
   return dispatch => {
     dispatch(addIngredientsStart());
     const data = {
       ingredients: ingredients,
+      additionalItems: additionalItems,
       eventId: eventId
     }
-    axios.post('/addIngredientsToEvent', data)
+    axios.put('/addIngredientsToEvent', data)
     .then(response => {
-      console.log(response.data);
-      dispatch(addIngredientsSuccess(response.data))
+      dispatch(addIngredientsSuccess());
     })
     .catch(error => {
-      console.log(error)
+      dispatch(addIngredientsFail(error.response.data.message));
     })
   }
 };
