@@ -19,6 +19,14 @@ router.post('/createEvent', passport.authenticate('jwt', {session: false}), cont
 // localhost:4000/api/events/addIngredientsToEvent
 router.post('/addIngredientsToEvent', passport.authenticate('jwt', {session: false}), controller.addIngredientsToEvent);
 
+// localhost:4000/api/events/eventLinkCreate
+router.post('/eventLinkCreate', controller.createLinkEvent);
+
+// localhost:4000/api/events/eventLink
+
+router.post('/eventLink', controller.getLinkEvent);
+
+
 
 
 
