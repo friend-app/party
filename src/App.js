@@ -11,12 +11,11 @@ import Signup from './containers/Auth/Singup/Signup';
 import Logout from './containers/Auth/Logout/Logout';
 import FrontPage from './containers/FrontPage/FrontPage';
 import PartyEvents from './containers/PartyEvents/PartyEvents';
-// import SingleEvent from './containers/PartyEvents/SingleEvent/SingleEvent';
 import CreateEvent from './containers/PartyEvents/CreateEvent/CreateEvent';
 import AddIngredientsToEvent from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent';
 import EventForUser from './containers/PartyEvents/EventForUser/EventForUser';
 import EventForCreator from './containers/PartyEvents/EventForCreator/EventForCreator';
-// import AddIngredientsToEvent1 from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent.1/AddIngredientsToEvent';
+import UpdateUserChoice from './containers/PartyEvents/EventForUser/updateUserChoices/UpdateUserChoice';
 
 class App extends Component {
   componentDidMount() {
@@ -36,9 +35,18 @@ class App extends Component {
           component={AddIngredientsToEvent}
         />
         <Route exact path='/events/eventForUser' component={EventForUser} />
-          <Route exact path='/events/eventForCreator' component={EventForCreator} />
+        <Route
+          exact
+          path='/events/eventForUser/updateUserChoice'
+          component={UpdateUserChoice}
+        />
+        <Route
+          exact
+          path='/events/eventForCreator'
+          component={EventForCreator}
+        />
         {/* <Route exact path='/events/:eventId' component={SingleEvent} /> */}
-        <Route exact path='/' component={FrontPage} />
+        <Route path='/' component={FrontPage} />
       </Switch>
     );
 
@@ -56,9 +64,18 @@ class App extends Component {
             component={AddIngredientsToEvent}
           />
           <Route exact path='/events/eventForUser' component={EventForUser} />
-          <Route exact path='/events/eventForCreator' component={EventForCreator} />
+          <Route
+            exact
+            path='/events/eventForUser/updateUserChoice'
+            component={UpdateUserChoice}
+          />
+          <Route
+            exact
+            path='/events/eventForCreator'
+            component={EventForCreator}
+          />
           {/* <Route exact path='/events/:eventId' component={SingleEvent} /> */}
-          <Route exact path='/' component={FrontPage} />
+          <Route path='/' component={FrontPage} />
         </Switch>
       );
     }

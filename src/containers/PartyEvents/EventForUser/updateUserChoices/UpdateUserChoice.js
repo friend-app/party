@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import classes from './EventForUser.module.css';
 import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import { makeChosenIngs } from '../../../shared/makeChosenIngs';
-import EventControls from '../../../components/EventSwitcher/EventControls/EventControls';
-import Button from '../../../components/UI/Button/Button';
-import UserChoiceCards from '../../../components/EventSwitcher/userChoiceCards/userChoiceCards';
+import classes from './UpdateUserChoice.module.css';
+import * as actions from '../../../../store/actions/index';
+import Spinner from '../../../../components/UI/Spinner/Spinner';
+import { makeChosenIngs } from '../../../../shared/makeChosenIngs';
+import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
+import Button from '../../../../components/UI/Button/Button';
 
-class EventForUser extends Component {
+class UpdateUserChoice extends Component {
   componentDidMount() {
-      this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
+    this.props.onUpdateUserChoiceInit(
+      this.props.location.state.userChoice.choice
+    );
   }
 
   onSubmitHandler = () => {
@@ -20,15 +21,13 @@ class EventForUser extends Component {
         delete ings[key];
       }
     }
-    this.props.onUserChoice(ings, this.props.event._id, this.props.userId);
+    this.props.onUpdateUserChoice(
+      ings,
+      this.props.location.state.userChoice._id,
+      this.props.event._id,
+      this.props.userId
+    );
   };
-
-  chooseUserChoiceHanlder = (userChoice) => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/updateUserChoice',
-      state: { userChoice: userChoice }
-    });
-  }
 
   render() {
     const disabledMin = {
@@ -44,17 +43,9 @@ class EventForUser extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
-      const currentUser = this.props.event.users.find(user => user.user._id === this.props.userId);
-
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
-          <h2>{this.props.event.title}</h2>
-          <h3>
-            {new Date(this.props.event.date).toLocaleDateString('he-He')} -{' '}
-            {new Date(this.props.event.date).toLocaleTimeString('he-He')}
-          </h3>
-          <h3>Creator: {this.props.event.nickname}</h3>
-
+          <h3>Change you ingredients</h3>
           <div className={classes.ChoosesBox}>
             <h2>Chosen Ingredient - Can be scrolled</h2>
             {this.props.loading ? <Spinner /> : chosenIngs}
@@ -73,7 +64,6 @@ class EventForUser extends Component {
             >
               Submit
             </Button>
-            <UserChoiceCards user={currentUser} clicked={this.chooseUserChoiceHanlder} />
           </div>
         </div>
       );
@@ -93,16 +83,16 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchSingleUserEvent: eventId =>
-      dispatch(actions.fetchSingleUserEvent(eventId)),
+    onUpdateUserChoiceInit: choice =>
+      dispatch(actions.updateUserChoiceInit(choice)),
     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
-    onUserChoice: (userChoice, eventId, userId) =>
-      dispatch(actions.addUserChoice(userChoice, eventId, userId))
+    onUpdateUserChoice: (choice, choiceId, eventId, userId) =>
+      dispatch(actions.updateUserChoice(choice, choiceId, eventId, userId))
   };
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EventForUser);
+)(UpdateUserChoice);

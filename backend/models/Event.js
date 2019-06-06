@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userChoices = new Schema({
-  type: Array
-});
-
-mongoose.model('userChoices', userChoices);
-
 const eventSchema = new Schema({
   title: {
     type: String,

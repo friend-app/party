@@ -15,9 +15,9 @@ const EventControls = props => {
   return (
     <div className={classes.EventControlsWrapper}>
       <h3>Choose Your Food</h3>
-      {controls.map(control => (
+      {controls.map((control, index) => (
         <EventControl
-          key={control.label}
+          key={index}
           label={control.label}
           added={() => {
             props.ingredientAdded(control.type);

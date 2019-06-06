@@ -19,11 +19,17 @@ router.get('/fetchUserEvents', passport.authenticate('jwt', {session: false}), c
 // localhost:4000/api/events/createEvent
 router.post('/createEvent', passport.authenticate('jwt', {session: false}), controller.createEvent);
 
+// localhost:4000/api/events/updateCreatedEvent
+router.post('/updateCreatedEvent', passport.authenticate('jwt', {session: false}), controller.updateCreatedEvent);
+
 // localhost:4000/api/events/addIngredientsToEvent
 router.put('/addIngredientsToEvent', passport.authenticate('jwt', {session: false}), controller.addIngredientsToEvent);
 
 // localhost:4000/api/events/addUserChoices
 router.put('/addUserChoices', passport.authenticate('jwt', {session: false}), controller.addUserChoices);
+
+// localhost:4000/api/events/updateUserChoice
+router.put('/updateUserChoice', passport.authenticate('jwt', {session: false}), controller.updateUserChoice);
 
 // localhost:4000/api/events/eventLinkCreate
 router.post('/eventLinkCreate', controller.createLinkEvent);

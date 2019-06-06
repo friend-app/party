@@ -4,7 +4,7 @@ const initialState = {
   loading: false,
   event: null,
   singleEvent: null,
-  error: null,
+  error: null
   // ingredients: null
 };
 
@@ -25,27 +25,54 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: false, error: payload.error };
 
     case actionTypes.ADD_INGREDIENT:
-    console.log(payload.ingredientName);
       const updatedAddIngredient = {
         [payload.ingredientName]: state.ingredients[payload.ingredientName] + 1
       };
-      const updatedAddIngredients = { ...state.ingredients, ...updatedAddIngredient };
+      const updatedAddIngredients = {
+        ...state.ingredients,
+        ...updatedAddIngredient
+      };
       return { ...state, ingredients: updatedAddIngredients };
 
     case actionTypes.REMOVE_INGREDIENT:
       const updatedRemoveIngredient = {
         [payload.ingredientName]: state.ingredients[payload.ingredientName] - 1
       };
-      const updatedRemoveIngredients = { ...state.ingredients, ...updatedRemoveIngredient };
+      const updatedRemoveIngredients = {
+        ...state.ingredients,
+        ...updatedRemoveIngredient
+      };
       return { ...state, ingredients: updatedRemoveIngredients };
 
-      case actionTypes.ADD_USER_CHOICES_START:
+    case actionTypes.ADD_USER_CHOICES_START:
       return { ...state, loading: true, error: payload.error };
 
-      case actionTypes.ADD_USER_CHOICES_SUCCESS:
-      return { ...state, loading: false, event: payload.event, ingredients: payload.ingredients };
+    case actionTypes.ADD_USER_CHOICES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        event: payload.event,
+        ingredients: payload.ingredients
+      };
 
-      case actionTypes.ADD_USER_CHOICES_FAIL:
+    case actionTypes.ADD_USER_CHOICES_FAIL:
+      return { ...state, loading: false, error: payload.error };
+
+    case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT:
+      return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice} };
+
+    case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
+      return { ...state, loading: true, error: payload.error };
+
+    case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        event: payload.event,
+        ingredients: payload.ingredients
+      };
+
+    case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL:
       return { ...state, loading: false, error: payload.error };
 
     default:

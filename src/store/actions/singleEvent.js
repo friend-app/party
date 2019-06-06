@@ -107,3 +107,55 @@ export const removeIngredient = ingredientName => ({
   type: actionTypes.REMOVE_INGREDIENT,
   payload: { ingredientName: ingredientName }
 });
+
+export const updateUserChoiceInit = (userChoice) => ({
+  type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT,
+  payload: {
+    userChoice: userChoice
+  }
+});
+
+export const updateUserChoiceStart = () => ({
+  type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START,
+  payload: {}
+});
+
+export const updateUserChoiceSuccess = (event, ingredients) => ({
+  type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS,
+  payload: {
+    event: event,
+    ingredients: ingredients
+  }
+});
+
+export const updateUserChoiceFail = (choice) => ({
+  type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const updateUserChoice = (userChoice, choiceId, eventId, userId) => {
+  return dispatch => {
+    dispatch(updateUserChoiceStart());
+    const data = {
+      choice: userChoice,
+      choiceId: choiceId,
+      eventId: eventId,
+      userId: userId
+    };
+    console.log(data);
+    axios
+      .put('updateUserChoice', data)
+      .then(response => {
+        let ingredients = {};
+        response.data.event.ingredients.map(ingredient => {
+          return (ingredients[ingredient] = 0);
+        });
+        dispatch(updateUserChoiceSuccess(response.data.event, ingredients));
+      })
+      .catch(error => {
+        dispatch(updateUserChoiceFail(error.response.data.message));
+      });
+  };
+};
