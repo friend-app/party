@@ -1,34 +1,34 @@
-const Event = require('../models/Event');
-const Link = require('../models/Link');
-const uniqid = require('uniqid');
+const Event = require("../models/Event");
+const Link = require("../models/Link");
+const uniqid = require("uniqid");
 
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
     .then(events => {
       res.status(201).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         events: events
       });
     })
     .catch(error => {
       res.status(404).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         error: error
       });
     });
 };
 
 module.exports.fetchUserEvents = function(req, res) {
-  Event.find({ 'users.user': req.user.id })
+  Event.find({ "users.user": req.user.id })
     .then(events => {
       res.status(201).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         events: events
       });
     })
     .catch(error => {
       res.status(404).json({
-        message: 'Events NOT Found!',
+        message: "Events NOT Found!",
         error: error
       });
     });
@@ -36,17 +36,17 @@ module.exports.fetchUserEvents = function(req, res) {
 
 module.exports.fetchSingleCreatedEvent = function(req, res, next) {
   Event.findById(req.params.eventId)
-    .populate(['users.user'])
+    .populate(["users.user"])
     .then(event => {
       console.log(event);
       res.status(201).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         event: event
       });
     })
     .catch(error => {
       res.status(201).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         event: error
       });
     });
@@ -54,18 +54,18 @@ module.exports.fetchSingleCreatedEvent = function(req, res, next) {
 
 module.exports.fetchSingleUserEvent = function(req, res, next) {
   Event.findById(req.params.eventId)
-    .populate('users.user', '-password')
+    .populate("users.user", "-password")
     // .populate(['users.userChoices'])
     .then(event => {
       console.log(event);
       res.status(201).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         event: event
       });
     })
     .catch(error => {
       res.status(201).json({
-        message: 'Events Found!',
+        message: "Events Found!",
         event: error
       });
     });
@@ -77,7 +77,7 @@ module.exports.createEvent = function(req, res) {
     .save()
     .then(event => {
       res.status(201).json({
-        message: 'Event Saved!',
+        message: "Event Saved!",
         event: event
       });
     })
@@ -99,14 +99,14 @@ module.exports.updateCreatedEvent = function(req, res) {
   )
     .then(event => {
       res.status(201).json({
-        message: 'Ingredients Added',
+        message: "Ingredients Added",
         event: event
       });
     })
     .catch(error => {
       res.status(404).json({
         error: error,
-        message: 'Ingredients Failed'
+        message: "Ingredients Failed"
       });
     });
 };
@@ -129,14 +129,14 @@ module.exports.addIngredientsToEvent = function(req, res) {
   )
     .then(event => {
       res.status(201).json({
-        message: 'Ingredients Added',
+        message: "Ingredients Added",
         event: event
       });
     })
     .catch(error => {
       res.status(404).json({
         error: error,
-        message: 'Ingredients Failed'
+        message: "Ingredients Failed"
       });
     });
 };
@@ -148,21 +148,21 @@ module.exports.addUserChoices = function(req, res) {
   Event.findOneAndUpdate(
     {
       _id: eventId,
-      'users.user': userId
+      "users.user": userId
     },
     {
       $push: {
-        'users.$.userChoices': userChoice
+        "users.$.userChoices": userChoice
       }
     },
     { new: true, useFindAndModify: false }
   )
     .then(event => {
       Event.findById(eventId)
-        .populate(['users.user'])
+        .populate("users.user", "-password")
         .then(event => {
           res.status(201).json({
-            message: 'Choices Added',
+            message: "Choices Added",
             event: event
           });
         })
@@ -170,7 +170,7 @@ module.exports.addUserChoices = function(req, res) {
           console.log(error);
           res.status(404).json({
             error: error,
-            message: 'Choices Failed'
+            message: "Choices Failed"
           });
         });
     })
@@ -178,36 +178,34 @@ module.exports.addUserChoices = function(req, res) {
       console.log(error);
       res.status(404).json({
         error: error,
-        message: 'Choices Failed'
+        message: "Choices Failed"
       });
     });
 };
 
 module.exports.updateUserChoice = function(req, res) {
   const data = {
-    choice: req.body.choice,
-    choiceId: req.body.choiceId,
+    choices: req.body.choices,
+    choiceLocationId: req.body.choiceLocationId,
     eventId: req.body.eventId,
-    userId: req.body.userId
   };
   console.log(data);
   Event.findOneAndUpdate(
     {
       _id: data.eventId,
-      'users.user': data.userId,
-      'userChoices': data.choiceId
+      "users._id": data.choiceLocationId,
     },
     {
-      $set: { 'users.$.userChoices.$.choice': data.choice  }
+      $set: { "users.$.userChoices": data.choices }
     },
     { new: true, useFindAndModify: false }
   )
     .then(event => {
       Event.findById(data.eventId)
-        .populate(['users.user'])
+        .populate("users.user", "-password")
         .then(event => {
           res.status(201).json({
-            message: 'Choices Added',
+            message: "Choices Added",
             event: event
           });
         })
@@ -215,7 +213,7 @@ module.exports.updateUserChoice = function(req, res) {
           console.log(error);
           res.status(404).json({
             error: error,
-            message: 'Choices Failed'
+            message: "Choices Failed"
           });
         });
     })
@@ -223,7 +221,7 @@ module.exports.updateUserChoice = function(req, res) {
       console.log(error);
       res.status(404).json({
         error: error,
-        message: 'Choices Failed'
+        message: "Choices Failed"
       });
     });
 };
@@ -237,7 +235,7 @@ module.exports.createLinkEvent = function(req, res) {
     .save()
     .then(link => {
       res.status(201).json({
-        message: 'Link Created!',
+        message: "Link Created!",
         link: link
       });
     })

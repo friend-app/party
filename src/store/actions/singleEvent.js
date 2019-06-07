@@ -135,14 +135,13 @@ export const updateUserChoiceFail = (choice) => ({
   }
 });
 
-export const updateUserChoice = (userChoice, choiceId, eventId, userId) => {
+export const updateUserChoice = (updatedChoices, choiceLocationId, eventId) => {
   return dispatch => {
     dispatch(updateUserChoiceStart());
     const data = {
-      choice: userChoice,
-      choiceId: choiceId,
+      choices: updatedChoices,
+      choiceLocationId: choiceLocationId,
       eventId: eventId,
-      userId: userId
     };
     console.log(data);
     axios

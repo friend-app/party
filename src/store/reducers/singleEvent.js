@@ -4,8 +4,9 @@ const initialState = {
   loading: false,
   event: null,
   singleEvent: null,
-  error: null
-  // ingredients: null
+  error: null,
+  ingredients: null,
+  editMode: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -59,21 +60,22 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: false, error: payload.error };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT:
-      return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice} };
+      return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice}, editMode: true };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
-      return { ...state, loading: true, error: payload.error };
+      return { ...state, loading: true, error: payload.error, editMode: true};
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS:
       return {
         ...state,
         loading: false,
         event: payload.event,
-        ingredients: payload.ingredients
+        ingredients: null,
+        editMode: false
       };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL:
-      return { ...state, loading: false, error: payload.error };
+      return { ...state, loading: false, error: payload.error, editMode: false };
 
     default:
       return state;

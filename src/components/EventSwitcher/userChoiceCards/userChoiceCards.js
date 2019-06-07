@@ -10,6 +10,7 @@ const userChoiceCards = props => {
       userName={props.user.user.nickname}
       clicked={props.clicked}
       choice={singleChoice}
+      choiceLocationId={props.user._id}
     />
   ));
   return (
