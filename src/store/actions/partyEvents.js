@@ -49,7 +49,7 @@ export const fetchCreatedEvents = () => {
           dispatch(fetchCreatedEventsSuccess(response.data.events));
         })
         .catch(error => {
-          dispatch(fetchCreatedEventFail(error));
+          dispatch(fetchCreatedEventFail(error.response.data.message));
         });
     }, 0);
   };
@@ -65,24 +65,7 @@ export const fetchUserEvents = () => {
           dispatch(fetchUserEventsSuccess(response.data.events));
         })
         .catch(error => {
-          dispatch(fetchUserEventFail(error));
-        });
-    }, 0);
-  };
-};
-
-export const fetchSignleEvent = eventId => {
-  return dispatch => {
-    dispatch(fetchCreatedEventsStart());
-    setTimeout(() => {
-      axios
-        .get('/events/' + eventId)
-        .then(response => {
-          console.log(response.data.event);
-          dispatch(fetchCreatedEventsSuccess(response.data.event));
-        })
-        .catch(error => {
-          dispatch(fetchCreatedEventFail(error));
+          dispatch(fetchUserEventFail(error.response.data.message));
         });
     }, 0);
   };

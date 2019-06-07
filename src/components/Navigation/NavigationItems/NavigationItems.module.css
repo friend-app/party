@@ -6,6 +6,11 @@
   flex-flow: row;
   align-items: center;
   height: 100%;
+justify-content: space-between;
+}
+
+.Spacer{
+  flex: 1 1 auto;
 }
 
 @media (max-width: 767px) {

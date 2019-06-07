@@ -65,7 +65,7 @@ export class CreateEvent extends Component {
         },
         value: '',
         validators: {
-          required: false
+          required: true
         },
         touched: false,
         valid: false
@@ -75,7 +75,25 @@ export class CreateEvent extends Component {
   };
 
   componentDidMount() {
-    this.props.onCreateEventInit();
+    if (!this.props.event) {
+      this.props.onCreateEventInit();
+    } else {
+      this.parseEventAndAddToState();
+    }
+  }
+
+  parseEventAndAddToState() {
+    let updateControls = { ...this.state.controls };
+    for (let key in this.state.controls) {
+      if (key === 'date') {
+        updateControls[key].value = new Date(this.props.event[key]);
+        updateControls[key].valid = true;
+      } else {
+        updateControls[key].value = this.props.event[key];
+        updateControls[key].valid = true;
+      }
+    }
+    this.setState({ controls: updateControls, formIsValid: true});
   }
 
   inputChangedHanlder = (event, inputName) => {
@@ -122,30 +140,36 @@ export class CreateEvent extends Component {
 
   onSubmitHandler = event => {
     event.preventDefault();
-    const eventDetails = {
-      title: this.state.controls.title.value,
-      address: this.state.controls.address.value,
-      date: this.state.controls.date.value,
-      description: this.state.controls.description.value,
-      creatorId: localStorage.getItem('userId'),
-      nickname: localStorage.getItem('nickname'),
-      users: [
-        {
-          user: '5ce28889af9d59226c38008e',
-          userChoices: [
-            { 
-              bacon: 1,
-              cheese: 3
-            },
-            {
-              bread: 44,
-              tomato: 33
-            }
-          ]
-        }
-      ]
-    };
-    this.props.onCreateEvent(eventDetails);
+    if (!this.props.event) {
+      const createEventDetails = {
+        title: this.state.controls.title.value,
+        address: this.state.controls.address.value,
+        date: this.state.controls.date.value,
+        description: this.state.controls.description.value,
+        creatorId: localStorage.getItem('userId'),
+        nickname: localStorage.getItem('nickname'),
+        users: [
+          {
+            user: '5ce28889af9d59226c38008e',
+            userChoices: []
+          },
+          {
+            user: localStorage.getItem('userId'),
+            userChoices: []
+          }
+        ]
+      };
+      this.props.onCreateEvent(createEventDetails);
+    } else {
+      const updateEventDetails = {
+        title: this.state.controls.title.value,
+        address: this.state.controls.address.value,
+        date: this.state.controls.date.value,
+        description: this.state.controls.description.value,
+      }
+      this.props.onUpdateEvent(this.props.event._id, updateEventDetails);
+    }
+    
   };
 
   OnAddIngsRedirect = eventId => {
@@ -180,7 +204,7 @@ export class CreateEvent extends Component {
 
     return (
       <div className={classes.CreateEventWrapper}>
-        <h2>Create Event</h2>
+        {this.props.event ? <h2>Update Event</h2> : <h2>Create Event</h2>}
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -219,6 +243,9 @@ const mapDispatchToProps = dispatch => {
     },
     onCreateEventInit: () => {
       dispatch(actions.createEventInit());
+    },
+    onUpdateEvent: (eventId, eventDetails) => {
+      dispatch(actions.updateCreatedEvent(eventId, eventDetails));
     }
   };
 };
