@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import classes from './UpdateUserChoice.module.css';
-import * as actions from '../../../../store/actions/index';
-import Spinner from '../../../../components/UI/Spinner/Spinner';
-import { makeChosenIngs } from '../../../../shared/makeChosenIngs';
-import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
-import Button from '../../../../components/UI/Button/Button';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import classes from "./UpdateUserChoice.module.css";
+import * as actions from "../../../../store/actions/index";
+import Spinner from "../../../../components/UI/Spinner/Spinner";
+import { makeChosenIngs } from "../../../../shared/makeChosenIngs";
+import EventControls from "../../../../components/EventSwitcher/EventControls/EventControls";
+import Button from "../../../../components/UI/Button/Button";
 
 class UpdateUserChoice extends Component {
   componentDidMount() {
@@ -21,15 +22,40 @@ class UpdateUserChoice extends Component {
         delete ings[key];
       }
     }
+
+    const userWithChoices = this.props.event.users.find(
+      user => user._id === this.props.location.state.choiceLocationId
+    );
+    const userChoices = [...userWithChoices.userChoices];
+    userChoices.map(singleChoice => {
+      if (singleChoice._id === this.props.location.state.userChoice._id) {
+        singleChoice.choice = ings;
+      }
+      return singleChoice;
+    });
+
+    const updatedUserChoices = userChoices.filter(
+      singleChoice => Object.keys(singleChoice.choice).length !== 0
+    );
+
     this.props.onUpdateUserChoice(
-      ings,
-      this.props.location.state.userChoice._id,
-      this.props.event._id,
-      this.props.userId
+      updatedUserChoices,
+      this.props.location.state.choiceLocationId,
+      this.props.event._id
     );
   };
 
   render() {
+    console.log(!this.props.ings);
+    if (!this.props.event || !this.props.ings) {
+      return <Redirect
+        to={{
+          pathname: "/events/eventForUser",
+          state: { eventId: this.props.location.state.eventId }
+        }}
+      />;
+    }
+
     const disabledMin = {
       ...this.props.ings
     };
@@ -58,8 +84,8 @@ class UpdateUserChoice extends Component {
               disabled={disabledMin}
             />
             <Button
-              btnType='SubmitUserChoice'
-              disabled=''
+              btnType="SubmitUserChoice"
+              disabled=""
               clicked={this.onSubmitHandler}
             >
               Submit
@@ -78,7 +104,8 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   loading: state.singleEvent.loading,
   userId: state.auth.userId,
-  ings: state.singleEvent.ingredients
+  ings: state.singleEvent.ingredients,
+  editMode: state.singleEvent.editMode
 });
 
 const mapDispatchToProps = dispatch => {
@@ -87,8 +114,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.updateUserChoiceInit(choice)),
     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
-    onUpdateUserChoice: (choice, choiceId, eventId, userId) =>
-      dispatch(actions.updateUserChoice(choice, choiceId, eventId, userId))
+    onUpdateUserChoice: (choice, choiceId, eventId, userId, currentId) =>
+      dispatch(
+        actions.updateUserChoice(choice, choiceId, eventId, userId, currentId)
+      )
   };
 };
 

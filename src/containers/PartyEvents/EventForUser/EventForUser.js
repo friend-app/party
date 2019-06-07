@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import classes from './EventForUser.module.css';
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import { makeChosenIngs } from '../../../shared/makeChosenIngs';
-import EventControls from '../../../components/EventSwitcher/EventControls/EventControls';
-import Button from '../../../components/UI/Button/Button';
-import UserChoiceCards from '../../../components/EventSwitcher/userChoiceCards/userChoiceCards';
+import React, { Component } from "react";
+import classes from "./EventForUser.module.css";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/index";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import { makeChosenIngs } from "../../../shared/makeChosenIngs";
+import EventControls from "../../../components/EventSwitcher/EventControls/EventControls";
+import Button from "../../../components/UI/Button/Button";
+import UserChoiceCards from "../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
 
 class EventForUser extends Component {
   componentDidMount() {
-      this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
+    this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
   }
 
   onSubmitHandler = () => {
@@ -23,14 +23,15 @@ class EventForUser extends Component {
     this.props.onUserChoice(ings, this.props.event._id, this.props.userId);
   };
 
-  chooseUserChoiceHanlder = (userChoice) => {
+  chooseUserChoiceHanlder = (userChoice, choiceLocationId) => {
     return this.props.history.push({
-      pathname: '/events/eventForUser/updateUserChoice',
-      state: { userChoice: userChoice }
+      pathname: "/events/eventForUser/updateUserChoice",
+      state: { userChoice: userChoice, choiceLocationId: choiceLocationId, eventId: this.props.event._id }
     });
-  }
+  };
 
   render() {
+      
     const disabledMin = {
       ...this.props.ings
     };
@@ -44,14 +45,16 @@ class EventForUser extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
-      const currentUser = this.props.event.users.find(user => user.user._id === this.props.userId);
+      const currentUser = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
 
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
           <h2>{this.props.event.title}</h2>
           <h3>
-            {new Date(this.props.event.date).toLocaleDateString('he-He')} -{' '}
-            {new Date(this.props.event.date).toLocaleTimeString('he-He')}
+            {new Date(this.props.event.date).toLocaleDateString("he-He")} -{" "}
+            {new Date(this.props.event.date).toLocaleTimeString("he-He")}
           </h3>
           <h3>Creator: {this.props.event.nickname}</h3>
 
@@ -67,13 +70,16 @@ class EventForUser extends Component {
               disabled={disabledMin}
             />
             <Button
-              btnType='SubmitUserChoice'
-              disabled=''
+              btnType="SubmitUserChoice"
+              disabled=""
               clicked={this.onSubmitHandler}
             >
               Submit
             </Button>
-            <UserChoiceCards user={currentUser} clicked={this.chooseUserChoiceHanlder} />
+            <UserChoiceCards
+              user={currentUser}
+              clicked={this.chooseUserChoiceHanlder}
+            />
           </div>
         </div>
       );
@@ -88,7 +94,8 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   loading: state.singleEvent.loading,
   userId: state.auth.userId,
-  ings: state.singleEvent.ingredients
+  ings: state.singleEvent.ingredients,
+  editMode: state.singleEvent.editMode
 });
 
 const mapDispatchToProps = dispatch => {
