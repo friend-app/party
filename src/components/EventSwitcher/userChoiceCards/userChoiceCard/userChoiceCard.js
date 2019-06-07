@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './userChoiceCard.module.css';
+import Button from '../../../UI/Button/Button';
 
 const userChoiceCard = props => {
   let choices = [];
@@ -16,9 +17,11 @@ const userChoiceCard = props => {
   ));
 
   return (
-    <div className={classes.userChoiceCardWrapper} onClick={() => props.clicked(props.choice, props.choiceLocationId)}>
+    <div className={classes.userChoiceCardWrapper}>
       <h3>User Name: {props.userName}</h3>
+      <Button btnType="Success" clicked={() => props.clicked(props.choice, props.choiceLocationId)}>Edit Me</Button>
       {ingredient}
+      <Button btnType="Danger" clicked={() => props.onDelete(props.choiceLocationId, props.choice._id)}>Delete Me</Button>
     </div>
   );
 };

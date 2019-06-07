@@ -60,22 +60,22 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: false, error: payload.error };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT:
-      return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice}, editMode: true };
+      return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice}};
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
-      return { ...state, loading: true, error: payload.error, editMode: true};
+      return { ...state, loading: true, error: payload.error};
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS:
       return {
         ...state,
         loading: false,
         event: payload.event,
-        ingredients: null,
+        ingredients: payload.ingredients,
         editMode: false
       };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL:
-      return { ...state, loading: false, error: payload.error, editMode: false };
+      return { ...state, loading: false, error: payload.error };
 
     default:
       return state;

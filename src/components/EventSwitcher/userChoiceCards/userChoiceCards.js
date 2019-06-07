@@ -11,6 +11,7 @@ const userChoiceCards = props => {
       clicked={props.clicked}
       choice={singleChoice}
       choiceLocationId={props.user._id}
+      onDelete={props.onDelete}
     />
   ));
   return (

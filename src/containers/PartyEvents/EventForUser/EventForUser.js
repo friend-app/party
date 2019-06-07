@@ -26,12 +26,28 @@ class EventForUser extends Component {
   chooseUserChoiceHanlder = (userChoice, choiceLocationId) => {
     return this.props.history.push({
       pathname: "/events/eventForUser/updateUserChoice",
-      state: { userChoice: userChoice, choiceLocationId: choiceLocationId, eventId: this.props.event._id }
+      state: {
+        userChoice: userChoice,
+        choiceLocationId: choiceLocationId,
+        eventId: this.props.event._id
+      }
     });
   };
 
+  deleteUserChoiceHandler = (locationId, choiceId) => {
+    // console.log(choiceId);
+    const choiceByUser = this.props.event.users.find(choice => choice._id === locationId);
+    choiceByUser.userChoices.map((userChoice, index) => {
+      if(userChoice._id === choiceId){
+        return choiceByUser.userChoices.splice(index, 1);
+      }
+      return userChoice;
+    })
+    // console.log(choiceByUser.userChoices);
+    this.props.onUpdateUserChoice(choiceByUser.userChoices, locationId, this.props.event._id);
+  };
+
   render() {
-      
     const disabledMin = {
       ...this.props.ings
     };
@@ -79,6 +95,7 @@ class EventForUser extends Component {
             <UserChoiceCards
               user={currentUser}
               clicked={this.chooseUserChoiceHanlder}
+              onDelete={this.deleteUserChoiceHandler}
             />
           </div>
         </div>
@@ -105,7 +122,9 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
     onUserChoice: (userChoice, eventId, userId) =>
-      dispatch(actions.addUserChoice(userChoice, eventId, userId))
+      dispatch(actions.addUserChoice(userChoice, eventId, userId)),
+    onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
+      dispatch(actions.updateUserChoice(choice, choiceLocationId, eventId))
   };
 };
 

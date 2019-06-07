@@ -114,9 +114,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.updateUserChoiceInit(choice)),
     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
-    onUpdateUserChoice: (choice, choiceId, eventId, userId, currentId) =>
+    onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
       dispatch(
-        actions.updateUserChoice(choice, choiceId, eventId, userId, currentId)
+        actions.updateUserChoice(choice, choiceLocationId, eventId)
       )
   };
 };

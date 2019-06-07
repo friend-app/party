@@ -189,7 +189,7 @@ module.exports.updateUserChoice = function(req, res) {
     choiceLocationId: req.body.choiceLocationId,
     eventId: req.body.eventId,
   };
-  console.log(data);
+  console.log('blya', data);
   Event.findOneAndUpdate(
     {
       _id: data.eventId,
