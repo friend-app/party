@@ -11,7 +11,7 @@ import Button from "../../../../components/UI/Button/Button";
 class UpdateUserChoice extends Component {
   componentDidMount() {
     this.props.onUpdateUserChoiceInit(
-      this.props.location.state.userChoice.choice
+      this.props.location.state.userChoice.foodChoice
     );
   }
 
@@ -29,13 +29,13 @@ class UpdateUserChoice extends Component {
     const userChoices = [...userWithChoices.userChoices];
     userChoices.map(singleChoice => {
       if (singleChoice._id === this.props.location.state.userChoice._id) {
-        singleChoice.choice = ings;
+        singleChoice.foodChoice = ings;
       }
       return singleChoice;
     });
 
     const updatedUserChoices = userChoices.filter(
-      singleChoice => Object.keys(singleChoice.choice).length !== 0
+      singleChoice => Object.keys(singleChoice.foodChoice).length !== 0
     );
 
     this.props.onUpdateUserChoice(

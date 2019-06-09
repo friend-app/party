@@ -88,12 +88,13 @@ export const addIngredientsFail = (payload) => ({
   }
 })
 
-export const addIngredients = (ingredients, additionalItems, eventId) => {
+export const addIngredients = (foodIngredients, drinkIngredients, additionalIngredients, eventId) => {
   return dispatch => {
     dispatch(addIngredientsStart());
     const data = {
-      ingredients: ingredients,
-      additionalItems: additionalItems,
+      foodIngredients: foodIngredients,
+      drinkIngredients: drinkIngredients,
+      additionalItems: additionalIngredients,
       eventId: eventId
     }
     axios.put('/addIngredientsToEvent', data)

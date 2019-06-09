@@ -5,7 +5,8 @@ const initialState = {
   event: null,
   singleEvent: null,
   error: null,
-  ingredients: null,
+  foodIngredients: null,
+  drinkIngredients: null,
   editMode: false
 };
 
@@ -18,7 +19,8 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         event: payload.data,
-        ingredients: payload.ingredients,
+        foodIngredients: payload.foodIngredients,
+        drinkIngredients: payload.drinkIngredients,
         loading: false
       };
 
@@ -27,23 +29,23 @@ export default (state = initialState, { type, payload }) => {
 
     case actionTypes.ADD_INGREDIENT:
       const updatedAddIngredient = {
-        [payload.ingredientName]: state.ingredients[payload.ingredientName] + 1
+        [payload.ingredientName]: state.foodIngredients[payload.ingredientName] + 1
       };
-      const updatedAddIngredients = {
-        ...state.ingredients,
+      const updatedAddfoodIngredient = {
+        ...state.foodIngredients,
         ...updatedAddIngredient
       };
-      return { ...state, ingredients: updatedAddIngredients };
+      return { ...state, foodIngredients: updatedAddfoodIngredient };
 
     case actionTypes.REMOVE_INGREDIENT:
       const updatedRemoveIngredient = {
-        [payload.ingredientName]: state.ingredients[payload.ingredientName] - 1
+        [payload.ingredientName]: state.foodIngredients[payload.ingredientName] - 1
       };
-      const updatedRemoveIngredients = {
-        ...state.ingredients,
+      const updatedRemovefoodIngredient = {
+        ...state.foodIngredients,
         ...updatedRemoveIngredient
       };
-      return { ...state, ingredients: updatedRemoveIngredients };
+      return { ...state, foodIngredients: updatedRemovefoodIngredient };
 
     case actionTypes.ADD_USER_CHOICES_START:
       return { ...state, loading: true, error: payload.error };
@@ -53,14 +55,14 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         loading: false,
         event: payload.event,
-        ingredients: payload.ingredients
+        foodIngredients: payload.foodIngredients
       };
 
     case actionTypes.ADD_USER_CHOICES_FAIL:
       return { ...state, loading: false, error: payload.error };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT:
-      return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice}};
+      return { ...state, loading: false, foodIngredients: {...state.foodIngredients, ...payload.userChoice}};
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
       return { ...state, loading: true, error: payload.error};
@@ -70,7 +72,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         loading: false,
         event: payload.event,
-        ingredients: payload.ingredients,
+        foodIngredients: payload.foodIngredients,
         editMode: false
       };
 
