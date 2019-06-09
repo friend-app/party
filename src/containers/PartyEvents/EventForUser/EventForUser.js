@@ -11,9 +11,7 @@ import Button from "../../../components/UI/Button/Button";
 
 class EventForUser extends Component {
   componentDidMount() {
-    if(!this.props.event){
       this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
-    }
   }
 
   onUserFoodChoice = () => {
