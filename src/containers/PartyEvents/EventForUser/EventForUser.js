@@ -10,6 +10,7 @@ import UserChoiceCards from "../../../components/EventSwitcher/userChoiceCards/u
 
 class EventForUser extends Component {
   componentDidMount() {
+    console.log(this.props.location.state.eventId);
     this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
   }
 

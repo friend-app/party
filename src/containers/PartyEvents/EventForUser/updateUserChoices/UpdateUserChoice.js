@@ -46,8 +46,7 @@ class UpdateUserChoice extends Component {
   };
 
   render() {
-    console.log(!this.props.ings);
-    if (!this.props.event || !this.props.ings) {
+    if (!this.props.event || !this.props.ings || !this.props.editMode) {
       return <Redirect
         to={{
           pathname: "/events/eventForUser",

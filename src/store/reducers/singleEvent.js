@@ -19,7 +19,8 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         event: payload.data,
         ingredients: payload.ingredients,
-        loading: false
+        loading: false,
+        editMode: true
       };
 
     case actionTypes.FETCH_SINGLE_EVENT_FAIL:
@@ -63,7 +64,7 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: false, ingredients: {...state.ingredients, ...payload.userChoice}};
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
-      return { ...state, loading: true, error: payload.error};
+      return { ...state, loading: true, error: payload.error, editMode: true};
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS:
       return {
