@@ -6,7 +6,7 @@ const userChoiceCards = props => {
   const card = props.user.userChoices.map((singleChoice, index) => (
     <UserChoiceCard
       key={index}
-      choiceIngs={singleChoice.choice}
+      choiceIngs={singleChoice.foodChoice}
       userName={props.user.user.nickname}
       clicked={props.clicked}
       choice={singleChoice}

@@ -150,10 +150,6 @@ export class CreateEvent extends Component {
         nickname: localStorage.getItem('nickname'),
         users: [
           {
-            user: '5ce28889af9d59226c38008e',
-            userChoices: []
-          },
-          {
             user: localStorage.getItem('userId'),
             userChoices: []
           }

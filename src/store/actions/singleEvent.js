@@ -6,11 +6,12 @@ export const fetchEventStart = payload => ({
   payload
 });
 
-export const fetchEventSuccess = (data, ingredients) => ({
+export const fetchEventSuccess = (data, foodIngredients, drinkIngredients) => ({
   type: actionTypes.FETCH_SINGLE_EVENT_SUCCESS,
   payload: {
     data: data,
-    ingredients: ingredients
+    foodIngredients: foodIngredients,
+    drinkIngredients: drinkIngredients
   }
 });
 
@@ -27,11 +28,15 @@ export const fetchSingleCreatedEvent = eventId => {
     axios
       .get('fetchSingleCreatedEvent/' + eventId)
       .then(response => {
-        let ingredients = {};
-        response.data.event.ingredients.map(ingredient => {
-          return (ingredients[ingredient] = 0);
+        let foodIngredients = {};
+        let drinkIngredients = {};
+        response.data.event.foodIngredients.map(ingredient => {
+          return (foodIngredients[ingredient] = 0);
         });
-        dispatch(fetchEventSuccess(response.data.event, ingredients));
+        response.data.event.drinkIngredients.map(ingredient => {
+          return (drinkIngredients[ingredient] = 0);
+        });
+        dispatch(fetchEventSuccess(response.data.event, foodIngredients, drinkIngredients));
       })
       .catch(error => {
         dispatch(fetchEventFail(error));
@@ -45,11 +50,15 @@ export const fetchSingleUserEvent = eventId => {
     axios
       .get('fetchSingleUserEvent/' + eventId)
       .then(response => {
-        let ingredients = {};
-        response.data.event.ingredients.map(ingredient => {
-          return (ingredients[ingredient] = 0);
+        let foodIngredients = {};
+        let drinkIngredients = {};
+        response.data.event.foodIngredients.map(ingredient => {
+          return (foodIngredients[ingredient] = 0);
         });
-        dispatch(fetchEventSuccess(response.data.event, ingredients));
+        response.data.event.drinkIngredients.map(ingredient => {
+          return (drinkIngredients[ingredient] = 0);
+        });
+        dispatch(fetchEventSuccess(response.data.event, foodIngredients, drinkIngredients));
       })
       .catch(error => {
         dispatch(fetchEventFail(error.response.data.message));
@@ -62,11 +71,12 @@ export const addUserChoicesStart = () => ({
   payload: {}
 });
 
-export const addUserChoicesSuccess = (event, ingredients) => ({
+export const addUserChoicesSuccess = (event, foodIngredients, drinkIngredients) => ({
   type: actionTypes.ADD_USER_CHOICES_SUCCESS,
   payload: {
     event: event,
-    ingredients: ingredients
+    foodIngredients: foodIngredients,
+    drinkIngredients: drinkIngredients
   }
 });
 
@@ -86,11 +96,15 @@ export const addUserChoice = (userChoice, eventId, userId) => {
     axios
       .put('addUserChoices', data)
       .then(response => {
-        let ingredients = {};
-        response.data.event.ingredients.map(ingredient => {
-          return (ingredients[ingredient] = 0);
+        let foodIngredients = {};
+        let drinkIngredients = {};
+        response.data.event.foodIngredients.map(ingredient => {
+          return (foodIngredients[ingredient] = 0);
         });
-        dispatch(addUserChoicesSuccess(response.data.event, ingredients));
+        response.data.event.drinkIngredients.map(ingredient => {
+          return (drinkIngredients[ingredient] = 0);
+        });
+        dispatch(addUserChoicesSuccess(response.data.event, foodIngredients));
       })
       .catch(error => {
         dispatch(addUserChoicesFail(error.response.data.message));
@@ -120,11 +134,12 @@ export const updateUserChoiceStart = () => ({
   payload: {}
 });
 
-export const updateUserChoiceSuccess = (event, ingredients) => ({
+export const updateUserChoiceSuccess = (event, foodIngredients, drinkIngredients) => ({
   type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS,
   payload: {
     event: event,
-    ingredients: ingredients
+    foodIngredients: foodIngredients,
+    drinkIngredients: drinkIngredients
   }
 });
 
@@ -147,11 +162,11 @@ export const updateUserChoice = (updatedChoices, choiceLocationId, eventId) => {
     axios
       .put('updateUserChoice', data)
       .then(response => {
-        let ingredients = {};
-        response.data.event.ingredients.map(ingredient => {
-          return (ingredients[ingredient] = 0);
+        let foodIngredients = {};
+        response.data.event.foodIngredients.map(ingredient => {
+          return (foodIngredients[ingredient] = 0);
         });
-        dispatch(updateUserChoiceSuccess(response.data.event, ingredients));
+        dispatch(updateUserChoiceSuccess(response.data.event, foodIngredients));
       })
       .catch(error => {
         dispatch(updateUserChoiceFail(error.response.data.message));

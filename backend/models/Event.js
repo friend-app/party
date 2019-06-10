@@ -18,7 +18,11 @@ const eventSchema = new Schema({
     type: String,
     required: true
   },
-  ingredients: {
+  foodIngredients: {
+    type: Array,
+    require: false
+  },
+  drinkIngredients: {
     type: Array,
     require: false
   },
@@ -37,7 +41,7 @@ const eventSchema = new Schema({
   users: [
     {
       user: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
-      userChoices: [{choice: Object}]
+      userChoices: [{foodChoice: Object, drinkChoice: Object}]
     }
   ]
 });

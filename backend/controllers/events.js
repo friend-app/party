@@ -113,7 +113,8 @@ module.exports.updateCreatedEvent = function(req, res) {
 
 module.exports.addIngredientsToEvent = function(req, res) {
   console.log(req.body);
-  const ingredients = req.body.ingredients;
+  const foodIngredients = req.body.foodIngredients;
+  const drinkIngredients = req.body.drinkIngredients;
   const additionalItems = req.body.additionalItems;
   Event.findOneAndUpdate(
     {
@@ -121,7 +122,8 @@ module.exports.addIngredientsToEvent = function(req, res) {
     },
     {
       $set: {
-        ingredients: ingredients,
+        foodIngredients: foodIngredients,
+        drinkIngredients: drinkIngredients,
         additionalItems: additionalItems
       }
     },
