@@ -29,23 +29,23 @@ export default (state = initialState, { type, payload }) => {
 
     case actionTypes.ADD_INGREDIENT:
       const updatedAddIngredient = {
-        [payload.ingredientName]: state.foodIngredients[payload.ingredientName] + 1
+        [payload.ingredientName]: state[payload.type][payload.ingredientName] + 1
       };
       const updatedAddfoodIngredient = {
-        ...state.foodIngredients,
+        ...state[payload.type],
         ...updatedAddIngredient
       };
-      return { ...state, foodIngredients: updatedAddfoodIngredient };
+      return { ...state, [payload.type]: updatedAddfoodIngredient };
 
     case actionTypes.REMOVE_INGREDIENT:
       const updatedRemoveIngredient = {
-        [payload.ingredientName]: state.foodIngredients[payload.ingredientName] - 1
+        [payload.ingredientName]: state[payload.type][payload.ingredientName] - 1
       };
       const updatedRemovefoodIngredient = {
-        ...state.foodIngredients,
+        ...state[payload.type],
         ...updatedRemoveIngredient
       };
-      return { ...state, foodIngredients: updatedRemovefoodIngredient };
+      return { ...state, [payload.type]: updatedRemovefoodIngredient };
 
     case actionTypes.ADD_USER_CHOICES_START:
       return { ...state, loading: true, error: payload.error };
@@ -55,7 +55,8 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         loading: false,
         event: payload.event,
-        foodIngredients: payload.foodIngredients
+        foodIngredients: payload.foodIngredients,
+        drinkIngredients: payload.drinkIngredients
       };
 
     case actionTypes.ADD_USER_CHOICES_FAIL:

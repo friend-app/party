@@ -52,11 +52,11 @@ class App extends Component {
           path="/events/eventForUser/updateUserChoice"
           component={UpdateUserChoice}
         />
-        <Route
+        {/* <Route
           exact
           path="/events/eventForCreator"
           component={EventForCreator}
-        />
+        /> */}
         {/* <Route exact path='/events/:eventId' component={SingleEvent} /> */}
         <Route path="/" component={FrontPage} />
       </Switch>
@@ -91,11 +91,11 @@ class App extends Component {
             path="/events/eventForUser/updateUserChoice"
             component={UpdateUserChoice}
           />
-          <Route
+          {/* <Route
             exact
             path="/events/eventForCreator"
             component={EventForCreator}
-          />
+          /> */}
           {/* <Route exact path='/events/:eventId' component={SingleEvent} /> */}
           <Route path="/" component={FrontPage} />
         </Switch>

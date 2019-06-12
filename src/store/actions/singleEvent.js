@@ -36,7 +36,13 @@ export const fetchSingleCreatedEvent = eventId => {
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
-        dispatch(fetchEventSuccess(response.data.event, foodIngredients, drinkIngredients));
+        dispatch(
+          fetchEventSuccess(
+            response.data.event,
+            foodIngredients,
+            drinkIngredients
+          )
+        );
       })
       .catch(error => {
         dispatch(fetchEventFail(error));
@@ -58,7 +64,13 @@ export const fetchSingleUserEvent = eventId => {
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
-        dispatch(fetchEventSuccess(response.data.event, foodIngredients, drinkIngredients));
+        dispatch(
+          fetchEventSuccess(
+            response.data.event,
+            foodIngredients,
+            drinkIngredients
+          )
+        );
       })
       .catch(error => {
         dispatch(fetchEventFail(error.response.data.message));
@@ -71,7 +83,11 @@ export const addUserChoicesStart = () => ({
   payload: {}
 });
 
-export const addUserChoicesSuccess = (event, foodIngredients, drinkIngredients) => ({
+export const addUserChoicesSuccess = (
+  event,
+  foodIngredients,
+  drinkIngredients
+) => ({
   type: actionTypes.ADD_USER_CHOICES_SUCCESS,
   payload: {
     event: event,
@@ -85,16 +101,18 @@ export const addUserChoicesFail = () => ({
   payload: {}
 });
 
-export const addUserChoice = (userChoice, eventId, userId) => {
+export const addFoodChoice = (userChoice, eventId, userId) => {
   return dispatch => {
     dispatch(addUserChoicesStart());
     const data = {
-      userChoice: { choice: userChoice },
+      foodChoice: { choice: userChoice },
       eventId: eventId,
       userId: userId
     };
+
+    console.log(data);
     axios
-      .put('addUserChoices', data)
+      .put('addFoodChoices', data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -104,7 +122,7 @@ export const addUserChoice = (userChoice, eventId, userId) => {
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
-        dispatch(addUserChoicesSuccess(response.data.event, foodIngredients));
+        dispatch(addUserChoicesSuccess(response.data.event, foodIngredients, drinkIngredients));
       })
       .catch(error => {
         dispatch(addUserChoicesFail(error.response.data.message));
@@ -112,17 +130,44 @@ export const addUserChoice = (userChoice, eventId, userId) => {
   };
 };
 
-export const addIngredient = ingredientName => ({
+export const addDrinksChoice = (userChoice, eventId, userId) => {
+  return dispatch => {
+    dispatch(addUserChoicesStart());
+    const data = {
+      drinksChoice: { choice: userChoice },
+      eventId: eventId,
+      userId: userId
+    };
+    axios
+      .put('addDrinkChoices', data)
+      .then(response => {
+        let foodIngredients = {};
+        let drinkIngredients = {};
+        response.data.event.foodIngredients.map(ingredient => {
+          return (foodIngredients[ingredient] = 0);
+        });
+        response.data.event.drinkIngredients.map(ingredient => {
+          return (drinkIngredients[ingredient] = 0);
+        });
+        dispatch(addUserChoicesSuccess(response.data.event, foodIngredients, drinkIngredients));
+      })
+      .catch(error => {
+        dispatch(addUserChoicesFail(error.response.data.message));
+      });
+  };
+};
+
+export const addIngredient = (ingredientName, type) => ({
   type: actionTypes.ADD_INGREDIENT,
-  payload: { ingredientName: ingredientName }
+  payload: { ingredientName: ingredientName, type: type }
 });
 
-export const removeIngredient = ingredientName => ({
+export const removeIngredient = (ingredientName, type) => ({
   type: actionTypes.REMOVE_INGREDIENT,
-  payload: { ingredientName: ingredientName }
+  payload: { ingredientName: ingredientName, type: type }
 });
 
-export const updateUserChoiceInit = (userChoice) => ({
+export const updateUserChoiceInit = userChoice => ({
   type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT,
   payload: {
     userChoice: userChoice
@@ -134,7 +179,11 @@ export const updateUserChoiceStart = () => ({
   payload: {}
 });
 
-export const updateUserChoiceSuccess = (event, foodIngredients, drinkIngredients) => ({
+export const updateUserChoiceSuccess = (
+  event,
+  foodIngredients,
+  drinkIngredients
+) => ({
   type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS,
   payload: {
     event: event,
@@ -143,7 +192,7 @@ export const updateUserChoiceSuccess = (event, foodIngredients, drinkIngredients
   }
 });
 
-export const updateUserChoiceFail = (choice) => ({
+export const updateUserChoiceFail = choice => ({
   type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL,
   payload: {
     userChoice: choice
@@ -156,7 +205,7 @@ export const updateUserChoice = (updatedChoices, choiceLocationId, eventId) => {
     const data = {
       choices: updatedChoices,
       choiceLocationId: choiceLocationId,
-      eventId: eventId,
+      eventId: eventId
     };
     console.log(data);
     axios
