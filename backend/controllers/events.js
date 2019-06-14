@@ -233,14 +233,16 @@ module.exports.updateUserChoice = function(req, res) {
     choiceLocationId: req.body.choiceLocationId,
     eventId: req.body.eventId,
   };
+  const updateKey = "users.$." +  req.body.type
   console.log('blya', data);
+  console.log('shluha', updateKey);
   Event.findOneAndUpdate(
     {
       _id: data.eventId,
       "users._id": data.choiceLocationId,
     },
     {
-      $set: { "users.$.userChoices": data.choices }
+      $set: { [updateKey]: data.choices }
     },
     { new: true, useFindAndModify: false }
   )

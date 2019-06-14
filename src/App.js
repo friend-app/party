@@ -14,9 +14,10 @@ import PartyEvents from "./containers/PartyEvents/PartyEvents";
 import CreateEvent from "./containers/PartyEvents/CreateEvent/CreateEvent";
 import AddIngredientsToEvent from "./containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent";
 import EventForUser from "./containers/PartyEvents/EventForUser/EventForUser";
-import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCreator";
+// import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCreator";
 import FoodUserChoice from "./containers/PartyEvents/EventForUser/FoodUserChoice/FoodUserChoice";
 import DrinkUserChoice from "./containers/PartyEvents/EventForUser/DrinkUserChoice/DrinkUserChoice";
+import UserChoicesCards from "./containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards";
 import UpdateUserChoice from "./containers/PartyEvents/EventForUser/updateUserChoices/UpdateUserChoice";
 
 class App extends Component {
@@ -52,6 +53,11 @@ class App extends Component {
           path="/events/eventForUser/updateUserChoice"
           component={UpdateUserChoice}
         />
+        <Route
+          exact
+          path="/events/eventForUser/userChoicesCards"
+          component={UserChoicesCards}
+        />
         {/* <Route
           exact
           path="/events/eventForCreator"
@@ -85,6 +91,11 @@ class App extends Component {
             path="/events/create-event/add-ingredients"
             component={AddIngredientsToEvent}
           />
+          <Route
+          exact
+          path="/events/eventForUser/userChoicesCards"
+          component={UserChoicesCards}
+        />
           <Route exact path="/events/eventForUser" component={EventForUser} />
           <Route
             exact

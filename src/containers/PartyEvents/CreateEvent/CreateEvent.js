@@ -152,7 +152,7 @@ export class CreateEvent extends Component {
           {
             user: localStorage.getItem('userId'),
             foodChoices: [],
-            drinkChoices: []
+            drinksChoices: []
           }
         ]
       };

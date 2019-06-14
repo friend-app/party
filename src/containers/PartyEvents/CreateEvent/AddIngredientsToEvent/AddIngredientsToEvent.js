@@ -222,36 +222,6 @@ class AddIngredientsToEvent extends Component {
       return <Redirect to="" />;
     }
 
-    for(let control in this.state){
-      if(control !== 'formIsValid'){
-        const formIngElements = this.state[control].map((formEl, index) => (
-          <div key={formEl.elementType + index} className={classes.InputWrapper}>
-            <Input
-              divStyle={["InputFieldWidth"]}
-              className={classes.InputFieldWidth}
-              inputType={formEl.elementType}
-              elementConfig={formEl.elementConfig}
-              value={formEl.value}
-              changed={event =>
-                this.inputChangedHanlder(event, index, control)
-              }
-              invalid={!formEl.valid}
-              touched={formEl.touched}
-              shouldValidate={formEl.validators}
-            />
-            <Button
-              btnDivStyle={["RemoveDivButton"]}
-              btnType="Remove"
-              bType="button"
-              clicked={() => this.onDeleteHandler(index, "foodControls")}
-            >
-              X
-            </Button>
-          </div>
-        ));
-      }
-    }
-
     const formFoodIngElements = this.state.foodControls.map((formEl, index) => (
       <div key={formEl.elementType + index} className={classes.InputWrapper}>
         <Input

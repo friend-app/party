@@ -6,7 +6,7 @@ import * as actions from "../../../store/actions/index";
 // import Spinner from "../../../components/UI/Spinner/Spinner";
 import FoodUserChoice from './FoodUserChoice/FoodUserChoice';
 import DrinkUserChoice from './DrinkUserChoice/DrinkUserChoice';
-import UserChoiceCards from "../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
+import userChoicesCards from './UserChoicesCards/UserChoicesCards';
 import Button from "../../../components/UI/Button/Button";
 
 class EventForUser extends Component {
@@ -35,12 +35,23 @@ class EventForUser extends Component {
     });
   }
   
+  onUserChoicesCards = () => {
+    return this.props.history.push({
+      pathname: "/events/eventForUser/userChoicesCards",
+      state: {
+        eventId: this.props.event._id
+      }
+    });
+  }
+  
   render() {
     return <div>
       <Button btnType="Success" clicked={this.onUserFoodChoice}>FoodChoice</Button>
       <div><Route path={'/events/eventForUser/foodUserChoice'} component={FoodUserChoice} /></div>
       <Button btnType="Success" clicked={this.onUserDrinkChoice}>DrinkChoice</Button>
       <div><Route path={'/events/eventForUser/drinkUserChoice'} component={DrinkUserChoice} /></div>
+      <Button btnType="Success" clicked={this.onUserChoicesCards}>UserCards</Button>
+      <div><Route path={'/events/eventForUser/drinkUserChoice'} component={userChoicesCards} /></div>
     </div>;
   }
 }

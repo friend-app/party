@@ -19,9 +19,9 @@ const userChoiceCard = props => {
   return (
     <div className={classes.userChoiceCardWrapper}>
       <h3>User Name: {props.userName}</h3>
-      <Button btnType="Success" clicked={() => props.clicked(props.choice, props.choiceLocationId)}>Edit Me</Button>
+      <Button btnType="Success" clicked={() => props.clicked(props.choice, props.choiceLocationId, props.type)}>Edit Me</Button>
       {ingredient}
-      <Button btnType="Danger" clicked={() => props.onDelete(props.choiceLocationId, props.choice._id)}>Delete Me</Button>
+      <Button btnType="Danger" clicked={() => props.onDelete(props.choiceLocationId, props.choice._id, props.type)}>Delete Me</Button>
     </div>
   );
 };
