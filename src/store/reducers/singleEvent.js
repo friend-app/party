@@ -74,7 +74,7 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
         event: payload.event,
         foodIngredients: payload.foodIngredients,
-        editMode: false
+        drinkIngredients: payload.drinkIngredients
       };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL:

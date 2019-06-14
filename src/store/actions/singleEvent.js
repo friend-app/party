@@ -199,10 +199,11 @@ export const updateUserChoiceFail = choice => ({
   }
 });
 
-export const updateUserChoice = (updatedChoices, choiceLocationId, eventId) => {
+export const updateUserChoice = (updatedChoices, type, choiceLocationId, eventId) => {
   return dispatch => {
     dispatch(updateUserChoiceStart());
     const data = {
+      type: type,
       choices: updatedChoices,
       choiceLocationId: choiceLocationId,
       eventId: eventId
@@ -212,10 +213,14 @@ export const updateUserChoice = (updatedChoices, choiceLocationId, eventId) => {
       .put('updateUserChoice', data)
       .then(response => {
         let foodIngredients = {};
+        let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {
           return (foodIngredients[ingredient] = 0);
         });
-        dispatch(updateUserChoiceSuccess(response.data.event, foodIngredients));
+        response.data.event.drinkIngredients.map(ingredient => {
+          return (drinkIngredients[ingredient] = 0);
+        });
+        dispatch(updateUserChoiceSuccess(response.data.event, foodIngredients, drinkIngredients));
       })
       .catch(error => {
         dispatch(updateUserChoiceFail(error.response.data.message));

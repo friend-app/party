@@ -62,9 +62,9 @@ class FoodUserChoice extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
-      const currentUser = this.props.event.users.find(
-        user => user.user._id === this.props.userId
-      );
+      // const currentUser = this.props.event.users.find(
+      //   user => user.user._id === this.props.userId
+      // );
 
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
@@ -107,8 +107,7 @@ const mapStateToProps = state => ({
   token: state.auth.token,
   loading: state.singleEvent.loading,
   userId: state.auth.userId,
-  foodIngs: state.singleEvent.foodIngredients,
-  editMode: state.singleEvent.editMode
+  foodIngs: state.singleEvent.foodIngredients
 });
 
 const mapDispatchToProps = dispatch => {

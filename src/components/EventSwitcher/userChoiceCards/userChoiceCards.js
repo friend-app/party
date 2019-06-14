@@ -3,20 +3,23 @@ import UserChoiceCard from './userChoiceCard/userChoiceCard';
 import classes from './userChoiceCards.module.css';
 
 const userChoiceCards = props => {
-  const card = props.user.userChoices.map((singleChoice, index) => (
+  // console.log(props.user);
+  const card = props.user[props.choiceType].map((singleChoice, index) => {
+    // console.log(singleChoice)
+    return (
     <UserChoiceCard
       key={index}
-      choiceIngs={singleChoice.foodChoice}
+      choiceIngs={singleChoice.choice}
       userName={props.user.user.nickname}
       clicked={props.clicked}
       choice={singleChoice}
       choiceLocationId={props.user._id}
       onDelete={props.onDelete}
-    />
-  ));
+      type={props.choiceType}
+    />)
+});
   return (
     <div className={classes.UserChoiceCardsWrapper}>
-      <h3>First Choice card</h3>
       {card}
     </div>
   );

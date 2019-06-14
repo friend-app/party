@@ -38,8 +38,10 @@ class UpdateUserChoice extends Component {
       singleChoice => Object.keys(singleChoice.foodChoice).length !== 0
     );
 
+    const type = '';
     this.props.onUpdateUserChoice(
       updatedUserChoices,
+      type,
       this.props.location.state.choiceLocationId,
       this.props.event._id
     );
@@ -113,9 +115,14 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.updateUserChoiceInit(choice)),
     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
-    onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
+    onUpdateUserChoice: (updatedChoices, type, choiceLocationId, eventId) =>
       dispatch(
-        actions.updateUserChoice(choice, choiceLocationId, eventId)
+        actions.updateUserChoice(
+          updatedChoices,
+          type,
+          choiceLocationId,
+          eventId
+        )
       )
   };
 };
