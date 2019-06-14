@@ -11,7 +11,10 @@ import Button from "../../../components/UI/Button/Button";
 
 class EventForUser extends Component {
   componentDidMount() {
+    if(!this.props.event){
       this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
+    }
+
   }
 
   onUserFoodChoice = () => {
@@ -38,7 +41,6 @@ class EventForUser extends Component {
       <div><Route path={'/events/eventForUser/foodUserChoice'} component={FoodUserChoice} /></div>
       <Button btnType="Success" clicked={this.onUserDrinkChoice}>DrinkChoice</Button>
       <div><Route path={'/events/eventForUser/drinkUserChoice'} component={DrinkUserChoice} /></div>
-      {/* <div>{UserChoiceCards}</div> */}
     </div>;
   }
 }
@@ -56,12 +58,6 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchSingleUserEvent: eventId =>
       dispatch(actions.fetchSingleUserEvent(eventId)),
-    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
-    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
-    onUserChoice: (userChoice, eventId, userId) =>
-      dispatch(actions.addUserChoice(userChoice, eventId, userId)),
-    onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
-      dispatch(actions.updateUserChoice(choice, choiceLocationId, eventId))
   };
 };
 

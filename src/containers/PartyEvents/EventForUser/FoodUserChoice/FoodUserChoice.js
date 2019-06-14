@@ -115,10 +115,10 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchSingleUserEvent: eventId =>
       dispatch(actions.fetchSingleUserEvent(eventId)),
-    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
-    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
+    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName, 'foodIngredients')),
+    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName, 'foodIngredients')),
     onUserChoice: (userChoice, eventId, userId) =>
-      dispatch(actions.addUserChoice(userChoice, eventId, userId)),
+      dispatch(actions.addFoodChoice(userChoice, eventId, userId)),
     onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
       dispatch(actions.updateUserChoice(choice, choiceLocationId, eventId))
   };

@@ -143,8 +143,8 @@ module.exports.addIngredientsToEvent = function(req, res) {
     });
 };
 
-module.exports.addUserChoices = function(req, res) {
-  const userChoice = req.body.userChoice;
+module.exports.addFoodChoices = function(req, res) {
+  const foodChoice = req.body.foodChoice;
   const eventId = req.body.eventId;
   const userId = req.body.userId;
   Event.findOneAndUpdate(
@@ -154,7 +154,49 @@ module.exports.addUserChoices = function(req, res) {
     },
     {
       $push: {
-        "users.$.userChoices": userChoice
+        "users.$.foodChoices": foodChoice
+      }
+    },
+    { new: true, useFindAndModify: false }
+  )
+    .then(event => {
+      Event.findById(eventId)
+        .populate("users.user", "-password")
+        .then(event => {
+          res.status(201).json({
+            message: "Choices Added",
+            event: event
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(404).json({
+            error: error,
+            message: "Choices Failed"
+          });
+        });
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(404).json({
+        error: error,
+        message: "Choices Failed"
+      });
+    });
+};
+
+module.exports.addDrinksChoices = function(req, res) {
+  const drinksChoice = req.body.drinksChoice;
+  const eventId = req.body.eventId;
+  const userId = req.body.userId;
+  Event.findOneAndUpdate(
+    {
+      _id: eventId,
+      "users.user": userId
+    },
+    {
+      $push: {
+        "users.$.drinksChoices": drinksChoice
       }
     },
     { new: true, useFindAndModify: false }
