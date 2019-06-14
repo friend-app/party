@@ -41,7 +41,8 @@ const eventSchema = new Schema({
   users: [
     {
       user: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
-      userChoices: [{foodChoice: Object, drinkChoice: Object}]
+      foodChoices: [{choice: Object}],
+      drinksChoices: [{choice: Object}]
     }
   ]
 });

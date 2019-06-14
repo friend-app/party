@@ -6,7 +6,8 @@ export {
   fetchSingleUserEvent,
   addIngredient,
   removeIngredient,
-  addUserChoice,
+  addFoodChoice,
+  addDrinksChoice,
   updateUserChoiceInit,
   updateUserChoice
 } from './singleEvent';
