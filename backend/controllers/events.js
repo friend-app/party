@@ -1,6 +1,7 @@
 const Event = require("../models/Event");
 const Link = require("../models/Link");
 const uniqid = require("uniqid");
+const upload = require('../uploads/storage_model/Storage');
 
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
@@ -84,6 +85,12 @@ module.exports.createEvent = function(req, res) {
     .catch(error => {
       console.log(error);
     });
+  upload(req,res,function(err) {
+    if(err) {
+      return res.end("Error uploading file.");
+    }
+    res.end("File is uploaded");
+  });
 };
 
 module.exports.updateCreatedEvent = function(req, res) {
