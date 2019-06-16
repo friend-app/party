@@ -8,7 +8,8 @@ const initialState = {
   token: null,
   loading: false,
   message: null,
-  userId: null
+  userId: null,
+  authRedirectPath: '/'
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -62,6 +63,12 @@ export default (state = initialState, { type, payload }) => {
         password: null,
         token: null,
         message: null
+      };
+
+    case actionTypes.SET_AUTH_REDIRECT_PATH:
+      return {
+        ...state,
+        authRedirectPath: payload.path
       };
 
 

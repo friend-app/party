@@ -1,17 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userChoices = new Schema({
-  type: Array
-});
-
-mongoose.model('userChoices', userChoices);
-
 const eventSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   address: {
     type: String,
@@ -19,13 +12,21 @@ const eventSchema = new Schema({
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
   description: {
     type: String,
     required: true
   },
-  ingredients: {
+  foodIngredients: {
+    type: Array,
+    require: false
+  },
+  drinkIngredients: {
+    type: Array,
+    require: false
+  },
+  additionalItems: {
     type: Array,
     require: false
   },
@@ -39,8 +40,9 @@ const eventSchema = new Schema({
   },
   users: [
     {
-      user: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
-      userChoices: []
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
+      foodChoices: [{choice: Object}],
+      drinksChoices: [{choice: Object}]
     }
   ]
 });

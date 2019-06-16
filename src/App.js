@@ -1,60 +1,139 @@
-import React, { Component } from 'react';
-import './App.css';
-import { Switch, Route } from 'react-router-dom';
-import Layout from './hoc/Layout/Layout';
+import React, { Component } from "react";
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "./store/actions/index";
 
-import Login from './containers/Auth/Login/Login';
-import Signup from './containers/Auth/Singup/Signup';
-import Logout from './containers/Auth/Logout/Logout';
-import FrontPage from './containers/FrontPage/FrontPage';
-import PartyEvents from './containers/PartyEvents/PartyEvents';
-import SingleEvent from './containers/PartyEvents/SingleEvent/SingleEvent';
-import CreateEvent from './containers/PartyEvents/CreateEvent/CreateEvent';
-import AddIngredientsToEvent from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent';
-// import AddIngredientsToEvent1 from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent.1/AddIngredientsToEvent';
+import Layout from "./hoc/Layout/Layout";
+
+import Login from "./containers/Auth/Login/Login";
+import Signup from "./containers/Auth/Singup/Signup";
+import Logout from "./containers/Auth/Logout/Logout";
+import FrontPage from "./containers/FrontPage/FrontPage";
+import PartyEvents from "./containers/PartyEvents/PartyEvents";
+import CreateEvent from "./containers/PartyEvents/CreateEvent/CreateEvent";
+import AddIngredientsToEvent from "./containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent";
+import EventForUser from "./containers/PartyEvents/EventForUser/EventForUser";
+// import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCreator";
+import FoodUserChoice from "./containers/PartyEvents/EventForUser/FoodUserChoice/FoodUserChoice";
+import DrinkUserChoice from "./containers/PartyEvents/EventForUser/DrinkUserChoice/DrinkUserChoice";
+import UserChoicesCards from "./containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards";
+import UpdateUserChoice from "./containers/PartyEvents/EventForUser/updateUserChoices/UpdateUserChoice";
 
 class App extends Component {
-  state = {
-    isAuth: false
-  };
+  componentDidMount() {
+    this.props.onAuthCheckState();
+  }
 
   render() {
     let routes = (
       <Switch>
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/signup' component={Signup} />
-        <Route exact path='/logout' component={Logout} />
-        <Route exact path='/events' component={PartyEvents} />
-        <Route exact path='/events/create-event' component={CreateEvent} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/events" component={PartyEvents} />
+        <Route exact path="/events/create-event" component={CreateEvent} />
         <Route
           exact
-          path='/events/create-event/add-ingredients'
+          path="/events/create-event/add-ingredients"
           component={AddIngredientsToEvent}
+        />
+        <Route exact path="/events/eventForUser" component={EventForUser} />
+        <Route
+          exact
+          path="/events/eventForUser/foodUserChoice"
+          component={FoodUserChoice}
+        />
+        <Route
+          exact
+          path="/events/eventForUser/drinkUserChoice"
+          component={DrinkUserChoice}
+        />
+        <Route
+          exact
+          path="/events/eventForUser/updateUserChoice"
+          component={UpdateUserChoice}
+        />
+        <Route
+          exact
+          path="/events/eventForUser/userChoicesCards"
+          component={UserChoicesCards}
         />
         {/* <Route
           exact
-          path='/events/create-event/add-ingredients1'
-          component={AddIngredientsToEvent1}
+          path="/events/eventForCreator"
+          component={EventForCreator}
         /> */}
-        <Route exact path='/events/:eventId' component={SingleEvent} />
-        <Route exact path='/' component={FrontPage} />
+        {/* <Route exact path='/events/:eventId' component={SingleEvent} /> */}
+        <Route path="/" component={FrontPage} />
       </Switch>
     );
 
-    if (this.state.isAuth) {
+    if (this.props.isAuth) {
       routes = (
         <Switch>
-          <Route path='/logout' component={Logout} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route path="/logout" component={Logout} />
+          <Route exact path="/events" component={PartyEvents} />
+          <Route exact path="/events/create-event" component={CreateEvent} />
+          <Route
+            exact
+            path="/events/eventForUser/foodUserChoice"
+            component={FoodUserChoice}
+          />
+          <Route
+            exact
+            path="/events/eventForUser/drinkUserChoice"
+            component={DrinkUserChoice}
+          />
+          <Route
+            exact
+            path="/events/create-event/add-ingredients"
+            component={AddIngredientsToEvent}
+          />
+          <Route
+          exact
+          path="/events/eventForUser/userChoicesCards"
+          component={UserChoicesCards}
+        />
+          <Route exact path="/events/eventForUser" component={EventForUser} />
+          <Route
+            exact
+            path="/events/eventForUser/updateUserChoice"
+            component={UpdateUserChoice}
+          />
+          {/* <Route
+            exact
+            path="/events/eventForCreator"
+            component={EventForCreator}
+          /> */}
+          {/* <Route exact path='/events/:eventId' component={SingleEvent} /> */}
+          <Route path="/" component={FrontPage} />
         </Switch>
       );
     }
 
     return (
-      <div className='App'>
+      <div className="App">
         <Layout>{routes}</Layout>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isAuth: state.auth.token !== null
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAuthCheckState: () => {
+      dispatch(actions.authCheckState());
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

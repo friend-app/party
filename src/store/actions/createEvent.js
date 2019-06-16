@@ -15,12 +15,13 @@ export const createEventSuccess = (event) => ({
 
 export const createEventFail = (payload) => ({
   type: actionTypes.CREATE_EVENT_FAIL,
-  payload
+  payload: {
+    error: payload
+  }
 })
 
-export const createEventInit = (payload) => ({
-  type: actionTypes.CREATE_EVENT_INIT,
-  payload
+export const createEventInit = () => ({
+  type: actionTypes.CREATE_EVENT_INIT
 })
 
 export const createEvent = (eventDetails) => {
@@ -30,43 +31,78 @@ export const createEvent = (eventDetails) => {
     .then(response => {
       dispatch(createEventSuccess(response.data.event))
     }).catch(error => {
-      console.log(error);
+      dispatch(createEventFail(error.response.data.message))
     })
 
 
   }
 };
 
+export const updateEventStart = () => ({
+  type: actionTypes.UPDATE_EVENT_START,
+})
+
+export const updateEventSuccess = (event) => ({
+  type: actionTypes.UPDATE_EVENT_SUCCESS,
+  payload: {
+    event: event
+  }
+})
+
+export const updateEventFail = (error) => ({
+  type: actionTypes.UPDATE_EVENT_FAIL,
+  payload: {
+    error: error
+  }
+})
+
+export const updateCreatedEvent = (eventId, eventDetails) => {
+  return dispatch => {
+    dispatch(updateEventStart());
+    const eventData = {
+      eventId: eventId,
+      eventDetails: eventDetails
+    }
+    axios.post('/updateCreatedEvent', eventData)
+    .then(response => {
+      dispatch(updateEventSuccess(response.data.event))
+    }).catch(error => {
+      dispatch(updateEventFail(error.response.data.message))
+    })
+  }
+}
+
 export const addIngredientsStart = () => ({
   type: actionTypes.ADD_INGREDEINTS_TO_EVENT_START,
 })
 
-export const addIngredientsSuccess = (ingredients) => ({
+export const addIngredientsSuccess = () => ({
   type: actionTypes.ADD_INGREDEINTS_TO_EVENT_SUCCESS,
-  payload: {
-    ingredients: ingredients
-  }
+  payload: {}
 })
 
 export const addIngredientsFail = (payload) => ({
   type: actionTypes.ADD_INGREDEINTS_TO_EVENT_FAIL,
-  payload
+  payload: {
+    error: payload
+  }
 })
 
-export const addIngredients = (ingredients, eventId) => {
+export const addIngredients = (foodIngredients, drinkIngredients, additionalIngredients, eventId) => {
   return dispatch => {
     dispatch(addIngredientsStart());
     const data = {
-      ingredients: ingredients,
+      foodIngredients: foodIngredients,
+      drinkIngredients: drinkIngredients,
+      additionalItems: additionalIngredients,
       eventId: eventId
     }
-    axios.post('/addIngredientsToEvent', data)
+    axios.put('/addIngredientsToEvent', data)
     .then(response => {
-      console.log(response.data);
-      dispatch(addIngredientsSuccess(response.data))
+      dispatch(addIngredientsSuccess());
     })
     .catch(error => {
-      console.log(error)
+      dispatch(addIngredientsFail(error.response.data.message));
     })
   }
 };

@@ -8,32 +8,52 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 class PartyEvents extends Component {
   componentDidMount() {
-    if (this.props.token) {
+    if (this.props.isAuth) {
       this.props.onFetchCreatedEvents();
       this.props.onFetchUserEvents();
     }
   }
 
-  eventSelectedHandler = (id, creatorId) => {
-    this.props.history.push({
-      pathname: '/events/singleEvent',
-      state: { eventId: id, creatorId: creatorId }
-    });
+  eventSelectedHandler = (id, eventType) => {
+    switch (eventType) {
+      case 'creator': 
+      return this.props.history.push({
+        pathname: '/events/eventForCreator',
+        state: { eventId: id, eventType: eventType }
+      });
+      case 'user': 
+      return this.props.history.push({
+        pathname: '/events/eventForUser',
+        state: { eventId: id, eventType: eventType }
+      });
+      default: return alert('Refresh the page please');
+    }
+    
   };
 
   render() {
-    console.log(this.props.userEvents);
-    if (!this.props.token) {
+    if (!this.props.isAuth) {
       return <Redirect to='/login' />;
     }
     let createdEvents = <Spinner />;
+    let userEvents = <Spinner />;
 
     if (this.props.createdEvents) {
       createdEvents = this.props.createdEvents.map(event => (
         <AllEventsPage
           key={event._id}
           eventInfo={event}
-          clicked={() => this.eventSelectedHandler(event._id, event.creatorId)}
+          clicked={() => this.eventSelectedHandler(event._id, 'creator')}
+        />
+      ));
+    }
+
+    if (this.props.userEvents) {
+      userEvents = this.props.userEvents.map(event => (
+        <AllEventsPage
+          key={event._id}
+          eventInfo={event}
+          clicked={() => this.eventSelectedHandler(event._id, 'user')}
         />
       ));
     }
@@ -42,6 +62,8 @@ class PartyEvents extends Component {
       <div>
         <h3>Created Events</h3>
         {createdEvents}
+        <h3>user Events</h3>
+        {userEvents}
       </div>
     );
   }
@@ -51,7 +73,7 @@ const mapStateToProps = state => ({
   loading: state.party.loading,
   createdEvents: state.party.createdEvents,
   userEvents: state.party.userEvents,
-  token: state.auth.token !== null
+  isAuth: state.auth.token !== null
 });
 
 const mapDispatchToProps = dispatch => {

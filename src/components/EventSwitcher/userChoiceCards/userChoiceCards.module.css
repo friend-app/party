@@ -1,0 +1,8 @@
+.UserChoiceCardsWrapper{
+  margin-top: 75px;
+  cursor: pointer;
+}
+
+.UserChoiceCardsWrapper h3{
+  text-align: left;
+}
