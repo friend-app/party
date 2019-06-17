@@ -11,7 +11,7 @@ const userChoiceCards = props => {
       key={index}
       choiceIngs={singleChoice.choice}
       userName={props.user.user.nickname}
-      clicked={props.clicked}
+      onUpdate={props.clicked}
       choice={singleChoice}
       choiceLocationId={props.user._id}
       onDelete={props.onDelete}

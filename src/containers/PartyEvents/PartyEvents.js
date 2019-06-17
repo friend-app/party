@@ -8,7 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 class PartyEvents extends Component {
   componentDidMount() {
-    if (this.props.isAuth) {
+    if (localStorage.getItem('token')) {
       this.props.onFetchCreatedEvents();
       this.props.onFetchUserEvents();
     }
@@ -32,7 +32,7 @@ class PartyEvents extends Component {
   };
 
   render() {
-    if (!this.props.isAuth) {
+    if (!localStorage.getItem('token')) {
       return <Redirect to='/login' />;
     }
     let createdEvents = <Spinner />;

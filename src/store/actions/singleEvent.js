@@ -167,9 +167,10 @@ export const removeIngredient = (ingredientName, type) => ({
   payload: { ingredientName: ingredientName, type: type }
 });
 
-export const updateUserChoiceInit = userChoice => ({
+export const updateUserChoiceInit = (type, userChoice) => ({
   type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT,
   payload: {
+    type: type,
     userChoice: userChoice
   }
 });

@@ -13,6 +13,31 @@ class UserChoicesCards extends Component {
     }
   }
 
+  onUpdate = (userChoice, choiceLocationId, type) => {
+    let convertedType = null;
+    switch (type) {
+      case 'foodChoices':
+      convertedType = 'foodIngredients'
+      break;
+      case 'drinksChoices':
+      convertedType = 'drinkIngredients'
+      break;
+      default: return null
+
+    }
+    return this.props.history.push({
+      pathname: "/events/eventForUser/updateUserChoice",
+      state: {
+        choiceType: type,
+        type: convertedType,
+        userChoice: userChoice,
+        choiceLocationId: choiceLocationId,
+        eventId: this.props.event._id
+      }
+    });
+    // console.log(userChoice, choiceLocationId, convertedType);
+  };
+
   onDelete = (locationId, choiceId, type) => {
     const choicesById = this.props.event.users.find(
       user => user._id === locationId
@@ -21,6 +46,7 @@ class UserChoicesCards extends Component {
       if (choice._id === choiceId) {
         choicesById[type].splice(index, 1);
       }
+      return choicesById[type]
     });
     const updatedChoices = choicesById[type];
     this.props.onUpdateUserChoice(
@@ -44,6 +70,7 @@ class UserChoicesCards extends Component {
           user={user}
           choiceType="foodChoices"
           onDelete={this.onDelete}
+          clicked={this.onUpdate}
         />
       );
       drinksCards = (
@@ -51,6 +78,7 @@ class UserChoicesCards extends Component {
           user={user}
           choiceType="drinksChoices"
           onDelete={this.onDelete}
+          clicked={this.onUpdate}
         />
       );
     }
