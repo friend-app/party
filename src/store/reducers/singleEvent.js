@@ -29,7 +29,8 @@ export default (state = initialState, { type, payload }) => {
 
     case actionTypes.ADD_INGREDIENT:
       const updatedAddIngredient = {
-        [payload.ingredientName]: state[payload.type][payload.ingredientName] + 1
+        [payload.ingredientName]:
+          state[payload.type][payload.ingredientName] + 1
       };
       const updatedAddfoodIngredient = {
         ...state[payload.type],
@@ -39,7 +40,8 @@ export default (state = initialState, { type, payload }) => {
 
     case actionTypes.REMOVE_INGREDIENT:
       const updatedRemoveIngredient = {
-        [payload.ingredientName]: state[payload.type][payload.ingredientName] - 1
+        [payload.ingredientName]:
+          state[payload.type][payload.ingredientName] - 1
       };
       const updatedRemovefoodIngredient = {
         ...state[payload.type],
@@ -63,10 +65,15 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, loading: false, error: payload.error };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT:
-      return { ...state, loading: false, foodIngredients: {...state.foodIngredients, ...payload.userChoice}};
+      return {
+        ...state,
+        loading: false,
+        [payload.type]: { ...state[payload.type], ...payload.userChoice },
+        editMode: true
+      };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
-      return { ...state, loading: true, error: payload.error, editMode: true};
+      return { ...state, loading: true, error: payload.error, editMode: true };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS:
       return {
@@ -74,11 +81,17 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
         event: payload.event,
         foodIngredients: payload.foodIngredients,
-        drinkIngredients: payload.drinkIngredients
+        drinkIngredients: payload.drinkIngredients,
+        editMode: false
       };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_FAIL:
-      return { ...state, loading: false, error: payload.error };
+      return {
+        ...state,
+        loading: false,
+        error: payload.error,
+        editMode: false
+      };
 
     default:
       return state;

@@ -58,15 +58,23 @@ module.exports.fetchSingleUserEvent = function(req, res, next) {
     .populate("users.user", "-password")
     // .populate(['users.userChoices'])
     .then(event => {
-      console.log(event);
-      res.status(201).json({
-        message: "Events Found!",
-        event: event
-      });
+      if(!event) {
+        res.status(404).json({
+          message: "Event not Found!",
+          event: event
+        });
+      } else {
+        res.status(201).json({
+          message: "Event Found!",
+          event: event
+        });
+      }
+
+
     })
     .catch(error => {
-      res.status(201).json({
-        message: "Events Found!",
+      res.status(400).json({
+        message: "Event not Found!",
         event: error
       });
     });

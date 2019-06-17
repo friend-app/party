@@ -24,17 +24,6 @@ class FoodUserChoice extends Component {
     this.props.onUserChoice(foodIngs, this.props.event._id, this.props.userId);
   };
 
-  chooseUserChoiceHanlder = (userChoice, choiceLocationId) => {
-    return this.props.history.push({
-      pathname: "/events/eventForUser/updateUserChoice",
-      state: {
-        userChoice: userChoice,
-        choiceLocationId: choiceLocationId,
-        eventId: this.props.event._id
-      }
-    });
-  };
-
   deleteUserChoiceHandler = (locationId, choiceId) => {
     // console.log(choiceId);
     const choiceByUser = this.props.event.users.find(choice => choice._id === locationId);

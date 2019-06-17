@@ -4,7 +4,6 @@ const initialState = {
   loading: false,
   createdEvents: null,
   userEvents: null,
-  singleEvent: null,
   error: null
 };
 
