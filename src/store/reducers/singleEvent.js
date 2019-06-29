@@ -7,13 +7,13 @@ const initialState = {
   error: null,
   foodIngredients: null,
   drinkIngredients: null,
-  editMode: false
+  failLoadEvent: false
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case actionTypes.FETCH_SINGLE_EVENT_START:
-      return { ...state, event: null, loading: true };
+      return { ...state, event: null, loading: true, failLoadEvent: false };
 
     case actionTypes.FETCH_SINGLE_EVENT_SUCCESS:
       return {
@@ -21,11 +21,12 @@ export default (state = initialState, { type, payload }) => {
         event: payload.data,
         foodIngredients: payload.foodIngredients,
         drinkIngredients: payload.drinkIngredients,
-        loading: false
+        loading: false,
+        failLoadEvent: false
       };
 
     case actionTypes.FETCH_SINGLE_EVENT_FAIL:
-      return { ...state, loading: false, error: payload.error };
+      return { ...state, loading: false, error: payload.error, failLoadEvent: true };
 
     case actionTypes.ADD_INGREDIENT:
       const updatedAddIngredient = {

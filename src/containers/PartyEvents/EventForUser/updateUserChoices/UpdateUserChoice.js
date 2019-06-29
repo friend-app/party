@@ -9,11 +9,30 @@ import EventControls from '../../../../components/EventSwitcher/EventControls/Ev
 import Button from '../../../../components/UI/Button/Button';
 
 class UpdateUserChoice extends Component {
+
+  state = {
+    event: null
+  }
+
   componentDidMount() {
+    if(this.state.event !== null){
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
         this.props.location.state.userChoice.choice
       );
+    }
+    
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.event !== state.event) {
+      return {
+        event: props.event
+      };
+    }
+
+    // Return null if the state hasn't changed
+    return null;
   }
 
   onSubmitHandler = () => {
@@ -27,7 +46,6 @@ class UpdateUserChoice extends Component {
     const userWithChoices = this.props.event.users.find(
       user => user._id === this.props.location.state.choiceLocationId
     );
-    console.log(userWithChoices, this.props.location.state.type);
     const userChoices = JSON.parse(
       JSON.stringify(userWithChoices[this.props.location.state.choiceType])
     );
@@ -42,8 +60,6 @@ class UpdateUserChoice extends Component {
       singleChoice => Object.keys(singleChoice.choice).length !== 0
     );
 
-    // console.log(updatedUserChoices);
-
     this.props.onUpdateUserChoice(
       updatedUserChoices,
       this.props.location.state.choiceType,
@@ -55,13 +71,17 @@ class UpdateUserChoice extends Component {
   onRedirect = () => {
     if (
       !localStorage.getItem('token') ||
-      typeof this.props.location.state === 'undefined'
+      this.state.event === null
     ) {
-      console.log('huy');
+      let id = null; 
+      if(typeof this.props.location.state !== 'undefined'){
+        id = this.props.location.state.eventId
+      }
       return (
         <Redirect
           to={{
-            pathname: '/login'
+            pathname: '/events/eventForUser',
+            state: {eventId: id}
           }}
         />
       );
@@ -70,7 +90,10 @@ class UpdateUserChoice extends Component {
   };
 
   render() {
-    const disabledMin = {
+    let disabledMin = null;
+    let chosenIngs = null;
+    if(typeof this.props.location.state !== 'undefined'){
+    disabledMin = {
       ...this.props[this.props.location.state.type]
     };
 
@@ -78,11 +101,11 @@ class UpdateUserChoice extends Component {
       disabledMin[key] = disabledMin[key] <= 0;
     }
 
-    const chosenIngs = makeChosenIngs(
+    chosenIngs = makeChosenIngs(
       this.props[this.props.location.state.type]
     );
+  }
     let event = <Spinner />;
-
     if (this.props.event) {
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
