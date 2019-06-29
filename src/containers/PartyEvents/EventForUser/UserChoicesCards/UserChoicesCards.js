@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./UserChoicesCards.module.css";
 import { connect } from "react-redux";
+import { Redirect } from 'react-router-dom';
 import * as actions from "../../../../store/actions/index";
 import UserChoiceCards from "../../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
@@ -8,7 +9,8 @@ import Aux from "../../../../hoc/Auxillary/Auxillary";
 
 class UserChoicesCards extends Component {
   componentDidMount() {
-    if (!this.props.event) {
+    console.log(this.props.history);
+    if (!this.props.event && typeof this.props.location.state !== 'undefined') {
       this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
     }
   }
@@ -57,6 +59,24 @@ class UserChoicesCards extends Component {
     );
   };
 
+  
+  onRedirect = () => {
+    if (
+      !localStorage.getItem('token') ||
+      typeof this.props.location.state === 'undefined'
+    ) {
+      console.log('huy');
+      return (
+        <Redirect
+          to={{
+            pathname: '/login'
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
   render() {
     let foodCards = null;
     let drinksCards = null;
@@ -91,6 +111,7 @@ class UserChoicesCards extends Component {
 
     return (
       <div className={classes.UserCardsWrapper}>
+      {this.onRedirect()}
         {this.props.loading ? <Spinner /> : allCards}
       </div>
     );
