@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import classes from './UpdateUserChoice.module.css';
 import * as actions from '../../../../store/actions/index';
+import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
 import { makeChosenIngs } from '../../../../shared/makeChosenIngs';
 import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
@@ -136,7 +137,7 @@ class UpdateUserChoice extends Component {
     return (
       <div>
         {this.onRedirect()}
-        {event}
+       <InsideUserMenu>{event}</InsideUserMenu>
       </div>
     );
   }

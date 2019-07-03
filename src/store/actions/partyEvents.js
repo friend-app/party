@@ -46,6 +46,7 @@ export const fetchCreatedEvents = () => {
       axios
         .get('/fetchCreatedEvents')
         .then(response => {
+          localStorage.removeItem('eventId');
           dispatch(fetchCreatedEventsSuccess(response.data.events));
         })
         .catch(error => {
@@ -62,6 +63,7 @@ export const fetchUserEvents = () => {
       axios
         .get('/fetchUserEvents')
         .then(response => {
+          localStorage.removeItem('eventId');
           dispatch(fetchUserEventsSuccess(response.data.events));
         })
         .catch(error => {

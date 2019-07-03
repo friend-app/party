@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./DrinkUserChoice.module.css";
 import { connect } from "react-redux";
+import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
 import * as actions from "../../../../store/actions/index";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 import { makeChosenIngs } from "../../../../shared/makeChosenIngs";
@@ -9,8 +10,13 @@ import Button from "../../../../components/UI/Button/Button";
 
 class DrinkUserChoice extends Component {
   componentDidMount() {
-    if(!this.props.event){
-      this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
+
+    if(!this.props.event && localStorage.getItem('eventId')){
+      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
+    } if ( !localStorage.getItem('eventId') ) {
+      this.props.history.push({
+        pathname: "/events"
+      });
     }
   }
 
@@ -49,6 +55,7 @@ class DrinkUserChoice extends Component {
   };
 
   render() {
+    console.log('blya', this.props.event);
     const disabledMin = {
       ...this.props.drinkIngs
     };
@@ -60,6 +67,7 @@ class DrinkUserChoice extends Component {
     const chosenDrinkIngs = makeChosenIngs(this.props.drinkIngs);
 
     let event = <Spinner />;
+
 
     if (this.props.event) {
       // const currentUser = this.props.event.users.find(
@@ -98,7 +106,7 @@ class DrinkUserChoice extends Component {
       );
     }
 
-    return <div>{event}</div>;
+    return <div><InsideUserMenu>{event}</InsideUserMenu></div>;
   }
 }
 

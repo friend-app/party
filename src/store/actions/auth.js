@@ -53,6 +53,7 @@ export const logout = () => {
   localStorage.removeItem('userId');
   localStorage.removeItem('nickname');
   localStorage.removeItem('expirationDate');
+  localStorage.removeItem('eventId');
   return {
     type: actionTypes.AUTH_LOGOUT,
     payload: {}

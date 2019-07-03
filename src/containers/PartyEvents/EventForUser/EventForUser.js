@@ -8,88 +8,41 @@ import FoodUserChoice from './FoodUserChoice/FoodUserChoice';
 import DrinkUserChoice from './DrinkUserChoice/DrinkUserChoice';
 import userChoicesCards from './UserChoicesCards/UserChoicesCards';
 import Button from '../../../components/UI/Button/Button';
+import InsideUserMenu from '../../../hoc/InsideUserMenu/InsideUserMenu';
 
 class EventForUser extends Component {
   componentDidMount() {
-    if (!this.props.event && typeof this.props.location.state !== 'undefined') {
+    if (
+      !this.props.event &&
+      !localStorage.getItem('eventId') &&
+      this.props.location.state
+    ) {
       this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
     }
-
-  }
-
-  onUserFoodChoice = () => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/foodUserChoice',
-      state: {
-        eventId: this.props.event._id
-      }
-    });
-  };
-
-  onUserDrinkChoice = () => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/drinkUserChoice',
-      state: {
-        eventId: this.props.event._id
-      }
-    });
-  };
-
-  onRedirect = () => {
-    if (!localStorage.getItem('token') || typeof this.props.location.state === 'undefined' ) {
-      console.log('huy');
-      return (
-        <Redirect
-          to={{
-            pathname: '/login'
-          }}
-        />
-      );
+    if (this.props.event &&
+      !localStorage.getItem('eventId')) {
+        localStorage.setItem('eventId', this.props.event._id);
     }
-    return null;
-  };
+    if (!this.props.event && localStorage.getItem('eventId')) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
+    }
 
-  onUserChoicesCards = () => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/userChoicesCards',
-      state: {
-        eventId: this.props.event._id
-      }
-    });
-  };
+    if (
+      !this.props.event &&
+      !localStorage.getItem('eventId') &&
+      !this.props.location.state
+    ) {
+      this.props.history.push({
+        pathname: '/events'
+      });
+    }
+  }
 
   render() {
     return (
-      <div>
-        {this.onRedirect()}
-        <Button btnType='Success' clicked={this.onUserFoodChoice}>
-          FoodChoice
-        </Button>
-        <div>
-          <Route
-            path={'/events/eventForUser/foodUserChoice'}
-            component={FoodUserChoice}
-          />
-        </div>
-        <Button btnType='Success' clicked={this.onUserDrinkChoice}>
-          DrinkChoice
-        </Button>
-        <div>
-          <Route
-            path={'/events/eventForUser/drinkUserChoice'}
-            component={DrinkUserChoice}
-          />
-        </div>
-        <Button btnType='Success' clicked={this.onUserChoicesCards}>
-          UserCards
-        </Button>
-        <div>
-          <Route
-            path={'/events/eventForUser/drinkUserChoice'}
-            component={userChoicesCards}
-          />
-        </div>
-      </div>
+      <InsideUserMenu>
+        <div />
+      </InsideUserMenu>
     );
   }
 }

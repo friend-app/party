@@ -28,6 +28,7 @@ export const fetchSingleCreatedEvent = eventId => {
     axios
       .get('fetchSingleCreatedEvent/' + eventId)
       .then(response => {
+        localStorage.setItem('eventId', response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {
@@ -56,6 +57,7 @@ export const fetchSingleUserEvent = eventId => {
     axios
       .get('fetchSingleUserEvent/' + eventId)
       .then(response => {
+        localStorage.setItem('eventId', response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {

@@ -1,17 +1,21 @@
-import React, { Component } from "react";
-import classes from "./UserChoicesCards.module.css";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import classes from './UserChoicesCards.module.css';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import * as actions from "../../../../store/actions/index";
-import UserChoiceCards from "../../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
-import Spinner from "../../../../components/UI/Spinner/Spinner";
-import Aux from "../../../../hoc/Auxillary/Auxillary";
+import * as actions from '../../../../store/actions/index';
+import UserChoiceCards from '../../../../components/EventSwitcher/userChoiceCards/userChoiceCards';
+import Spinner from '../../../../components/UI/Spinner/Spinner';
+import Aux from '../../../../hoc/Auxillary/Auxillary';
+import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
 
 class UserChoicesCards extends Component {
   componentDidMount() {
-    console.log(this.props.history);
-    if (!this.props.event && typeof this.props.location.state !== 'undefined') {
-      this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
+    if(!this.props.event && localStorage.getItem('eventId')){
+      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
+    } if ( !localStorage.getItem('eventId') ) {
+      this.props.history.push({
+        pathname: "/events"
+      });
     }
   }
 
@@ -19,16 +23,16 @@ class UserChoicesCards extends Component {
     let convertedType = null;
     switch (type) {
       case 'foodChoices':
-      convertedType = 'foodIngredients'
-      break;
+        convertedType = 'foodIngredients';
+        break;
       case 'drinksChoices':
-      convertedType = 'drinkIngredients'
-      break;
-      default: return null
-
+        convertedType = 'drinkIngredients';
+        break;
+      default:
+        return null;
     }
     return this.props.history.push({
-      pathname: "/events/eventForUser/updateUserChoice",
+      pathname: '/events/eventForUser/updateUserChoice',
       state: {
         choiceType: type,
         type: convertedType,
@@ -48,7 +52,7 @@ class UserChoicesCards extends Component {
       if (choice._id === choiceId) {
         choicesById[type].splice(index, 1);
       }
-      return choicesById[type]
+      return choicesById[type];
     });
     const updatedChoices = choicesById[type];
     this.props.onUpdateUserChoice(
@@ -59,11 +63,9 @@ class UserChoicesCards extends Component {
     );
   };
 
-  
   onRedirect = () => {
     if (
-      !localStorage.getItem('token') ||
-      typeof this.props.location.state === 'undefined'
+      !localStorage.getItem('token') || !localStorage.getItem('eventId')
     ) {
       console.log('huy');
       return (
@@ -88,7 +90,7 @@ class UserChoicesCards extends Component {
       foodCards = (
         <UserChoiceCards
           user={user}
-          choiceType="foodChoices"
+          choiceType='foodChoices'
           onDelete={this.onDelete}
           clicked={this.onUpdate}
         />
@@ -96,7 +98,7 @@ class UserChoicesCards extends Component {
       drinksCards = (
         <UserChoiceCards
           user={user}
-          choiceType="drinksChoices"
+          choiceType='drinksChoices'
           onDelete={this.onDelete}
           clicked={this.onUpdate}
         />
@@ -110,10 +112,12 @@ class UserChoicesCards extends Component {
     );
 
     return (
-      <div className={classes.UserCardsWrapper}>
-      {this.onRedirect()}
-        {this.props.loading ? <Spinner /> : allCards}
-      </div>
+      <InsideUserMenu>
+        <div className={classes.UserCardsWrapper}>
+          {this.onRedirect()}
+          {this.props.loading ? <Spinner /> : allCards}
+        </div>
+      </InsideUserMenu>
     );
   }
 }
