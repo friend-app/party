@@ -82,7 +82,6 @@ class Login extends Component {
   };
 
   render() {
-    console.log('huy');
     const redirect = this.props.isAuth ? <Redirect to="/events" /> : null;
 
     if (this.props.message) {

@@ -10,5 +10,6 @@ export {
   addDrinksChoice,
   updateUserChoiceInit,
   updateUserChoice,
-  singleEventReset
+  singleEventReset,
+  updateChoiceReset 
 } from './singleEvent';

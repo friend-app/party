@@ -25,6 +25,7 @@ const EventControls = props => {
           removed={() => {
             props.ingredientRemoved(control.type);
           }}
+          chosenIngs={props.chosenIngs[control.type]}
           disabled={props.disabled[control.type]}
         />
       ))}

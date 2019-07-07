@@ -29,25 +29,30 @@ class FoodUserChoice extends Component {
     this.props.onUserChoice(foodIngs, this.props.event._id, this.props.userId);
   };
 
-  deleteUserChoiceHandler = (locationId, choiceId) => {
-    // console.log(choiceId);
-    const choiceByUser = this.props.event.users.find(choice => choice._id === locationId);
-    choiceByUser.userChoices.map((userChoice, index) => {
-      if(userChoice._id === choiceId){
-        return choiceByUser.userChoices.splice(index, 1);
-      }
-      return userChoice;
-    })
-    // console.log(choiceByUser.userChoices);
-    this.props.onUpdateUserChoice(choiceByUser.userChoices, locationId, this.props.event._id);
-  };
+  // deleteUserChoiceHandler = (locationId, choiceId) => {
+  //   // console.log(choiceId);
+  //   const choiceByUser = this.props.event.users.find(choice => choice._id === locationId);
+  //   choiceByUser.userChoices.map((userChoice, index) => {
+  //     if(userChoice._id === choiceId){
+  //       return choiceByUser.userChoices.splice(index, 1);
+  //     }
+  //     return userChoice;
+  //   })
+  //   // console.log(choiceByUser.userChoices);
+  //   this.props.onUpdateUserChoice(choiceByUser.userChoices, locationId, this.props.event._id);
+  // };
 
   render() {
     const disabledMin = {
       ...this.props.foodIngs
     };
 
+    let disableButton = true;
+
     for (let key in this.props.foodIngs) {
+      if (disabledMin[key] > 0) {
+        disableButton = false;
+      }
       disabledMin[key] = disabledMin[key] <= 0;
     }
 
@@ -56,10 +61,6 @@ class FoodUserChoice extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
-      // const currentUser = this.props.event.users.find(
-      //   user => user.user._id === this.props.userId
-      // );
-
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
           <h2>{this.props.event.title}</h2>
@@ -75,6 +76,7 @@ class FoodUserChoice extends Component {
           </div>
           <div className={classes.EventInside}>
             <EventControls
+              chosenIngs={this.props.foodIngs}
               controls={this.props.event.foodIngredients}
               ingredientAdded={this.props.onIngredientAdded}
               ingredientRemoved={this.props.onIngredientRemoved}
@@ -82,7 +84,7 @@ class FoodUserChoice extends Component {
             />
             <Button
               btnType="SubmitUserChoice"
-              disabled=""
+              disabled={disableButton}
               clicked={this.onSubmitHandler}
             >
               Submit
