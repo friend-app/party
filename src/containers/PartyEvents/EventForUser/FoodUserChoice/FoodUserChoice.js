@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./FoodUserChoice.module.css";
 import { connect } from "react-redux";
+import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
 import * as actions from "../../../../store/actions/index";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 import { makeChosenIngs } from "../../../../shared/makeChosenIngs";
@@ -9,9 +10,13 @@ import Button from "../../../../components/UI/Button/Button";
 
 class FoodUserChoice extends Component {
   componentDidMount() {
-    if(!this.props.event){
-        this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
-      }
+    if(!this.props.event && localStorage.getItem('eventId')){
+      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
+    } if ( !localStorage.getItem('eventId') ) {
+      this.props.history.push({
+        pathname: "/events"
+      });
+    }
   }
 
   onSubmitHandler = () => {
@@ -87,7 +92,7 @@ class FoodUserChoice extends Component {
       );
     }
 
-    return <div>{event}</div>;
+    return <div><InsideUserMenu>{event}</InsideUserMenu></div>;
   }
 }
 

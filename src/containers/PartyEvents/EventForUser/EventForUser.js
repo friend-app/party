@@ -1,95 +1,68 @@
-import React, { Component } from 'react';
-// import classes from "./EventForUser.module.css";
-import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
-import * as actions from '../../../store/actions/index';
-// import Spinner from "../../../components/UI/Spinner/Spinner";
-import FoodUserChoice from './FoodUserChoice/FoodUserChoice';
-import DrinkUserChoice from './DrinkUserChoice/DrinkUserChoice';
-import userChoicesCards from './UserChoicesCards/UserChoicesCards';
-import Button from '../../../components/UI/Button/Button';
+import React, { Component } from "react";
+import classes from "./EventForUser.module.css";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/index";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Aux from "../../../hoc/Auxillary/Auxillary";
+
+import InsideUserMenu from "../../../hoc/InsideUserMenu/InsideUserMenu";
 
 class EventForUser extends Component {
   componentDidMount() {
-    if (!this.props.event && typeof this.props.location.state !== 'undefined') {
+    if (
+      !this.props.event &&
+      !localStorage.getItem("eventId") &&
+      this.props.location.state
+    ) {
       this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
     }
+    if (this.props.event && !localStorage.getItem("eventId")) {
+      localStorage.setItem("eventId", this.props.event._id);
+    }
+    if (!this.props.event && localStorage.getItem("eventId")) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
+    }
 
+    if (
+      !this.props.event &&
+      !localStorage.getItem("eventId") &&
+      !this.props.location.state
+    ) {
+      this.props.history.push({
+        pathname: "/events"
+      });
+    }
   }
 
-  onUserFoodChoice = () => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/foodUserChoice',
-      state: {
-        eventId: this.props.event._id
-      }
-    });
-  };
+  render() {
+    let eventInfo = <Spinner />;
 
-  onUserDrinkChoice = () => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/drinkUserChoice',
-      state: {
-        eventId: this.props.event._id
-      }
-    });
-  };
+    let usersList = null;
 
-  onRedirect = () => {
-    if (!localStorage.getItem('token') || typeof this.props.location.state === 'undefined' ) {
-      console.log('huy');
-      return (
-        <Redirect
-          to={{
-            pathname: '/login'
-          }}
-        />
+
+
+    if (this.props.event) {
+      usersList = this.props.event.users.map(user => {
+        return (<li key={user.user._id}>{user.user.nickname}</li>)
+      })
+
+      eventInfo = (
+        <Aux>
+          <h3>{this.props.event.title}</h3>
+          <h4>
+            {new Date(this.props.event.date).toLocaleDateString("he-He")} -{" "}
+            {this.props.event.address}
+          </h4>
+          <p>{this.props.event.description}</p>
+          <ul>{usersList}</ul>
+        </Aux>
       );
     }
-    return null;
-  };
 
-  onUserChoicesCards = () => {
-    return this.props.history.push({
-      pathname: '/events/eventForUser/userChoicesCards',
-      state: {
-        eventId: this.props.event._id
-      }
-    });
-  };
-
-  render() {
     return (
-      <div>
-        {this.onRedirect()}
-        <Button btnType='Success' clicked={this.onUserFoodChoice}>
-          FoodChoice
-        </Button>
-        <div>
-          <Route
-            path={'/events/eventForUser/foodUserChoice'}
-            component={FoodUserChoice}
-          />
-        </div>
-        <Button btnType='Success' clicked={this.onUserDrinkChoice}>
-          DrinkChoice
-        </Button>
-        <div>
-          <Route
-            path={'/events/eventForUser/drinkUserChoice'}
-            component={DrinkUserChoice}
-          />
-        </div>
-        <Button btnType='Success' clicked={this.onUserChoicesCards}>
-          UserCards
-        </Button>
-        <div>
-          <Route
-            path={'/events/eventForUser/drinkUserChoice'}
-            component={userChoicesCards}
-          />
-        </div>
-      </div>
+      <InsideUserMenu>
+        <div className={classes.EventWrapper}>{eventInfo}</div>
+      </InsideUserMenu>
     );
   }
 }

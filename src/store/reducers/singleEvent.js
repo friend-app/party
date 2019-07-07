@@ -22,7 +22,8 @@ export default (state = initialState, { type, payload }) => {
         foodIngredients: payload.foodIngredients,
         drinkIngredients: payload.drinkIngredients,
         loading: false,
-        failLoadEvent: false
+        failLoadEvent: false,
+        editMode: false
       };
 
     case actionTypes.FETCH_SINGLE_EVENT_FAIL:
@@ -92,6 +93,12 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
         error: payload.error,
         editMode: false
+      };
+
+    case actionTypes.SINGLE_EVENT_RESET:
+      return {
+        ...state,
+        event: null
       };
 
     default:
