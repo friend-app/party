@@ -93,12 +93,12 @@ module.exports.createEvent = function(req, res) {
     .catch(error => {
       console.log(error);
     });
-  upload(req,res,function(err) {
-    if(err) {
-      return res.end("Error uploading file.");
-    }
-    res.end("File is uploaded");
-  });
+  // upload(req,res,function(err) {
+  //   if(err) {
+  //     return res.end("Error uploading file.");
+  //   }
+  //   res.end("File is uploaded");
+  // });
 };
 
 module.exports.updateCreatedEvent = function(req, res) {

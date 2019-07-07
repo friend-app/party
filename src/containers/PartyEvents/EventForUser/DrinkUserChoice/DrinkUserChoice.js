@@ -42,7 +42,6 @@ class DrinkUserChoice extends Component {
   };
 
   deleteUserChoiceHandler = (locationId, choiceId) => {
-    // console.log(choiceId);
     const choiceByUser = this.props.event.users.find(choice => choice._id === locationId);
     choiceByUser.userChoices.map((userChoice, index) => {
       if(userChoice._id === choiceId){
@@ -50,12 +49,10 @@ class DrinkUserChoice extends Component {
       }
       return userChoice;
     })
-    // console.log(choiceByUser.userChoices);
     this.props.onUpdateUserChoice(choiceByUser.userChoices, locationId, this.props.event._id);
   };
 
   render() {
-    console.log('blya', this.props.event);
     const disabledMin = {
       ...this.props.drinkIngs
     };

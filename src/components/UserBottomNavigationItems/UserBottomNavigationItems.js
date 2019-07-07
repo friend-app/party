@@ -2,7 +2,6 @@ import React from 'react';
 import UserBottomNavigationItem from './UserBottomNavigationItem/UserBottomNavigationItem';
 
 import classes from './UserBottomNavigationItems.module.css';
-import Aux from '../../hoc/Auxillary/Auxillary';
 
 const UserBottomNavigationItems = props => {
   return (

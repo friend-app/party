@@ -9,5 +9,6 @@ export {
   addFoodChoice,
   addDrinksChoice,
   updateUserChoiceInit,
-  updateUserChoice
+  updateUserChoice,
+  singleEventReset
 } from './singleEvent';

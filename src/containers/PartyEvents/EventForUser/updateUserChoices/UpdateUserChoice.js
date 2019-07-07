@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import classes from './UpdateUserChoice.module.css';
 import * as actions from '../../../../store/actions/index';
 import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
@@ -16,6 +16,12 @@ class UpdateUserChoice extends Component {
   }
 
   componentDidMount() {
+    console.log(typeof this.props.location.state === 'undefined');
+    if(typeof  this.props.location.state === 'undefined'){
+      this.props.history.push({
+        pathname: "/events"
+      })
+    }
     if(this.state.event !== null){
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
@@ -69,27 +75,6 @@ class UpdateUserChoice extends Component {
     );
   };
 
-  onRedirect = () => {
-    if (
-      !localStorage.getItem('token') ||
-      this.state.event === null
-    ) {
-      let id = null; 
-      if(typeof this.props.location.state !== 'undefined'){
-        id = this.props.location.state.eventId
-      }
-      return (
-        <Redirect
-          to={{
-            pathname: '/events/eventForUser',
-            state: {eventId: id}
-          }}
-        />
-      );
-    }
-    return null;
-  };
-
   render() {
     let disabledMin = null;
     let chosenIngs = null;
@@ -136,7 +121,7 @@ class UpdateUserChoice extends Component {
 
     return (
       <div>
-        {this.onRedirect()}
+        {/* {this.onRedirect()} */}
        <InsideUserMenu>{event}</InsideUserMenu>
       </div>
     );
@@ -149,7 +134,8 @@ const mapStateToProps = state => ({
   loading: state.singleEvent.loading,
   userId: state.auth.userId,
   foodIngredients: state.singleEvent.foodIngredients,
-  drinkIngredients: state.singleEvent.drinkIngredients
+  drinkIngredients: state.singleEvent.drinkIngredients,
+  editMode: state.singleEvent.editMode
 });
 
 const mapDispatchToProps = (dispatch, props) => {

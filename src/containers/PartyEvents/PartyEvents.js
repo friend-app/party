@@ -8,6 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 class PartyEvents extends Component {
   componentDidMount() {
+    this.props.onSingleEventReset();
     if (localStorage.getItem('token')) {
       this.props.onFetchCreatedEvents();
       this.props.onFetchUserEvents();
@@ -79,7 +80,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     onFetchCreatedEvents: () => dispatch(actions.fetchCreatedEvents()),
-    onFetchUserEvents: () => dispatch(actions.fetchUserEvents())
+    onFetchUserEvents: () => dispatch(actions.fetchUserEvents()),
+    onSingleEventReset: () => dispatch(actions.singleEventReset())
   };
 };
 

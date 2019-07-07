@@ -1,6 +1,10 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-events';
 
+export const singleEventReset = () => ({
+  type: actionTypes.SINGLE_EVENT_RESET
+});
+
 export const fetchEventStart = payload => ({
   type: actionTypes.FETCH_SINGLE_EVENT_START,
   payload
@@ -111,8 +115,6 @@ export const addFoodChoice = (userChoice, eventId, userId) => {
       eventId: eventId,
       userId: userId
     };
-
-    console.log(data);
     axios
       .put('addFoodChoices', data)
       .then(response => {
@@ -211,7 +213,6 @@ export const updateUserChoice = (updatedChoices, type, choiceLocationId, eventId
       choiceLocationId: choiceLocationId,
       eventId: eventId
     };
-    console.log(data);
     axios
       .put('updateUserChoice', data)
       .then(response => {

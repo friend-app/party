@@ -75,6 +75,7 @@ export class CreateEvent extends Component {
   };
 
   componentDidMount() {
+    this.props.onSingleEventReset();
     if (!this.props.event) {
       this.props.onCreateEventInit();
     } else {
@@ -243,7 +244,8 @@ const mapDispatchToProps = dispatch => {
     },
     onUpdateEvent: (eventId, eventDetails) => {
       dispatch(actions.updateCreatedEvent(eventId, eventDetails));
-    }
+    },
+    onSingleEventReset: () => dispatch(actions.singleEventReset())
   };
 };
 
