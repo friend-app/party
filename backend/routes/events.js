@@ -73,8 +73,8 @@ router.put(
   controller.updateUserChoice
 );
 
-// localhost:4000/api/events/eventLinkCreate
-router.post('/eventLinkCreate', controller.createLinkEvent);
+// localhost:4000/api/events/createLinkEvent
+router.post('/createLinkEvent', controller.createLinkEvent);
 
 // localhost:4000/api/events/eventLink
 router.post('/eventLink', controller.getLinkEvent);

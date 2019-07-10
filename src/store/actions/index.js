@@ -11,5 +11,6 @@ export {
   updateUserChoiceInit,
   updateUserChoice,
   singleEventReset,
-  updateChoiceReset 
+  updateChoiceReset,
+  publishEvent 
 } from './singleEvent';

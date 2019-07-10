@@ -9,7 +9,8 @@ const linksSchema = new Schema({
     },
     eventId: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 });
 

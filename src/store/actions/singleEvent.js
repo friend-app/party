@@ -189,9 +189,11 @@ export const updateChoiceReset = () => ({
 
 export const updateUserChoiceInit = (type, userChoice, event) => {
   let updatedIngs = {};
-    for (let ing of event[type]) {
-      updatedIngs = Object.assign(updatedIngs, { [ing]: userChoice[ing] ? userChoice[ing] : 0 });
-    }
+  for (let ing of event[type]) {
+    updatedIngs = Object.assign(updatedIngs, {
+      [ing]: userChoice[ing] ? userChoice[ing] : 0
+    });
+  }
   return {
     type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT,
     payload: {
@@ -261,6 +263,48 @@ export const updateUserChoice = (
       })
       .catch(error => {
         dispatch(updateUserChoiceFail(error.response.data.message));
+      });
+  };
+};
+
+export const publishEventStart = choice => ({
+  type: actionTypes.PUBSLISH_EVENT_START,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const publishEventSuccess = choice => ({
+  type: actionTypes.PUBSLISH_EVENT_SUCCESS,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const publishEventFail = choice => ({
+  type: actionTypes.PUBSLISH_EVENT_FAIL,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const publishEvent = eventId => {
+  return dispatch => {
+    dispatch(publishEventStart());
+    const data = {
+      eventId: eventId
+    };
+    axios
+      .post('createLinkEvent', data)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        if (error.response.status === 409) {
+          console.log(error.response.data.message);
+        } else {
+          console.log(error.response.data.message);
+        }
       });
   };
 };
