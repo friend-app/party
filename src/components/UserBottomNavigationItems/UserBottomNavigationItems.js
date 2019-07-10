@@ -5,7 +5,6 @@ import classes from './UserBottomNavigationItems.module.css';
 
 const UserBottomNavigationItems = props => {
   return (
-    <div>
       <nav className={classes.UserBottomNavigationItems}>
         <UserBottomNavigationItem link='/events/eventForUser'>
           Event
@@ -20,7 +19,6 @@ const UserBottomNavigationItems = props => {
           Food Cards
         </UserBottomNavigationItem>
       </nav>
-    </div>
   );
 };
 

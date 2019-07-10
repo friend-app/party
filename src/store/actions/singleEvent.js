@@ -126,7 +126,13 @@ export const addFoodChoice = (userChoice, eventId, userId) => {
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
-        dispatch(addUserChoicesSuccess(response.data.event, foodIngredients, drinkIngredients));
+        dispatch(
+          addUserChoicesSuccess(
+            response.data.event,
+            foodIngredients,
+            drinkIngredients
+          )
+        );
       })
       .catch(error => {
         dispatch(addUserChoicesFail(error.response.data.message));
@@ -153,7 +159,13 @@ export const addDrinksChoice = (userChoice, eventId, userId) => {
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
-        dispatch(addUserChoicesSuccess(response.data.event, foodIngredients, drinkIngredients));
+        dispatch(
+          addUserChoicesSuccess(
+            response.data.event,
+            foodIngredients,
+            drinkIngredients
+          )
+        );
       })
       .catch(error => {
         dispatch(addUserChoicesFail(error.response.data.message));
@@ -171,13 +183,25 @@ export const removeIngredient = (ingredientName, type) => ({
   payload: { ingredientName: ingredientName, type: type }
 });
 
-export const updateUserChoiceInit = (type, userChoice) => ({
-  type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT,
-  payload: {
-    type: type,
-    userChoice: userChoice
-  }
+export const updateChoiceReset = () => ({
+  type: actionTypes.UPDATE_CHOICE_RESET
 });
+
+export const updateUserChoiceInit = (type, userChoice, event) => {
+  let updatedIngs = {};
+  for (let ing of event[type]) {
+    updatedIngs = Object.assign(updatedIngs, {
+      [ing]: userChoice[ing] ? userChoice[ing] : 0
+    });
+  }
+  return {
+    type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_INIT,
+    payload: {
+      type: type,
+      userChoice: updatedIngs
+    }
+  };
+};
 
 export const updateUserChoiceStart = () => ({
   type: actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START,
@@ -204,7 +228,12 @@ export const updateUserChoiceFail = choice => ({
   }
 });
 
-export const updateUserChoice = (updatedChoices, type, choiceLocationId, eventId) => {
+export const updateUserChoice = (
+  updatedChoices,
+  type,
+  choiceLocationId,
+  eventId
+) => {
   return dispatch => {
     dispatch(updateUserChoiceStart());
     const data = {
@@ -224,10 +253,58 @@ export const updateUserChoice = (updatedChoices, type, choiceLocationId, eventId
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
-        dispatch(updateUserChoiceSuccess(response.data.event, foodIngredients, drinkIngredients));
+        dispatch(
+          updateUserChoiceSuccess(
+            response.data.event,
+            foodIngredients,
+            drinkIngredients
+          )
+        );
       })
       .catch(error => {
         dispatch(updateUserChoiceFail(error.response.data.message));
+      });
+  };
+};
+
+export const publishEventStart = choice => ({
+  type: actionTypes.PUBSLISH_EVENT_START,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const publishEventSuccess = choice => ({
+  type: actionTypes.PUBSLISH_EVENT_SUCCESS,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const publishEventFail = choice => ({
+  type: actionTypes.PUBSLISH_EVENT_FAIL,
+  payload: {
+    userChoice: choice
+  }
+});
+
+export const publishEvent = eventId => {
+  return dispatch => {
+    dispatch(publishEventStart());
+    const data = {
+      eventId: eventId
+    };
+    axios
+      .post('createLinkEvent', data)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        if (error.response.status === 409) {
+          console.log(error.response.data.message);
+        } else {
+          console.log(error.response.data.message);
+        }
       });
   };
 };

@@ -1,35 +1,35 @@
-const Event = require("../models/Event");
-const Link = require("../models/Link");
-const uniqid = require("uniqid");
+const Event = require('../models/Event');
+const Link = require('../models/Link');
+const uniqid = require('uniqid');
 const upload = require('../uploads/storage_model/Storage');
 
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
     .then(events => {
       res.status(201).json({
-        message: "Events Found!",
+        message: 'Events Found!',
         events: events
       });
     })
     .catch(error => {
       res.status(404).json({
-        message: "Events Found!",
+        message: 'Events Found!',
         error: error
       });
     });
 };
 
 module.exports.fetchUserEvents = function(req, res) {
-  Event.find({ "users.user": req.user.id })
+  Event.find({ 'users.user': req.user.id })
     .then(events => {
       res.status(201).json({
-        message: "Events Found!",
+        message: 'Events Found!',
         events: events
       });
     })
     .catch(error => {
       res.status(404).json({
-        message: "Events NOT Found!",
+        message: 'Events NOT Found!',
         error: error
       });
     });
@@ -37,17 +37,17 @@ module.exports.fetchUserEvents = function(req, res) {
 
 module.exports.fetchSingleCreatedEvent = function(req, res, next) {
   Event.findById(req.params.eventId)
-    .populate(["users.user"])
+    .populate(['users.user'])
     .then(event => {
       console.log(event);
       res.status(201).json({
-        message: "Events Found!",
+        message: 'Events Found!',
         event: event
       });
     })
     .catch(error => {
       res.status(201).json({
-        message: "Events Found!",
+        message: 'Events Found!',
         event: error
       });
     });
@@ -55,26 +55,24 @@ module.exports.fetchSingleCreatedEvent = function(req, res, next) {
 
 module.exports.fetchSingleUserEvent = function(req, res, next) {
   Event.findById(req.params.eventId)
-    .populate("users.user", "-password")
+    .populate('users.user', '-password')
     // .populate(['users.userChoices'])
     .then(event => {
-      if(!event) {
+      if (!event) {
         res.status(404).json({
-          message: "Event not Found!",
+          message: 'Event not Found!',
           event: event
         });
       } else {
         res.status(201).json({
-          message: "Event Found!",
+          message: 'Event Found!',
           event: event
         });
       }
-
-
     })
     .catch(error => {
       res.status(400).json({
-        message: "Event not Found!",
+        message: 'Event not Found!',
         event: error
       });
     });
@@ -86,7 +84,7 @@ module.exports.createEvent = function(req, res) {
     .save()
     .then(event => {
       res.status(201).json({
-        message: "Event Saved!",
+        message: 'Event Saved!',
         event: event
       });
     })
@@ -114,14 +112,14 @@ module.exports.updateCreatedEvent = function(req, res) {
   )
     .then(event => {
       res.status(201).json({
-        message: "Ingredients Added",
+        message: 'Ingredients Added',
         event: event
       });
     })
     .catch(error => {
       res.status(404).json({
         error: error,
-        message: "Ingredients Failed"
+        message: 'Ingredients Failed'
       });
     });
 };
@@ -146,14 +144,14 @@ module.exports.addIngredientsToEvent = function(req, res) {
   )
     .then(event => {
       res.status(201).json({
-        message: "Ingredients Added",
+        message: 'Ingredients Added',
         event: event
       });
     })
     .catch(error => {
       res.status(404).json({
         error: error,
-        message: "Ingredients Failed"
+        message: 'Ingredients Failed'
       });
     });
 };
@@ -165,21 +163,21 @@ module.exports.addFoodChoices = function(req, res) {
   Event.findOneAndUpdate(
     {
       _id: eventId,
-      "users.user": userId
+      'users.user': userId
     },
     {
       $push: {
-        "users.$.foodChoices": foodChoice
+        'users.$.foodChoices': foodChoice
       }
     },
     { new: true, useFindAndModify: false }
   )
     .then(event => {
       Event.findById(eventId)
-        .populate("users.user", "-password")
+        .populate('users.user', '-password')
         .then(event => {
           res.status(201).json({
-            message: "Choices Added",
+            message: 'Choices Added',
             event: event
           });
         })
@@ -187,7 +185,7 @@ module.exports.addFoodChoices = function(req, res) {
           console.log(error);
           res.status(404).json({
             error: error,
-            message: "Choices Failed"
+            message: 'Choices Failed'
           });
         });
     })
@@ -195,7 +193,7 @@ module.exports.addFoodChoices = function(req, res) {
       console.log(error);
       res.status(404).json({
         error: error,
-        message: "Choices Failed"
+        message: 'Choices Failed'
       });
     });
 };
@@ -207,21 +205,21 @@ module.exports.addDrinksChoices = function(req, res) {
   Event.findOneAndUpdate(
     {
       _id: eventId,
-      "users.user": userId
+      'users.user': userId
     },
     {
       $push: {
-        "users.$.drinksChoices": drinksChoice
+        'users.$.drinksChoices': drinksChoice
       }
     },
     { new: true, useFindAndModify: false }
   )
     .then(event => {
       Event.findById(eventId)
-        .populate("users.user", "-password")
+        .populate('users.user', '-password')
         .then(event => {
           res.status(201).json({
-            message: "Choices Added",
+            message: 'Choices Added',
             event: event
           });
         })
@@ -229,7 +227,7 @@ module.exports.addDrinksChoices = function(req, res) {
           console.log(error);
           res.status(404).json({
             error: error,
-            message: "Choices Failed"
+            message: 'Choices Failed'
           });
         });
     })
@@ -237,7 +235,7 @@ module.exports.addDrinksChoices = function(req, res) {
       console.log(error);
       res.status(404).json({
         error: error,
-        message: "Choices Failed"
+        message: 'Choices Failed'
       });
     });
 };
@@ -246,15 +244,15 @@ module.exports.updateUserChoice = function(req, res) {
   const data = {
     choices: req.body.choices,
     choiceLocationId: req.body.choiceLocationId,
-    eventId: req.body.eventId,
+    eventId: req.body.eventId
   };
-  const updateKey = "users.$." +  req.body.type
+  const updateKey = 'users.$.' + req.body.type;
   console.log('blya', data);
   console.log('shluha', updateKey);
   Event.findOneAndUpdate(
     {
       _id: data.eventId,
-      "users._id": data.choiceLocationId,
+      'users._id': data.choiceLocationId
     },
     {
       $set: { [updateKey]: data.choices }
@@ -263,10 +261,10 @@ module.exports.updateUserChoice = function(req, res) {
   )
     .then(event => {
       Event.findById(data.eventId)
-        .populate("users.user", "-password")
+        .populate('users.user', '-password')
         .then(event => {
           res.status(201).json({
-            message: "Choices Added",
+            message: 'Choices Added',
             event: event
           });
         })
@@ -274,7 +272,7 @@ module.exports.updateUserChoice = function(req, res) {
           console.log(error);
           res.status(404).json({
             error: error,
-            message: "Choices Failed"
+            message: 'Choices Failed'
           });
         });
     })
@@ -282,27 +280,52 @@ module.exports.updateUserChoice = function(req, res) {
       console.log(error);
       res.status(404).json({
         error: error,
-        message: "Choices Failed"
+        message: 'Choices Failed'
       });
     });
 };
 
-module.exports.createLinkEvent = function(req, res) {
+module.exports.createLinkEvent = async function(req, res) {
   const link = new Link({
-    link: uniqid(),
+    link: 'huy/' + uniqid(),
     eventId: req.body.eventId
   });
-  link
-    .save()
-    .then(link => {
+  try {
+    const proceedLink = await link.save();
+    if (proceedLink) {
       res.status(201).json({
-        message: "Link Created!",
+        message: 'Link Created!',
         link: link
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    }
+  } catch (err) {
+    if (err.code === 11000)
+      res.status(409).json({
+        error: err,
+        message: 'already exist'
+      });
+  }
+
+  // .then(link => {
+  //   res.status(201).json({
+  //     message: "Link Created!",
+  //     link: link
+  //   });
+  // })
+  // .catch(error => {
+  //   if(error.code === 11000){
+  //     res.status(301).json({
+  //       error: error,
+  //       message: "link already here",
+  //     });
+  //   } else {
+  //     res.status(404).json({
+  //       error: error,
+  //       message: "somethign wrong",
+  //     });
+  //   }
+
+  // });
 };
 
 module.exports.getLinkEvent = function(req, res) {
@@ -318,5 +341,3 @@ module.exports.getLinkEvent = function(req, res) {
       console.log(error);
     });
 };
-
-

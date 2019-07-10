@@ -69,7 +69,7 @@ module.exports.register = async function(req, res) {
 
     try {
       //пробуем сохранить пользователя
-      await await user.save();
+      await user.save();
 
       const token = jwt.sign({
         email: user.email,
