@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: false,
   email: null,
   password: null,
   nickname: null,
@@ -62,7 +62,8 @@ export default (state = initialState, { type, payload }) => {
         email: null,
         password: null,
         token: null,
-        message: null
+        message: null,
+        isAuthenticated: false
       };
 
     case actionTypes.SET_AUTH_REDIRECT_PATH:

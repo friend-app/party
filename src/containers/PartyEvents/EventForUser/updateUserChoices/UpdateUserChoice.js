@@ -28,7 +28,6 @@ class UpdateUserChoice extends Component {
         this.props.location.state.userChoice.choice
       );
     }
-    
   }
 
   static getDerivedStateFromProps(props, state) {

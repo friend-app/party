@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classes from "./EventForUser.module.css";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import * as actions from "../../../store/actions/index";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Aux from "../../../hoc/Auxillary/Auxillary";
@@ -39,12 +40,10 @@ class EventForUser extends Component {
 
     let usersList = null;
 
-
-
     if (this.props.event) {
       usersList = this.props.event.users.map(user => {
-        return (<li key={user.user._id}>{user.user.nickname}</li>)
-      })
+        return <li key={user.user._id}>{user.user.nickname}</li>;
+      });
 
       eventInfo = (
         <Aux>
@@ -61,6 +60,7 @@ class EventForUser extends Component {
 
     return (
       <InsideUserMenu>
+        {!this.props.isAuth ? <Redirect to="/login" /> : null}
         <div className={classes.EventWrapper}>{eventInfo}</div>
       </InsideUserMenu>
     );
@@ -69,7 +69,7 @@ class EventForUser extends Component {
 
 const mapStateToProps = state => ({
   event: state.singleEvent.event,
-  isAuth: state.auth.token !== null,
+  isAuth: state.auth.isAuthenticated || localStorage.getItem('token'),
   loading: state.singleEvent.loading,
   userId: state.auth.userId,
   ings: state.singleEvent.ingredients,
