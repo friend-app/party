@@ -114,13 +114,12 @@ export const addUserChoicesFail = () => ({
   payload: {}
 });
 
-export const addFoodChoice = (userChoice, eventId, userId) => {
+export const addFoodChoice = (userChoice, eventId) => {
   return dispatch => {
     dispatch(addUserChoicesStart());
     const data = {
       foodChoice: { choice: userChoice },
-      eventId: eventId,
-      userId: userId
+      eventId: eventId
     };
     axios
       .put("addFoodChoices", data)
@@ -147,13 +146,12 @@ export const addFoodChoice = (userChoice, eventId, userId) => {
   };
 };
 
-export const addDrinksChoice = (userChoice, eventId, userId) => {
+export const addDrinksChoice = (userChoice, eventId) => {
   return dispatch => {
     dispatch(addUserChoicesStart());
     const data = {
       drinksChoice: { choice: userChoice },
-      eventId: eventId,
-      userId: userId
+      eventId: eventId
     };
     axios
       .put("addDrinkChoices", data)

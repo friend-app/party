@@ -42,7 +42,7 @@ module.exports.fetchSingleCreatedEvent = async function(req, res, next) {
     ]);
 
     if (event) {
-      const link = await Link.findOne({ "eventId": req.params.eventId });
+      const link = await Link.findOne({ eventId: req.params.eventId });
       if (link) {
         res.status(201).json({
           message: "Event with link Found!",
@@ -52,7 +52,7 @@ module.exports.fetchSingleCreatedEvent = async function(req, res, next) {
       } else {
         res.status(201).json({
           message: "Event without link Found!",
-          event: event,
+          event: event
         });
       }
     }
@@ -180,7 +180,7 @@ module.exports.addIngredientsToEvent = function(req, res) {
 module.exports.addFoodChoices = function(req, res) {
   const foodChoice = req.body.foodChoice;
   const eventId = req.body.eventId;
-  const userId = req.body.userId;
+  const userId = req.user.id;
   Event.findOneAndUpdate(
     {
       _id: eventId,
@@ -222,7 +222,7 @@ module.exports.addFoodChoices = function(req, res) {
 module.exports.addDrinksChoices = function(req, res) {
   const drinksChoice = req.body.drinksChoice;
   const eventId = req.body.eventId;
-  const userId = req.body.userId;
+  const userId = req.user.id;
   Event.findOneAndUpdate(
     {
       _id: eventId,
@@ -338,27 +338,6 @@ module.exports.createLinkEvent = async function(req, res) {
       }
     }
   }
-
-  // .then(link => {
-  //   res.status(201).json({
-  //     message: "Link Created!",
-  //     link: link
-  //   });
-  // })
-  // .catch(error => {
-  //   if(error.code === 11000){
-  //     res.status(301).json({
-  //       error: error,
-  //       message: "link already here",
-  //     });
-  //   } else {
-  //     res.status(404).json({
-  //       error: error,
-  //       message: "somethign wrong",
-  //     });
-  //   }
-
-  // });
 };
 
 module.exports.getLinkEvent = function(req, res) {
@@ -373,4 +352,60 @@ module.exports.getLinkEvent = function(req, res) {
     .catch(error => {
       console.log(error);
     });
+};
+
+module.exports.addUserToEvent = async function(req, res) {
+  const link = await Link.findOne({
+    link: req.body.eventCode
+  });
+
+  const user = {
+    foodChoices: [],
+    drinksChoices: [],
+    user: req.user._id
+  };
+
+  if (link) {
+    try {
+      const event = await Event.findOne({
+        _id: link.eventId,
+        "users.user": req.user._id
+      });
+      if (event) {
+        res.status(200).json({
+          message: 'user already exist in event',
+          eventId: event._id
+        });
+      } else {
+        try {
+          const updatedEvent = await Event.findOneAndUpdate(
+            {
+              _id: link.eventId
+            },
+            {
+              $push: { users: user }
+            },
+            { new: true, useFindAndModify: false }
+          );
+
+          if (updatedEvent) {
+            res.status(200).json({
+              eventId: updatedEvent._id,
+              message: 'user added to event'
+            });
+          }
+        } catch (err) {
+          // console.log('user', req.user._id, err);
+          console.log('event', link.eventId, err);
+          res.status(409).json({
+            error: err
+          });
+        }
+      }
+    } catch (err) {
+      res.status(409).json({
+        error: err
+      });
+    }
+  }
 };

@@ -7,6 +7,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Aux from "../../../hoc/Auxillary/Auxillary";
 import { WhatsappShareButton, WhatsappIcon } from "react-share";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import InsideCreatorMenu from "../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
 
@@ -59,16 +60,28 @@ class EventForCreator extends Component {
 
       if (this.props.link) {
         shareButton = (
-          <WhatsappShareButton
-            url={
-              "Join to " +
-              this.props.event.title +
-              " https://localhost:3000/events/addUserToEvent?=" +
-              this.props.link
-            }
-          >
-            <WhatsappIcon size={32} round={true} />
-          </WhatsappShareButton>
+          <Aux>
+            <WhatsappShareButton
+              className={classes.WhatsappShare}
+              url={
+                "Join to " +
+                this.props.event.title +
+                " http://localhost:3000/events/addUserToEvent?eventCode=" +
+                this.props.link
+              }
+            >
+              <WhatsappIcon size={32} round={true} />
+            </WhatsappShareButton>
+            <CopyToClipboard
+              text={
+                "http://localhost:3000/events/addUserToEvent?eventCode=" +
+                this.props.link
+              }
+              onCopy={() => this.setState({ copied: true })}
+            >
+              <span>Copy Link</span>
+            </CopyToClipboard>
+          </Aux>
         );
       }
 

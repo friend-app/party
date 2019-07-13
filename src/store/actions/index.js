@@ -12,5 +12,7 @@ export {
   updateUserChoice,
   singleEventReset,
   updateChoiceReset,
-  publishEvent 
+  publishEvent
 } from './singleEvent';
+
+export { addUserToEvent } from './addUserToEvent';

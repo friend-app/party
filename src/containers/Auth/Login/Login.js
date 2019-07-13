@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
-import Input from '../../../components/UI/Forms/Input/Input';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import classes from './Login.module.css';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import { checkValidity } from '../../../shared/checkValidity';
-import Button from '../../../components/UI/Button/Button';
+import React, { Component } from "react";
+import Input from "../../../components/UI/Forms/Input/Input";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import classes from "./Login.module.css";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import { checkValidity } from "../../../shared/checkValidity";
+import Button from "../../../components/UI/Button/Button";
 
-import * as actions from '../../../store/actions/index';
+import * as actions from "../../../store/actions/index";
 
 class Login extends Component {
   state = {
     controls: {
       email: {
-        elementType: 'input',
-        elementLabel: 'Your Email',
+        elementType: "input",
+        elementLabel: "Your Email",
         elementConfig: {
-          type: 'email',
-          placeholder: 'Your Email'
+          type: "email",
+          placeholder: "Your Email"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           isEmail: true
@@ -28,13 +28,13 @@ class Login extends Component {
         valid: false
       },
       password: {
-        elementType: 'input',
-        elementLabel: 'Your Password',
+        elementType: "input",
+        elementLabel: "Your Password",
         elementConfig: {
-          type: 'password',
-          placeholder: 'Your Password'
+          type: "password",
+          placeholder: "Your Password"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           minLength: 5,
@@ -47,8 +47,7 @@ class Login extends Component {
     formIsValid: false
   };
 
-  componentDidUpdate() {
-  }
+  componentDidMount() {}
 
   inputChangedHanlder = (event, inputName) => {
     const updatedControls = {
@@ -82,7 +81,24 @@ class Login extends Component {
   };
 
   render() {
-    const redirect = this.props.isAuth ? <Redirect to="/events" /> : null;
+    let redirect = null;
+
+    if (this.props.isAuth && localStorage.getItem("eventCode")) {
+      redirect = (
+        <Redirect
+          to={
+            "/events/addUserToEvent?eventCode=" +
+            localStorage.getItem("eventCode")
+          }
+        />
+      );
+    } if(this.props.isAuth && !localStorage.getItem("eventCode")) {
+      redirect = <Redirect
+      to={
+        "/events"
+      }
+    />
+    }
 
     if (this.props.message) {
       // alert(this.props.message);
@@ -112,14 +128,16 @@ class Login extends Component {
 
     return (
       <div className={classes.LoginWrapper}>
-      {redirect}
+        {redirect}
         <h1>Login</h1>
         {this.props.loading ? (
           <Spinner />
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <Button btnType='Success' disabled={!this.state.formIsValid}>SUBMIT</Button>
+            <Button btnType="Success" disabled={!this.state.formIsValid}>
+              SUBMIT
+            </Button>
           </form>
         )}
       </div>

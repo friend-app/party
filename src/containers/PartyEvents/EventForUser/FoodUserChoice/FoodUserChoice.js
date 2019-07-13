@@ -26,7 +26,7 @@ class FoodUserChoice extends Component {
         delete foodIngs[key];
       }
     }
-    this.props.onUserChoice(foodIngs, this.props.event._id, this.props.userId);
+    this.props.onUserChoice(foodIngs, this.props.event._id);
   };
 
   // deleteUserChoiceHandler = (locationId, choiceId) => {
@@ -112,8 +112,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.fetchSingleUserEvent(eventId)),
     onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName, 'foodIngredients')),
     onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName, 'foodIngredients')),
-    onUserChoice: (userChoice, eventId, userId) =>
-      dispatch(actions.addFoodChoice(userChoice, eventId, userId)),
+    onUserChoice: (userChoice, eventId) =>
+      dispatch(actions.addFoodChoice(userChoice, eventId)),
     onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
       dispatch(actions.updateUserChoice(choice, choiceLocationId, eventId))
   };

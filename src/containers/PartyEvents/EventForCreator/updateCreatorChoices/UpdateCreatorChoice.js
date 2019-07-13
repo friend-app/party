@@ -82,10 +82,10 @@ class UpdateCreatorChoice extends Component {
   };
 
   render() {
-    const chosen = this.makeIngs(
-      this.props.location.state.ings,
-      this.props.location.state.userChoice.choice
-    );
+    // const chosen = this.makeIngs(
+    //   this.props.location.state.ings,
+    //   this.props.location.state.userChoice.choice
+    // );
 
 
     let disabledMin = null;
