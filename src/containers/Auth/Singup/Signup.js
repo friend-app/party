@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
-import Input from '../../../components/UI/Forms/Input/Input';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import classes from './Signup.module.css';
-import { checkValidity } from '../../../shared/checkValidity';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import Button from '../../../components/UI/Button/Button';
-import * as actions from '../../../store/actions/index';
+import React, { Component } from "react";
+import Input from "../../../components/UI/Forms/Input/Input";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import classes from "./Signup.module.css";
+import { checkValidity } from "../../../shared/checkValidity";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Button from "../../../components/UI/Button/Button";
+import * as actions from "../../../store/actions/index";
 
 class Signup extends Component {
   state = {
     controls: {
       email: {
-        elementType: 'input',
-        elementLabel: 'Your Email',
+        elementType: "input",
+        elementLabel: "Your Email",
         elementConfig: {
-          type: 'email',
-          placeholder: 'Please enter your email'
+          type: "email",
+          placeholder: "Please enter your email"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           isEmail: true
@@ -27,13 +27,13 @@ class Signup extends Component {
         valid: false
       },
       password: {
-        elementType: 'input',
-        elementLabel: 'Your Password',
+        elementType: "input",
+        elementLabel: "Your Password",
         elementConfig: {
-          type: 'password',
-          placeholder: 'Please enter your password'
+          type: "password",
+          placeholder: "Please enter your password"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           minLength: 5,
@@ -43,13 +43,13 @@ class Signup extends Component {
         valid: false
       },
       name: {
-        elementType: 'input',
-        elementLabel: 'Your Name',
+        elementType: "input",
+        elementLabel: "Your Name",
         elementConfig: {
-          type: 'text',
-          placeholder: 'Please enter your name'
+          type: "text",
+          placeholder: "Please enter your name"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           minLength: 2,
@@ -90,13 +90,26 @@ class Signup extends Component {
     this.props.onSignup(
       this.state.controls.email.value,
       this.state.controls.password.value,
-      this.state.controls.name.value,
+      this.state.controls.name.value
     );
   };
 
   render() {
+    let redirect = null;
 
-    const redirect = this.props.isAuth ? <Redirect to="/" /> : null;
+    if (this.props.isAuth && localStorage.getItem("eventCode")) {
+      redirect = (
+        <Redirect
+          to={
+            "/events/addUserToEvent?eventCode=" +
+            localStorage.getItem("eventCode")
+          }
+        />
+      );
+    }
+    if (this.props.isAuth && !localStorage.getItem("eventCode")) {
+      redirect = <Redirect to="/events" />;
+    }
 
     let formElementArr = [];
     for (let el in this.state.controls) {
@@ -122,14 +135,16 @@ class Signup extends Component {
 
     return (
       <div className={classes.SignupWrapper}>
-      {redirect}
+        {redirect}
         <h1>Signup</h1>
         {this.props.loading ? (
           <Spinner />
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <Button btnType='Success' disabled={!this.state.formIsValid}>SUBMIT</Button>
+            <Button btnType="Success" disabled={!this.state.formIsValid}>
+              SUBMIT
+            </Button>
           </form>
         )}
       </div>
@@ -137,17 +152,20 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   loading: state.auth.loading,
   message: state.auth.message,
   isAuth: state.auth.token !== null
-})
+});
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSignup: (email, password, name) => dispatch(actions.signup(email, password, name))
-  }
-}
+    onSignup: (email, password, name) =>
+      dispatch(actions.signup(email, password, name))
+  };
+};
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signup);

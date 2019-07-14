@@ -79,4 +79,11 @@ router.post('/createLinkEvent', controller.createLinkEvent);
 // localhost:4000/api/events/eventLink
 router.post('/eventLink', controller.getLinkEvent);
 
+// localhost:4000/api/events/updateCreatedEvent
+router.post(
+  '/addUserToEvent',
+  passport.authenticate('jwt', { session: false }),
+  controller.addUserToEvent
+);
+
 module.exports = router;

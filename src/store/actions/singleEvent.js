@@ -1,5 +1,5 @@
-import * as actionTypes from './actionTypes';
-import axios from '../../axios-events';
+import * as actionTypes from "./actionTypes";
+import axios from "../../axios-events";
 
 export const singleEventReset = () => ({
   type: actionTypes.SINGLE_EVENT_RESET
@@ -10,12 +10,18 @@ export const fetchEventStart = payload => ({
   payload
 });
 
-export const fetchEventSuccess = (data, foodIngredients, drinkIngredients) => ({
+export const fetchEventSuccess = (
+  data,
+  foodIngredients,
+  drinkIngredients,
+  link
+) => ({
   type: actionTypes.FETCH_SINGLE_EVENT_SUCCESS,
   payload: {
     data: data,
     foodIngredients: foodIngredients,
-    drinkIngredients: drinkIngredients
+    drinkIngredients: drinkIngredients,
+    link: link ? link : null
   }
 });
 
@@ -30,9 +36,9 @@ export const fetchSingleCreatedEvent = eventId => {
   return dispatch => {
     dispatch(fetchEventStart());
     axios
-      .get('fetchSingleCreatedEvent/' + eventId)
+      .get("fetchSingleCreatedEvent/" + eventId)
       .then(response => {
-        localStorage.setItem('eventId', response.data.event._id);
+        localStorage.setItem("eventId", response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {
@@ -45,7 +51,8 @@ export const fetchSingleCreatedEvent = eventId => {
           fetchEventSuccess(
             response.data.event,
             foodIngredients,
-            drinkIngredients
+            drinkIngredients,
+            response.data.link.link
           )
         );
       })
@@ -59,9 +66,9 @@ export const fetchSingleUserEvent = eventId => {
   return dispatch => {
     dispatch(fetchEventStart());
     axios
-      .get('fetchSingleUserEvent/' + eventId)
+      .get("fetchSingleUserEvent/" + eventId)
       .then(response => {
-        localStorage.setItem('eventId', response.data.event._id);
+        localStorage.setItem("eventId", response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {
@@ -107,16 +114,15 @@ export const addUserChoicesFail = () => ({
   payload: {}
 });
 
-export const addFoodChoice = (userChoice, eventId, userId) => {
+export const addFoodChoice = (userChoice, eventId) => {
   return dispatch => {
     dispatch(addUserChoicesStart());
     const data = {
       foodChoice: { choice: userChoice },
-      eventId: eventId,
-      userId: userId
+      eventId: eventId
     };
     axios
-      .put('addFoodChoices', data)
+      .put("addFoodChoices", data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -140,16 +146,15 @@ export const addFoodChoice = (userChoice, eventId, userId) => {
   };
 };
 
-export const addDrinksChoice = (userChoice, eventId, userId) => {
+export const addDrinksChoice = (userChoice, eventId) => {
   return dispatch => {
     dispatch(addUserChoicesStart());
     const data = {
       drinksChoice: { choice: userChoice },
-      eventId: eventId,
-      userId: userId
+      eventId: eventId
     };
     axios
-      .put('addDrinkChoices', data)
+      .put("addDrinkChoices", data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -243,7 +248,7 @@ export const updateUserChoice = (
       eventId: eventId
     };
     axios
-      .put('updateUserChoice', data)
+      .put("updateUserChoice", data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -267,24 +272,22 @@ export const updateUserChoice = (
   };
 };
 
-export const publishEventStart = choice => ({
+export const publishEventStart = () => ({
   type: actionTypes.PUBSLISH_EVENT_START,
-  payload: {
-    userChoice: choice
-  }
+  payload: {}
 });
 
-export const publishEventSuccess = choice => ({
+export const publishEventSuccess = link => ({
   type: actionTypes.PUBSLISH_EVENT_SUCCESS,
   payload: {
-    userChoice: choice
+    link: link
   }
 });
 
-export const publishEventFail = choice => ({
+export const publishEventFail = errMessage => ({
   type: actionTypes.PUBSLISH_EVENT_FAIL,
   payload: {
-    userChoice: choice
+    error: errMessage
   }
 });
 
@@ -295,16 +298,17 @@ export const publishEvent = eventId => {
       eventId: eventId
     };
     axios
-      .post('createLinkEvent', data)
+      .post("createLinkEvent", data)
       .then(response => {
-        console.log(response.data);
+        dispatch(
+          publishEventSuccess(
+            "http://localhost:3000/events/addUserToEvent?link=" +
+              response.data.link.link
+          )
+        );
       })
       .catch(error => {
-        if (error.response.status === 409) {
-          console.log(error.response.data.message);
-        } else {
-          console.log(error.response.data.message);
-        }
+        dispatch(publishEventFail(error.response.data.message));
       });
   };
 };

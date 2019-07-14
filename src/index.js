@@ -10,14 +10,16 @@ import * as serviceWorker from './serviceWorker';
 import authReducer from './store/reducers/auth';
 import partyEventsReducer from './store/reducers/partyEvents';
 import singleEventReducer from './store/reducers/singleEvent';
-import CreateEventReducer from './store/reducers/createEvent';
+import createEventReducer from './store/reducers/createEvent';
+import addUserToEvent from './store/reducers/addUserToEvent';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   party: partyEventsReducer,
   singleEvent:  singleEventReducer,
-  createEvent: CreateEventReducer
+  createEvent: createEventReducer,
+  addUserToEvent: addUserToEvent
 });
 
 const composeEnhancers =

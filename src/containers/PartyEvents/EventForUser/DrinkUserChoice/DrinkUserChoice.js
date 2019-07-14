@@ -27,7 +27,7 @@ class DrinkUserChoice extends Component {
         delete drinkIngs[key];
       }
     }
-    this.props.onUserChoice(drinkIngs, this.props.event._id, this.props.userId);
+    this.props.onUserChoice(drinkIngs, this.props.event._id);
   };
 
   // chooseUserChoiceHanlder = (userChoice, choiceLocationId) => {
@@ -139,8 +139,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.addIngredient(ingName, 'drinkIngredients')),
     onIngredientRemoved: ingName =>
       dispatch(actions.removeIngredient(ingName, 'drinkIngredients')),
-    onUserChoice: (userChoice, eventId, userId) =>
-      dispatch(actions.addDrinksChoice(userChoice, eventId, userId)),
+    onUserChoice: (userChoice, eventId) =>
+      dispatch(actions.addDrinksChoice(userChoice, eventId)),
     onUpdateUserChoice: (choice, choiceLocationId, eventId) =>
       dispatch(actions.updateUserChoice(choice, choiceLocationId, eventId))
   };

@@ -100,12 +100,13 @@ export const signup = (email, password, name) => {
     axios
       .post('http://localhost:4000/api/auth/register/', signupInfo)
       .then(response => {
+        console.log(response);
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userId', response.data.user.userId);
+        localStorage.setItem('userId', response.data.user._id);
         localStorage.setItem('nickname', response.data.user.nickname);
         localStorage.setItem(
           'expirationDate',
-          response.data.user.expirationDate
+          response.data.expirationDate
         );
         dispatch(signupSuccess(response.data));
       })
