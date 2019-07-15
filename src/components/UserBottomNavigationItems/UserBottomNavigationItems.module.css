@@ -16,7 +16,7 @@
 
 @media (max-width: 767px) {
   .UserBottomNavigationItems {
-    flex-flow: column;
+    flex-flow: row;
     align-items: center;
   }
 }

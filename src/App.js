@@ -1,29 +1,30 @@
-import React, { Component } from "react";
-import "./App.css";
-import { Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
-import * as actions from "./store/actions/index";
+import React, { Component } from 'react';
+import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
 
-import Layout from "./hoc/Layout/Layout";
+import Layout from './hoc/Layout/Layout';
 
-import Login from "./containers/Auth/Login/Login";
-import Signup from "./containers/Auth/Singup/Signup";
-import Logout from "./containers/Auth/Logout/Logout";
-import FrontPage from "./containers/FrontPage/FrontPage";
-import PartyEvents from "./containers/PartyEvents/PartyEvents";
-import CreateEvent from "./containers/PartyEvents/CreateEvent/CreateEvent";
-import AddIngredientsToEvent from "./containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent";
-import EventForUser from "./containers/PartyEvents/EventForUser/EventForUser";
-import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCreator";
-import FoodUserChoice from "./containers/PartyEvents/EventForUser/FoodUserChoice/FoodUserChoice";
-import DrinkUserChoice from "./containers/PartyEvents/EventForUser/DrinkUserChoice/DrinkUserChoice";
-import UserChoicesCards from "./containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards";
-import UpdateUserChoice from "./containers/PartyEvents/EventForUser/updateUserChoices/UpdateUserChoice";
-import FoodCreatorChoice from "./containers/PartyEvents/EventForCreator/FoodCreatorChoice/FoodCreatorChoice";
-import DrinkCreatorChoice from "./containers/PartyEvents/EventForCreator/DrinkCreatorChoice/DrinkCreatorChoice";
-import CreatorChoicesCards from "./containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards";
-import UpdateCreatorChoice from "./containers/PartyEvents/EventForCreator/updateCreatorChoices/UpdateCreatorChoice";
-import AddUserToEvent from "./containers/PartyEvents/AddUserToEvent/AddUserToEvent";
+import Login from './containers/Auth/Login/Login';
+import Signup from './containers/Auth/Singup/Signup';
+import Logout from './containers/Auth/Logout/Logout';
+import FrontPage from './containers/FrontPage/FrontPage';
+import PartyEvents from './containers/PartyEvents/PartyEvents';
+import CreateEvent from './containers/PartyEvents/CreateEvent/CreateEvent';
+import AddIngredientsToEvent from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent';
+import EventForUser from './containers/PartyEvents/EventForUser/EventForUser';
+import EventForCreator from './containers/PartyEvents/EventForCreator/EventForCreator';
+import FoodUserChoice from './containers/PartyEvents/EventForUser/FoodUserChoice/FoodUserChoice';
+import DrinkUserChoice from './containers/PartyEvents/EventForUser/DrinkUserChoice/DrinkUserChoice';
+import UserChoicesCards from './containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards';
+import UpdateUserChoice from './containers/PartyEvents/EventForUser/UpdateUserChoices/UpdateUserChoice';
+import FoodCreatorChoice from './containers/PartyEvents/EventForCreator/FoodCreatorChoice/FoodCreatorChoice';
+import DrinkCreatorChoice from './containers/PartyEvents/EventForCreator/DrinkCreatorChoice/DrinkCreatorChoice';
+import CreatorChoicesCards from './containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards';
+import UpdateCreatorChoice from './containers/PartyEvents/EventForCreator/updateCreatorChoices/UpdateCreatorChoice';
+import AddUserToEvent from './containers/PartyEvents/AddUserToEvent/AddUserToEvent';
+import ChoicesTabComponent from './containers/PartyEvents/EventForUser/ChoicesTabComponent/ChoicesTabComponent';
 
 class App extends Component {
   componentDidMount() {
@@ -37,7 +38,7 @@ class App extends Component {
 
   // Setup the `beforeunload` event listener
   setupBeforeUnloadListener = () => {
-    window.addEventListener("beforeunload", ev => {
+    window.addEventListener('beforeunload', ev => {
       ev.preventDefault();
       return this.doSomethingBeforeUnload();
     });
@@ -46,137 +47,136 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/events" component={PartyEvents} />
-        <Route exact path="/events/create-event" component={CreateEvent} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/signup' component={Signup} />
+        <Route exact path='/events' component={PartyEvents} />
+        {/* <Route exact path='/events/create-event' component={CreateEvent} />
         <Route
           exact
-          path="/events/create-event/add-ingredients"
+          path='/events/create-event/add-ingredients'
           component={AddIngredientsToEvent}
         />
-        <Route exact path="/events/eventForUser" component={EventForUser} />
+        <Route exact path='/events/eventForUser' component={EventForUser} />
         <Route
           exact
-          path="/events/eventForUser/foodUserChoice"
+          path='/events/userChoice'
+          component={ChoicesTabComponent}
+        />
+        <Route
+          exact
+          path='/events/eventForUser/userChoices/foodUserChoice'
           component={FoodUserChoice}
         />
         <Route
           exact
-          path="/events/eventForUser/drinkUserChoice"
+          path='/events/eventForUser/userChoices/drinkUserChoice'
           component={DrinkUserChoice}
         />
         <Route
           exact
-          path="/events/eventForUser/updateUserChoice"
+          path='/events/eventForUser/updateUserChoice'
           component={UpdateUserChoice}
         />
         <Route
           exact
-          path="/events/eventForUser/userChoicesCards"
+          path='/events/eventForUser/userChoicesCards'
           component={UserChoicesCards}
         />
         <Route
           exact
-          path="/events/eventForCreator"
+          path='/events/eventForCreator'
           component={EventForCreator}
         />
         <Route
           exact
-          path="/events/eventForCreator/foodCreatorChoice"
+          path='/events/eventForCreator/foodCreatorChoice'
           component={FoodCreatorChoice}
         />
         <Route
           exact
-          path="/events/eventForCreator/drinkCreatorChoice"
+          path='/events/eventForCreator/drinkCreatorChoice'
           component={DrinkCreatorChoice}
         />
         <Route
           exact
-          path="/events/eventForCreator/updateCreatorChoice"
+          path='/events/eventForCreator/updateCreatorChoice'
           component={UpdateCreatorChoice}
         />
         <Route
           exact
-          path="/events/eventForCreator/CreatorChoicesCards"
+          path='/events/eventForCreator/CreatorChoicesCards'
           component={CreatorChoicesCards}
         />
-        <Route exact path="/events/addUserToEvent" component={AddUserToEvent} />
-        <Route path="/" component={FrontPage} />
-      </Switch>
+        <Route exact path='/events/addUserToEvent' component={AddUserToEvent} />*/}
+        <Route path='/' component={FrontPage} /> 
+      </Switch> 
     );
 
-    if (this.props.isAuth) {
+    if (localStorage.getItem('token')) {
       routes = (
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          <Route path="/logout" component={Logout} />
-          <Route exact path="/events" component={PartyEvents} />
-          <Route exact path="/events/create-event" component={CreateEvent} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/signup' component={Signup} />
+          <Route path='/logout' component={Logout} />
+          <Route exact path='/events' component={PartyEvents} />
+          <Route exact path='/events/create-event' component={CreateEvent} />
           <Route
-            exact
-            path="/events/eventForUser/foodUserChoice"
-            component={FoodUserChoice}
+            path='/events/eventForUser/userChoices'
+            component={ChoicesTabComponent}
           />
           <Route
             exact
-            path="/events/eventForUser/drinkUserChoice"
-            component={DrinkUserChoice}
-          />
-          <Route
-            exact
-            path="/events/create-event/add-ingredients"
+            path='/events/create-event/add-ingredients'
             component={AddIngredientsToEvent}
           />
           <Route
             exact
-            path="/events/eventForUser/userChoicesCards"
+            path='/events/eventForUser/userChoicesCards'
             component={UserChoicesCards}
           />
-          <Route exact path="/events/eventForUser" component={EventForUser} />
+          <Route exact path='/events/eventForUser' component={EventForUser} />
           <Route
             exact
-            path="/events/eventForUser/updateUserChoice"
+            path='/events/eventForUser/updateUserChoice'
             component={UpdateUserChoice}
           />
           <Route
             exact
-            path="/events/eventForCreator"
+            path='/events/eventForCreator'
             component={EventForCreator}
           />
           <Route
             exact
-            path="/events/eventForCreator/foodCreatorChoice"
+            path='/events/eventForCreator/foodCreatorChoice'
             component={FoodCreatorChoice}
           />
           <Route
             exact
-            path="/events/eventForCreator/drinkCreatorChoice"
+            path='/events/eventForCreator/drinkCreatorChoice'
             component={DrinkCreatorChoice}
           />
           <Route
             exact
-            path="/events/eventForCreator/updateCreatorChoice"
+            path='/events/eventForCreator/updateCreatorChoice'
             component={UpdateCreatorChoice}
           />
           <Route
             exact
-            path="/events/eventForCreator/CreatorChoicesCards"
+            path='/events/eventForCreator/CreatorChoicesCards'
             component={CreatorChoicesCards}
           />
           <Route
             exact
-            path="/events/addUserToEvent"
+            path='/events/addUserToEvent'
             component={AddUserToEvent}
           />
-          <Route path="/" component={FrontPage} />
+          <Route path='/' component={FrontPage} />
         </Switch>
       );
     }
 
     return (
-      <div className="App">
+      <div className='App'>
         <Layout>{routes}</Layout>
       </div>
     );

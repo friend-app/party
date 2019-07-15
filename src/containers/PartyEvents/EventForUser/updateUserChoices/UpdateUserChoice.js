@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { Redirect } from 'react-router-dom';
 import classes from './UpdateUserChoice.module.css';
 import * as actions from '../../../../store/actions/index';
 import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
@@ -10,22 +9,21 @@ import EventControls from '../../../../components/EventSwitcher/EventControls/Ev
 import Button from '../../../../components/UI/Button/Button';
 
 class UpdateUserChoice extends Component {
-
   state = {
     event: null
-  }
+  };
 
   componentDidMount() {
-    console.log(typeof this.props.location.state === 'undefined');
-    if(typeof  this.props.location.state === 'undefined'){
+    if (typeof this.props.location.state === 'undefined') {
       this.props.history.push({
-        pathname: "/events"
-      })
+        pathname: '/events'
+      });
     }
-    if(this.state.event !== null){
+    if (this.state.event !== null) {
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
-        this.props.location.state.userChoice.choice
+        this.props.location.state.userChoice.choice,
+        this.props.event
       );
     }
   }
@@ -36,7 +34,6 @@ class UpdateUserChoice extends Component {
         event: props.event
       };
     }
-
     // Return null if the state hasn't changed
     return null;
   }
@@ -74,22 +71,30 @@ class UpdateUserChoice extends Component {
     );
   };
 
+  makeIngs = (ings, choice) => {
+    let updatedIngs = {};
+    for (let ing of ings) {
+      updatedIngs = Object.assign(updatedIngs, {
+        [ing]: choice[ing] ? choice[ing] : 0
+      });
+    }
+    return updatedIngs;
+  };
+
   render() {
     let disabledMin = null;
     let chosenIngs = null;
-    if(typeof this.props.location.state !== 'undefined'){
-    disabledMin = {
-      ...this.props[this.props.location.state.type]
-    };
+    if (typeof this.props.location.state !== 'undefined') {
+      disabledMin = {
+        ...this.props[this.props.location.state.type]
+      };
 
-    for (let key in this.props[this.props.location.state.type]) {
-      disabledMin[key] = disabledMin[key] <= 0;
+      for (let key in this.props[this.props.location.state.type]) {
+        disabledMin[key] = disabledMin[key] <= 0;
+      }
+
+      chosenIngs = makeChosenIngs(this.props[this.props.location.state.type]);
     }
-
-    chosenIngs = makeChosenIngs(
-      this.props[this.props.location.state.type]
-    );
-  }
     let event = <Spinner />;
     if (this.props.event) {
       event = (
@@ -101,6 +106,7 @@ class UpdateUserChoice extends Component {
           </div>
           <div className={classes.EventInside}>
             <EventControls
+              chosenIngs={this.props[this.props.location.state.type]}
               controls={this.props.event[this.props.location.state.type]}
               ingredientAdded={this.props.onIngredientAdded}
               ingredientRemoved={this.props.onIngredientRemoved}
@@ -120,8 +126,7 @@ class UpdateUserChoice extends Component {
 
     return (
       <div>
-        {/* {this.onRedirect()} */}
-       <InsideUserMenu>{event}</InsideUserMenu>
+        <InsideUserMenu>{event}</InsideUserMenu>
       </div>
     );
   }
@@ -141,8 +146,8 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     onFetchSingleUserEvent: eventId =>
       dispatch(actions.fetchSingleUserEvent(eventId)),
-    onUpdateUserChoiceInit: (type, choice) =>
-      dispatch(actions.updateUserChoiceInit(type, choice)),
+    onUpdateUserChoiceInit: (type, choice, event) =>
+      dispatch(actions.updateUserChoiceInit(type, choice, event)),
     onIngredientAdded: ingName =>
       dispatch(actions.addIngredient(ingName, props.location.state.type)),
     onIngredientRemoved: ingName =>
@@ -155,7 +160,8 @@ const mapDispatchToProps = (dispatch, props) => {
           choiceLocationId,
           eventId
         )
-      )
+      ),
+    onUpdateChoiceReset: () => dispatch(actions.updateChoiceReset())
   };
 };
 

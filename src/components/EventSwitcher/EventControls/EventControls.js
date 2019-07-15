@@ -14,7 +14,6 @@ const EventControls = props => {
 
   return (
     <div className={classes.EventControlsWrapper}>
-      <h3>Choose Your Food</h3>
       {controls.map((control, index) => (
         <EventControl
           key={index}

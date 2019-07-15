@@ -20,7 +20,6 @@ class UpdateCreatorChoice extends Component {
       });
     }
     if (this.state.event !== null) {
-      // this.props.onUpdateChoiceReset();
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
         this.props.location.state.userChoice.choice,
@@ -35,7 +34,6 @@ class UpdateCreatorChoice extends Component {
         event: props.event
       };
     }
-
     // Return null if the state hasn't changed
     return null;
   }
@@ -76,18 +74,14 @@ class UpdateCreatorChoice extends Component {
   makeIngs = (ings, choice) => {
     let updatedIngs = {};
     for (let ing of ings) {
-      updatedIngs = Object.assign(updatedIngs, { [ing]: choice[ing] ? choice[ing] : 0 });
+      updatedIngs = Object.assign(updatedIngs, {
+        [ing]: choice[ing] ? choice[ing] : 0
+      });
     }
     return updatedIngs;
   };
 
   render() {
-    // const chosen = this.makeIngs(
-    //   this.props.location.state.ings,
-    //   this.props.location.state.userChoice.choice
-    // );
-
-
     let disabledMin = null;
     let chosenIngs = null;
     if (typeof this.props.location.state !== 'undefined') {
