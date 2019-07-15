@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import InsideCreatorMenu from '../../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
 import * as actions from '../../../../store/actions/index';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
-import { makeChosenIngs } from '../../../../shared/makeChosenIngs';
 import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
 import Button from '../../../../components/UI/Button/Button';
 
@@ -72,25 +71,12 @@ class DrinkCreatorChoice extends Component {
       disabledMin[key] = disabledMin[key] <= 0;
     }
 
-    const chosenDrinkIngs = makeChosenIngs(this.props.drinkIngs);
-
     let event = <Spinner />;
 
     if (this.props.event) {
 
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
-          <h2>{this.props.event.title}</h2>
-          <h3>
-            {new Date(this.props.event.date).toLocaleDateString('he-He')} -{' '}
-            {new Date(this.props.event.date).toLocaleTimeString('he-He')}
-          </h3>
-          <h3>Creator: {this.props.event.nickname}</h3>
-
-          <div className={classes.ChoosesBox}>
-            <h2>Chosen Ingredient - Can be scrolled</h2>
-            {this.props.loading ? <Spinner /> : chosenDrinkIngs}
-          </div>
           <div className={classes.EventInside}>
             <EventControls
               chosenIngs={this.props.drinkIngs}

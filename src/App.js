@@ -18,7 +18,7 @@ import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCr
 import FoodUserChoice from "./containers/PartyEvents/EventForUser/FoodUserChoice/FoodUserChoice";
 import DrinkUserChoice from "./containers/PartyEvents/EventForUser/DrinkUserChoice/DrinkUserChoice";
 import UserChoicesCards from "./containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards";
-import UpdateUserChoice from "./containers/PartyEvents/EventForUser/updateUserChoices/UpdateUserChoice";
+import UpdateUserChoice from "./containers/PartyEvents/EventForUser/UpdateUserChoices/UpdateUserChoice";
 import FoodCreatorChoice from "./containers/PartyEvents/EventForCreator/FoodCreatorChoice/FoodCreatorChoice";
 import DrinkCreatorChoice from "./containers/PartyEvents/EventForCreator/DrinkCreatorChoice/DrinkCreatorChoice";
 import CreatorChoicesCards from "./containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards";

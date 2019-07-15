@@ -31,6 +31,7 @@ class UserChoicesCards extends Component {
       default:
         return null;
     }
+
     return this.props.history.push({
       pathname: '/events/eventForUser/updateUserChoice',
       state: {
@@ -38,10 +39,10 @@ class UserChoicesCards extends Component {
         type: convertedType,
         userChoice: userChoice,
         choiceLocationId: choiceLocationId,
-        eventId: this.props.event._id
+        eventId: this.props.event._id,
+        ings: this.props.event[convertedType]
       }
     });
-    // console.log(userChoice, choiceLocationId, convertedType);
   };
 
   onDelete = (locationId, choiceId, type) => {
@@ -125,7 +126,7 @@ class UserChoicesCards extends Component {
 const mapStateToProps = state => ({
   event: state.singleEvent.event,
   userId: state.auth.userId,
-  loading: state.singleEvent.loading
+  loading: state.singleEvent.loading,
 });
 
 const mapDispatchToProps = dispatch => {
