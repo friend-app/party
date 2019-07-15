@@ -46,13 +46,8 @@ class DrinkUserChoice extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
-      // const currentUser = this.props.event.users.find(
-      //   user => user.user._id === this.props.userId
-      // );
-
       event = (
-        <div className={classes.EventWrapper} onClick={this.props.clicked}>
-          <div className={classes.EventInside}>
+        <div className={classes.EventWrapper}>
             <EventControls
               chosenIngs={this.props.drinkIngs}
               controls={this.props.event.drinkIngredients}
@@ -67,7 +62,6 @@ class DrinkUserChoice extends Component {
             >
               Submit
             </Button>
-          </div>
         </div>
       );
     }

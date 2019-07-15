@@ -35,23 +35,13 @@
   margin-left: 15px;
 }
 
-.CheckOutContinue {
-  color: #5c9210;
-  font-weight: 600;
-  font-size: 25px;
-}
-
-.CheckOutCancel {
-  color: #cf1b01;
-  font-weight: 600;
-  font-size: 25px;
-}
-
 .SubmitUserChoice{
-  color: #fff;
+  width: 100%;
+  background-color: #55c1bc;
+  color: #fff !important;
   font-weight: 600;
-  font-size: 25px;
-  padding: 5px 15px !important;
-  border: 3px solid #fff;
-  margin: auto;
+  font-size: 18px;
+  padding: 15px 0 !important;
+  position: fixed;
+  bottom: 65px;
 }
