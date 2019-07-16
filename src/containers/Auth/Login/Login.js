@@ -1,53 +1,56 @@
-import React, { Component } from "react";
-import Input from "../../../components/UI/Forms/Input/Input";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import classes from "./Login.module.css";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import { checkValidity } from "../../../shared/checkValidity";
-import Button from "../../../components/UI/Button/Button";
+import React, { Component } from 'react';
+// import Input from "../../../components/UI/Forms/Input/Input";
+import Input from '@material-ui/core/Input';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import classes from './Login.module.css';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import { checkValidity } from '../../../shared/checkValidity';
+import Button from '../../../components/UI/Button/Button';
 
-import * as actions from "../../../store/actions/index";
+import * as actions from '../../../store/actions/index';
 
 class Login extends Component {
   state = {
     controls: {
       email: {
-        elementType: "input",
-        elementLabel: "Your Email",
+        elementType: 'input',
+        elementLabel: 'Your Email',
         elementConfig: {
-          type: "email",
-          placeholder: "Your Email"
+          type: 'email',
+          placeholder: 'Your Email'
         },
-        value: "",
+        value: '',
         validators: {
           required: true,
           isEmail: true
         },
         touched: false,
-        valid: false
+        valid: true
       },
       password: {
-        elementType: "input",
-        elementLabel: "Your Password",
+        elementType: 'input',
+        elementLabel: 'Your Password',
         elementConfig: {
-          type: "password",
-          placeholder: "Your Password"
+          type: 'password',
+          placeholder: 'Your Password'
         },
-        value: "",
+        value: '',
         validators: {
           required: true,
           minLength: 5,
           maxLength: 12
         },
         touched: false,
-        valid: false
+        valid: true
       }
     },
     formIsValid: false
   };
 
-  componentDidMount() {}
+  componentDidMount(){
+
+  }
 
   inputChangedHanlder = (event, inputName) => {
     const updatedControls = {
@@ -82,22 +85,19 @@ class Login extends Component {
 
   render() {
     let redirect = null;
-
-    if (this.props.isAuth && localStorage.getItem("eventCode")) {
+    console.log(this.state.controls.email);
+    if (this.props.isAuth && localStorage.getItem('eventCode')) {
       redirect = (
         <Redirect
           to={
-            "/events/addUserToEvent?eventCode=" +
-            localStorage.getItem("eventCode")
+            '/events/addUserToEvent?eventCode=' +
+            localStorage.getItem('eventCode')
           }
         />
       );
-    } if(this.props.isAuth && !localStorage.getItem("eventCode")) {
-      redirect = <Redirect
-      to={
-        "/events"
-      }
-    />
+    }
+    if (this.props.isAuth && !localStorage.getItem('eventCode')) {
+      redirect = <Redirect to={'/events'} />;
     }
 
     if (this.props.message) {
@@ -113,17 +113,33 @@ class Login extends Component {
     }
 
     let formElements = formElementArr.map(formEl => (
-      <Input
-        key={formEl.inputName}
-        label={formEl.properties.elementLabel}
-        inputType={formEl.properties.elementType}
-        elementConfig={formEl.properties.elementConfig}
-        value={formEl.properties.value}
-        changed={event => this.inputChangedHanlder(event, formEl.inputName)}
-        invalid={!formEl.properties.valid}
-        touched={formEl.properties.touched}
-        shouldValidate={formEl.properties.validators}
-      />
+      <div key={formEl.inputName}>
+        <label>{formEl.properties.elementLabel}</label>
+        <Input
+          inputComponent={formEl.properties.elementType}
+          inputProps={formEl.properties.elementConfig}
+          autoFocus={formEl.properties.elementConfig.type === 'email'}
+          error={!formEl.properties.valid}
+          onChange={event => this.inputChangedHanlder(event, formEl.inputName)}
+          fullWidth={true}
+          // invalid={!formEl.properties.valid}
+          // touched={formEl.properties.touched}
+          // shouldValidate={formEl.properties.validators}
+        />
+      </div>
+
+      // <Input
+      //   key={formEl.inputName}
+      //   label={formEl.properties.elementLabel}
+      // inputType={formEl.properties.elementType}
+      // elementConfig={formEl.properties.elementConfig}
+      // value={formEl.properties.value}
+      // error={true}
+      // onChange={event => this.inputChangedHanlder(event, formEl.inputName)}
+      // invalid={!formEl.properties.valid}
+      // touched={formEl.properties.touched}
+      // shouldValidate={formEl.properties.validators}
+      // />
     ));
 
     return (
@@ -135,7 +151,7 @@ class Login extends Component {
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <Button btnType="Success" disabled={!this.state.formIsValid}>
+            <Button btnType='Success' disabled={!this.state.formIsValid}>
               SUBMIT
             </Button>
           </form>
