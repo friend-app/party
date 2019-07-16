@@ -6,3 +6,10 @@
   box-sizing: border-box;
   padding: 10px 50px 40px 50px;
 }
+
+label {
+  margin-top: 15px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
