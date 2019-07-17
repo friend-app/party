@@ -1,6 +1,18 @@
+:root{
+  margin: auto 20px;
+}
+
+.MuiIcon{
+  color: orange;
+}
+
 .userChoiceCardWrapper{
-  padding: 20px;
-  border: 3px solid #fff;
-  margin-top: 15px;
-  box-shadow: 5px 5px 15px #ccc;
+  padding: 5px;
+  margin: 10px auto;
+  box-shadow: 5px 5px 15px #eee !important;
+}
+
+.Title{
+  font-size: 18px;
+  font-weight: 700;
 }

@@ -22,7 +22,7 @@ import UpdateUserChoice from './containers/PartyEvents/EventForUser/UpdateUserCh
 import FoodCreatorChoice from './containers/PartyEvents/EventForCreator/FoodCreatorChoice/FoodCreatorChoice';
 import DrinkCreatorChoice from './containers/PartyEvents/EventForCreator/DrinkCreatorChoice/DrinkCreatorChoice';
 import CreatorChoicesCards from './containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards';
-import UpdateCreatorChoice from './containers/PartyEvents/EventForCreator/updateCreatorChoices/UpdateCreatorChoice';
+import UpdateCreatorChoice from './containers/PartyEvents/EventForCreator/UpdateCreatorChoices/UpdateCreatorChoice';
 import AddUserToEvent from './containers/PartyEvents/AddUserToEvent/AddUserToEvent';
 import ChoicesTabComponent from './containers/PartyEvents/EventForUser/ChoicesTabComponent/ChoicesTabComponent';
 
