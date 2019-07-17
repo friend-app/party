@@ -8,6 +8,7 @@ const userChoiceCards = props => {
     // console.log(singleChoice)
     return (
     <UserChoiceCard
+      orderNumber={index + 1}
       key={index}
       choiceIngs={singleChoice.choice}
       userName={props.user.user.nickname}
