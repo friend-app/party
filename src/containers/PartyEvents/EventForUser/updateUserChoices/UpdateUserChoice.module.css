@@ -1,22 +1,4 @@
-.EventWrapper{
-  width: 800px;
-  margin: 25px auto 15px auto;
-  background: #713674;
-  color: #fff;
-  padding: 10px 25px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.EventInside{
-  color: #fff;
-  font-size: 16px;
-}
-
-.ChoosesBox{
-  background-color: rgb(41, 41, 41);
+.EventWrapper {
   width: 100%;
-  text-align: center;
-  height: 250px;
-  overflow-y: scroll;
-}
+  color: #3b3e47;
+};

@@ -45,3 +45,20 @@
   position: fixed;
   bottom: 65px;
 }
+
+.CardDelete{
+  color: #3b3e47;
+  margin: 10px 25px !important;
+  padding: 5px 5px !important;
+  text-transform: uppercase;
+}
+
+.CardEdit{
+  text-transform: uppercase;
+  color: #55c2bc;
+  border: 2px solid #55c2bc;
+  border-radius: 25px;
+  margin: 10px 10px !important;
+  padding: 5px 25px !important;
+}
+

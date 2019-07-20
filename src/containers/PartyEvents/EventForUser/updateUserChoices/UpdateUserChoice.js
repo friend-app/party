@@ -1,25 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import classes from './UpdateUserChoice.module.css';
 import * as actions from '../../../../store/actions/index';
 import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
-import { makeChosenIngs } from '../../../../shared/makeChosenIngs';
 import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
 import Button from '../../../../components/UI/Button/Button';
 
 class UpdateUserChoice extends Component {
   state = {
+    editMode: true,
     event: null
   };
 
   componentDidMount() {
-    if (typeof this.props.location.state === 'undefined') {
+    if (!this.props.event && localStorage.getItem("eventId")) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
+    }
+    if (!this.props.location.state) {
       this.props.history.push({
-        pathname: '/events'
+        pathname: '/events/eventForUser/userChoicesCards'
       });
     }
-    if (this.state.event !== null) {
+    if (this.props.event !== null && this.props.location.state) {
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
         this.props.location.state.userChoice.choice,
@@ -30,6 +34,15 @@ class UpdateUserChoice extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.event !== state.event) {
+      console.log('suka', props.event[props.location.state.convertedType
+         
+        
+        );
+      this.props.onUpdateUserChoiceInit(
+        this.props.location.state.type,
+        this.props.location.state.userChoice.choice,
+        props.event[props.location.state.convertedType]
+      );
       return {
         event: props.event
       };
@@ -69,21 +82,17 @@ class UpdateUserChoice extends Component {
       this.props.location.state.choiceLocationId,
       this.props.event._id
     );
-  };
 
-  makeIngs = (ings, choice) => {
-    let updatedIngs = {};
-    for (let ing of ings) {
-      updatedIngs = Object.assign(updatedIngs, {
-        [ing]: choice[ing] ? choice[ing] : 0
-      });
-    }
-    return updatedIngs;
+    this.setState({ editMode: false });
   };
 
   render() {
+
+    console.log('blya', this.state.event);
+    const redirect = !this.state.editMode ? (
+      <Redirect to='/events/eventForUser/userChoicesCards' />
+    ) : null;
     let disabledMin = null;
-    let chosenIngs = null;
     if (typeof this.props.location.state !== 'undefined') {
       disabledMin = {
         ...this.props[this.props.location.state.type]
@@ -92,40 +101,32 @@ class UpdateUserChoice extends Component {
       for (let key in this.props[this.props.location.state.type]) {
         disabledMin[key] = disabledMin[key] <= 0;
       }
-
-      chosenIngs = makeChosenIngs(this.props[this.props.location.state.type]);
     }
     let event = <Spinner />;
-    if (this.props.event) {
+    if (this.state.event) {
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
-          <h3>Change you ingredients</h3>
-          <div className={classes.ChoosesBox}>
-            <h2>Chosen Ingredient - Can be scrolled</h2>
-            {this.props.loading ? <Spinner /> : chosenIngs}
-          </div>
-          <div className={classes.EventInside}>
-            <EventControls
-              chosenIngs={this.props[this.props.location.state.type]}
-              controls={this.props.event[this.props.location.state.type]}
-              ingredientAdded={this.props.onIngredientAdded}
-              ingredientRemoved={this.props.onIngredientRemoved}
-              disabled={disabledMin}
-            />
-            <Button
-              btnType='SubmitUserChoice'
-              disabled=''
-              clicked={this.onSubmitHandler}
-            >
-              Submit
-            </Button>
-          </div>
+          <EventControls
+            chosenIngs={this.props[this.props.location.state.type]}
+            controls={this.props.event[this.props.location.state.type]}
+            ingredientAdded={this.props.onIngredientAdded}
+            ingredientRemoved={this.props.onIngredientRemoved}
+            disabled={disabledMin}
+          />
+          <Button
+            btnType='SubmitUserChoice'
+            disabled=''
+            clicked={this.onSubmitHandler}
+          >
+            Submit
+          </Button>
         </div>
       );
     }
 
     return (
       <div>
+        {redirect}
         <InsideUserMenu>{event}</InsideUserMenu>
       </div>
     );

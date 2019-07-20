@@ -7,7 +7,6 @@ import Aux from '../../../../hoc/Auxillary/Auxillary';
 
 class ChoicesTabComponent extends Component {
   componentDidMount() {
-    console.log('huy');
     this.props.history.push({
       pathname: '/events/eventForUser/userChoices'
     });

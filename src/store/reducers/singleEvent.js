@@ -8,7 +8,8 @@ const initialState = {
   foodIngredients: null,
   drinkIngredients: null,
   failLoadEvent: false,
-  link: null
+  link: null,
+  editMode: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -24,8 +25,7 @@ export default (state = initialState, { type, payload }) => {
         drinkIngredients: payload.drinkIngredients,
         link: payload.link,
         loading: false,
-        failLoadEvent: false,
-        editMode: false,
+        failLoadEvent: false
       };
 
     case actionTypes.FETCH_SINGLE_EVENT_FAIL:
@@ -85,7 +85,7 @@ export default (state = initialState, { type, payload }) => {
       };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_START:
-      return { ...state, loading: true, error: payload.error, editMode: true };
+      return { ...state, loading: true, error: payload.error };
 
     case actionTypes.UPDATE_USER_CHOICE_IN_EVENT_SUCCESS:
       return {
