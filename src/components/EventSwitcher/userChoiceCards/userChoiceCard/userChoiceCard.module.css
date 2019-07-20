@@ -1,18 +1,48 @@
-:root{
-  margin: auto 20px;
-}
-
-.MuiIcon{
+.MuiIcon {
   color: orange;
 }
 
-.userChoiceCardWrapper{
-  padding: 5px;
+.UserChoiceCardWrapper {
+  margin: 10px 24px !important;
+  padding: 0;
+  border-radius: 10px;
   margin: 10px auto;
-  box-shadow: 5px 5px 15px #eee !important;
+  -webkit-box-shadow: 0 0 10px #ddd !important;
+  box-shadow: 0 0 10px #ddd !important;
 }
 
-.Title{
+.UserChoiceCardWrapper:before {
+  background-color: transparent !important;
+}
+
+.Title {
   font-size: 18px;
   font-weight: 700;
+}
+
+.ChoiceLine {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #eee;
+  padding: 15px 24px;
+}
+
+.Spacer {
+  flex: 1 1 auto;
+}
+
+.PanelDetails {
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+.PanelSummary{
+  border-bottom: 1px solid #eee !important;
+}
+
+.Buttons{
+  padding: 10px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
