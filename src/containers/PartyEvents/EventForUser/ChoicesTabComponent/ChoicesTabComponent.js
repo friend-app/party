@@ -4,6 +4,8 @@ import { NavLink, Switch, Route } from 'react-router-dom';
 import FoodUserChoice from '../FoodUserChoice/FoodUserChoice';
 import DrinkUserChoice from '../DrinkUserChoice/DrinkUserChoice';
 import Aux from '../../../../hoc/Auxillary/Auxillary';
+import drinkImg from '../../../../assests/drink-tab.png';
+import foodImg from '../../../../assests/food.png';
 
 class ChoicesTabComponent extends Component {
   componentDidMount() {
@@ -17,24 +19,24 @@ class ChoicesTabComponent extends Component {
   }
 
   render() {
-    console.log('huy');
     return (
       <Aux>
         <div className={classes.TopMenu}>
-          {' '}
           <NavLink
             exact
             to={'/events/eventForUser/userChoices'}
             activeClassName={classes.active}
           >
-            Main Course
+            <img src={foodImg} alt='icon'/>
+            <span>Main Course</span>
           </NavLink>
           <NavLink
             exact
             to={'/events/eventForUser/userChoices/drinkUserChoice'}
             activeClassName={classes.active}
           >
-            Alcohol & Drinks
+            <img src={drinkImg} alt='icon'/>
+            <span>Alcohol & Drinks</span>
           </NavLink>
         </div>
         <Switch>

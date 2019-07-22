@@ -11,9 +11,12 @@
 }
 
 .NavigationItem a {
-  color: #000;
+  color: #8a8fa2;
   text-decoration: none;
   font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .NavigationItem a:hover,
@@ -21,6 +24,27 @@
 .NavigationItem a.active{
   color: rgb(248, 119, 13);
 }
+
+.NavigationItem a:hover img,
+.NavigationItem a:active img,
+.NavigationItem a.active img{
+  filter: grayscale(0) !important;
+}
+
+.NavigationItem img{
+  width: 30%;
+}
+
+.NavigationItem a:not(.active) img {
+  -webkit-filter: grayscale(100%); 
+  filter: grayscale(100%);
+}
+
+.TopMenu .active img{
+  -webkit-filter: grayscale(0);/* Safari 6.0 - 9.0 */
+  filter: grayscale(0);
+}
+
 
 @media (max-width: 500px) {
   .NavigationItem{

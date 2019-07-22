@@ -5,6 +5,8 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import alcoholImg from '../../../../assests/alcohol.png';
+import foodImg from '../../../../assests/food.png';
 
 const userChoiceCard = props => {
   let choices = [];
@@ -29,7 +31,7 @@ const userChoiceCard = props => {
         aria-controls='panel1a-content'
         id='panel1a-header'
       >
-        <span className={classes.Title}>Order {props.orderNumber}</span>
+        <img src={props.type === 'foodChoices' ? foodImg : alcoholImg} alt="icon"></img><span className={classes.Title}>Order {props.orderNumber}</span>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.PanelDetails}>
         <div>{ingredient}</div>
