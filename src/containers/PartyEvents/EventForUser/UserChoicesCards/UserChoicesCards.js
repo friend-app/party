@@ -68,7 +68,6 @@ class UserChoicesCards extends Component {
 
   onRedirect = () => {
     if (!localStorage.getItem('token') || !localStorage.getItem('eventId')) {
-      console.log('huy');
       return (
         <Redirect
           to={{

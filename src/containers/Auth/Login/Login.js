@@ -85,7 +85,6 @@ class Login extends Component {
 
   render() {
     let redirect = null;
-    console.log(this.state.controls.email);
     if (this.props.isAuth && localStorage.getItem('eventCode')) {
       redirect = (
         <Redirect

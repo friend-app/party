@@ -38,6 +38,17 @@
 
 .PanelSummary{
   border-bottom: 1px solid #eee !important;
+  justify-content: space-between !important;
+
+}
+.PanelSummary div{
+  flex-grow: 0;
+  align-items: center !important;
+}
+
+.PanelSummary div img{
+  width: 25%;
+  margin-right: 10px;
 }
 
 .Buttons{

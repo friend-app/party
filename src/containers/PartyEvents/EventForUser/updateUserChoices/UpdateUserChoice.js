@@ -10,20 +10,17 @@ import Button from '../../../../components/UI/Button/Button';
 
 class UpdateUserChoice extends Component {
   state = {
-    editMode: true,
+    editMode: false,
     event: null
   };
 
   componentDidMount() {
-    if (!this.props.event && localStorage.getItem("eventId")) {
-      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
-    }
-    if (!this.props.location.state) {
+    if (!this.props.location.state && this.state.editMode === false) {
       this.props.history.push({
         pathname: '/events/eventForUser/userChoicesCards'
       });
     }
-    if (this.props.event !== null && this.props.location.state) {
+    if (this.state.event !== null && this.props.location.state && this.state.editMode === true) {
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
         this.props.location.state.userChoice.choice,
@@ -34,20 +31,11 @@ class UpdateUserChoice extends Component {
 
   static getDerivedStateFromProps(props, state) {
     if (props.event !== state.event) {
-      console.log('suka', props.event[props.location.state.convertedType
-         
-        
-        );
-      this.props.onUpdateUserChoiceInit(
-        this.props.location.state.type,
-        this.props.location.state.userChoice.choice,
-        props.event[props.location.state.convertedType]
-      );
       return {
-        event: props.event
+        event: props.event,
+        editMode: true
       };
     }
-    // Return null if the state hasn't changed
     return null;
   }
 
@@ -87,8 +75,6 @@ class UpdateUserChoice extends Component {
   };
 
   render() {
-
-    console.log('blya', this.state.event);
     const redirect = !this.state.editMode ? (
       <Redirect to='/events/eventForUser/userChoicesCards' />
     ) : null;
