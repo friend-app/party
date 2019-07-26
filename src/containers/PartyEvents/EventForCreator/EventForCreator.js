@@ -42,8 +42,6 @@ class EventForCreator extends Component {
     this.props.onPublishEvent(this.props.event._id);
   };
 
-  share = () => {};
-
   render() {
     let eventInfo = <Spinner />;
     let usersList = null;

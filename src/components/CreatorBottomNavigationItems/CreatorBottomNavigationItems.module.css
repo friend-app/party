@@ -1,4 +1,4 @@
-.UserBottomNavigationItems {
+.CreatorBottomNavigationItems {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -15,8 +15,8 @@
 }
 
 @media (max-width: 767px) {
-  .UserBottomNavigationItems {
-    flex-flow: column;
+  .CreatorBottomNavigationItems {
+    flex-flow: row;
     align-items: center;
   }
 }

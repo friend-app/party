@@ -25,7 +25,7 @@ class Signup extends Component {
           isEmail: true
         },
         touched: false,
-        valid: true
+        valid: false
       },
       password: {
         elementType: 'input',
@@ -41,7 +41,7 @@ class Signup extends Component {
           maxLength: 12
         },
         touched: false,
-        valid: true
+        valid: false
       },
       name: {
         elementType: 'input',
@@ -57,7 +57,7 @@ class Signup extends Component {
           maxLength: 45
         },
         touched: false,
-        valid: true
+        valid: false
       }
     },
     formIsValid: false
@@ -127,7 +127,7 @@ class Signup extends Component {
           inputComponent={formEl.properties.elementType}
           inputProps={formEl.properties.elementConfig}
           autoFocus={formEl.properties.elementConfig.type === 'email'}
-          error={!formEl.properties.valid}
+          error={!formEl.properties.valid && formEl.properties.touched}
           onChange={event => this.inputChangedHanlder(event, formEl.inputName)}
           fullWidth={true}
           // invalid={!formEl.properties.valid}
@@ -158,7 +158,7 @@ class Signup extends Component {
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <Button btnType='Success' disabled={!this.state.formIsValid}>
+            <Button btnType='AuthSubmit' disabled={!this.state.formIsValid}>
               SUBMIT
             </Button>
           </form>

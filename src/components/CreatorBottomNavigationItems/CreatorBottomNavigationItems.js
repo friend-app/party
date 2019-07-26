@@ -1,25 +1,24 @@
-import React from 'react';
-import CreatorBottomNavigationItem from './CreatorBottomNavigationItem/CreatorBottomNavigationItem';
+import React from "react";
+import CreatorBottomNavigationItem from "./CreatorBottomNavigationItem/CreatorBottomNavigationItem";
+import classes from "./CreatorBottomNavigationItems.module.css";
+import choicesImg from "../../assests/my order orange.svg";
+import eventImg from "../../assests/party orange.svg";
+import foodCardsImg from "../../assests/cards orange.svg";
 
-import classes from './CreatorBottomNavigationItems.module.css';
-
-const UserBottomNavigationItems = props => {
+const CreatorBottomNavigationItems = props => {
   return (
-      <nav className={classes.UserBottomNavigationItems}>
-        <CreatorBottomNavigationItem link='/events/eventForCreator'>
-          Event
-        </CreatorBottomNavigationItem>
-        <CreatorBottomNavigationItem link='/events/eventForCreator/foodCreatorChoice'>
-          Food Choice
-        </CreatorBottomNavigationItem>
-        <CreatorBottomNavigationItem link='/events/eventForCreator/drinkCreatorChoice'>
-          Drink Choice
-        </CreatorBottomNavigationItem>
-        <CreatorBottomNavigationItem link='/events/eventForCreator/CreatorChoicesCards'>
-          Food Cards
-        </CreatorBottomNavigationItem>
-      </nav>
+    <nav className={classes.CreatorBottomNavigationItems}>
+    <CreatorBottomNavigationItem link='/events/eventForCreator' isExact={true}>
+    <img src={eventImg} alt="icon"></img><span>Event</span>
+    </CreatorBottomNavigationItem>
+    <CreatorBottomNavigationItem link='/events/eventForCreator/creatorChoices' isExact={false}>
+     <img src={choicesImg} alt="icon"></img><span>Choices</span>
+    </CreatorBottomNavigationItem>
+    <CreatorBottomNavigationItem link='/events/eventForCreator/creatorChoicesCards' isExact={true}>
+    <img src={foodCardsImg} alt="icon"></img><span>Food Cards</span>
+    </CreatorBottomNavigationItem>
+  </nav>
   );
 };
 
-export default UserBottomNavigationItems;
+export default CreatorBottomNavigationItems;
