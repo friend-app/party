@@ -1,25 +1,25 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import Input from "../../../components/UI/Forms/Input/Input";
-import Input from '@material-ui/core/Input';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import classes from './Signup.module.css';
-import { checkValidity } from '../../../shared/checkValidity';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import Button from '../../../components/UI/Button/Button';
-import * as actions from '../../../store/actions/index';
+import Input from "@material-ui/core/Input";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import classes from "./Signup.module.css";
+import { checkValidity } from "../../../shared/checkValidity";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Button from "../../../components/UI/Button/Button";
+import * as actions from "../../../store/actions/index";
 
 class Signup extends Component {
   state = {
     controls: {
       email: {
-        elementType: 'input',
-        elementLabel: 'Your Email',
+        elementType: "input",
+        elementLabel: "Your Email",
         elementConfig: {
-          type: 'email',
-          placeholder: 'Please enter your email'
+          type: "email",
+          placeholder: "Please enter your email"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           isEmail: true
@@ -28,13 +28,13 @@ class Signup extends Component {
         valid: false
       },
       password: {
-        elementType: 'input',
-        elementLabel: 'Your Password',
+        elementType: "input",
+        elementLabel: "Your Password",
         elementConfig: {
-          type: 'password',
-          placeholder: 'Please enter your password'
+          type: "password",
+          placeholder: "Please enter your password"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           minLength: 5,
@@ -44,17 +44,33 @@ class Signup extends Component {
         valid: false
       },
       name: {
-        elementType: 'input',
-        elementLabel: 'Your Name',
+        elementType: "input",
+        elementLabel: "Your Name",
         elementConfig: {
-          type: 'text',
-          placeholder: 'Please enter your name'
+          type: "text",
+          placeholder: "Please enter your name"
         },
-        value: '',
+        value: "",
         validators: {
           required: true,
           minLength: 3,
           maxLength: 45
+        },
+        touched: false,
+        valid: false
+      },
+      file: {
+        elementType: "input",
+        elementLabel: "upload Image",
+        elementConfig: {
+          type: "File",
+          placeholder: ""
+        },
+        value: "",
+        tempUrl: null,
+        validators: {
+          required: true,
+          fileSize: 1500000
         },
         touched: false,
         valid: false
@@ -64,18 +80,35 @@ class Signup extends Component {
   };
 
   inputChangedHanlder = (event, inputName) => {
-    const updatedControls = {
-      ...this.state.controls,
-      [inputName]: {
-        ...this.state.controls[inputName],
-        value: event.target.value,
-        valid: checkValidity(
-          event.target.value,
-          this.state.controls[inputName].validators
-        ),
-        touched: true
-      }
-    };
+    let updatedControls;
+    if (event.target.files) {
+      updatedControls = {
+        ...this.state.controls,
+        [inputName]: {
+          ...this.state.controls[inputName],
+          value: event.target.files[0],
+          tempUrl: URL.createObjectURL(event.target.files[0]),
+          valid: checkValidity(
+            event.target.files[0],
+            this.state.controls[inputName].validators
+          ),
+          touched: true
+        }
+      };
+    } else {
+      updatedControls = {
+        ...this.state.controls,
+        [inputName]: {
+          ...this.state.controls[inputName],
+          value: event.target.value,
+          valid: checkValidity(
+            event.target.value,
+            this.state.controls[inputName].validators
+          ),
+          touched: true
+        }
+      };
+    }
 
     let formIsValid = true;
 
@@ -91,25 +124,27 @@ class Signup extends Component {
     this.props.onSignup(
       this.state.controls.email.value,
       this.state.controls.password.value,
-      this.state.controls.name.value
+      this.state.controls.name.value,
+      this.state.controls.file.value
     );
   };
 
   render() {
+    console.log(this.state.controls.file);
     let redirect = null;
 
-    if (this.props.isAuth && localStorage.getItem('eventCode')) {
+    if (this.props.isAuth && localStorage.getItem("eventCode")) {
       redirect = (
         <Redirect
           to={
-            '/events/addUserToEvent?eventCode=' +
-            localStorage.getItem('eventCode')
+            "/events/addUserToEvent?eventCode=" +
+            localStorage.getItem("eventCode")
           }
         />
       );
     }
-    if (this.props.isAuth && !localStorage.getItem('eventCode')) {
-      redirect = <Redirect to='/events' />;
+    if (this.props.isAuth && !localStorage.getItem("eventCode")) {
+      redirect = <Redirect to="/events" />;
     }
 
     let formElementArr = [];
@@ -126,14 +161,35 @@ class Signup extends Component {
         <Input
           inputComponent={formEl.properties.elementType}
           inputProps={formEl.properties.elementConfig}
-          autoFocus={formEl.properties.elementConfig.type === 'email'}
+          autoFocus={formEl.properties.elementConfig.type === "email"}
           error={!formEl.properties.valid && formEl.properties.touched}
           onChange={event => this.inputChangedHanlder(event, formEl.inputName)}
           fullWidth={true}
+          accept={
+            formEl.properties.elementConfig.type === "File" ? "image/*" : null
+          }
+          multipart={
+            formEl.properties.elementConfig.type === "File" ? "true" : null
+          }
+          style={
+            formEl.properties.elementConfig.type === "File"
+              ? { display: "none" }
+              : null
+          }
+          inputRef={
+            formEl.properties.elementConfig.type === "File"
+              ? input => (this.fileInput = input)
+              : null
+          }
           // invalid={!formEl.properties.valid}
           // touched={formEl.properties.touched}
           // shouldValidate={formEl.properties.validators}
         />
+        {formEl.properties.elementConfig.type === "File" ? (
+          <p onClick={() => this.fileInput.click()}>Upload File</p>
+        ) : (
+          ""
+        )}
       </div>
 
       // <Input
@@ -148,7 +204,6 @@ class Signup extends Component {
       //   shouldValidate={formEl.properties.validators}
       // />
     ));
-
     return (
       <div className={classes.SignupWrapper}>
         {redirect}
@@ -158,7 +213,8 @@ class Signup extends Component {
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <Button btnType='AuthSubmit' disabled={!this.state.formIsValid}>
+            <img src={this.state.controls.file.tempUrl} />
+            <Button btnType="AuthSubmit" disabled={!this.state.formIsValid}>
               SUBMIT
             </Button>
           </form>
@@ -176,8 +232,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSignup: (email, password, name) =>
-      dispatch(actions.signup(email, password, name))
+    onSignup: (email, password, name, image) =>
+      dispatch(actions.signup(email, password, name, image))
   };
 };
 

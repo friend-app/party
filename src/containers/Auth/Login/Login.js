@@ -43,8 +43,9 @@ class Login extends Component {
         },
         touched: false,
         valid: false
-      }
+      },
     },
+      
     formIsValid: false
   };
 
