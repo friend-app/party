@@ -1,7 +1,8 @@
 const Event = require("../models/Event");
 const Link = require("../models/Link");
 const uniqid = require("uniqid");
-const upload = require("../uploads/storage_model/Storage");
+const upload = require("../uploads/storage_model/Storage")
+
 
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
@@ -100,24 +101,32 @@ module.exports.fetchSingleUserEvent = function(req, res, next) {
 };
 
 module.exports.createEvent = function(req, res) {
-  const event = new Event(req.body);
-  event
-    .save()
-    .then(event => {
-      res.status(201).json({
-        message: "Event Saved!",
-        event: event
-      });
-    })
-    .catch(error => {
-      console.log(error);
+  upload(req,res,function(err) {
+    if(err) {
+      console.log(err);
+      return res.end("Error uploading file.");
+    }
+    const preEvent = JSON.parse(req.body.jsonKeys);
+    preEvent.photo = req.file.filename;
+    const event = new Event(preEvent);
+    event
+        .save()
+        .then(() => {
+          console.log('Event OK!')
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+    res.status(201).json({
+      message: "Event Saved!",
+      event: event
     });
-  // upload(req,res,function(err) {
-  //   if(err) {
-  //     return res.end("Error uploading file.");
-  //   }
-  //   res.end("File is uploaded");
-  // });
+  });
+
+
+
+
 };
 
 module.exports.updateCreatedEvent = function(req, res) {
