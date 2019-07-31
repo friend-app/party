@@ -1,7 +1,7 @@
 const Event = require("../models/Event");
 const Link = require("../models/Link");
 const uniqid = require("uniqid");
-const upload = require("../uploads/storage_model/Storage")
+const upload = require("../uploads/storage_model/Storage");
 
 
 module.exports.fetchCreatedEvents = function(req, res) {
