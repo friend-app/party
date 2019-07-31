@@ -4,6 +4,7 @@ import classes from "./CreatorBottomNavigationItems.module.css";
 import choicesImg from "../../assests/my order orange.svg";
 import eventImg from "../../assests/party orange.svg";
 import foodCardsImg from "../../assests/cards orange.svg";
+import ingredientImg from "../../assests/ingredients orange.svg";
 
 const CreatorBottomNavigationItems = props => {
   return (
@@ -16,6 +17,9 @@ const CreatorBottomNavigationItems = props => {
     </CreatorBottomNavigationItem>
     <CreatorBottomNavigationItem link='/events/eventForCreator/creatorChoicesCards' isExact={true}>
     <img src={foodCardsImg} alt="icon"></img><span>Food Cards</span>
+    </CreatorBottomNavigationItem>
+    <CreatorBottomNavigationItem link='/events/eventForCreator/ingredientList' isExact={true}>
+    <img src={ingredientImg} alt="icon"></img><span>Ingredients</span>
     </CreatorBottomNavigationItem>
   </nav>
   );

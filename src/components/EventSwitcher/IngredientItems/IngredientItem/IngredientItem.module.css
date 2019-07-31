@@ -1,0 +1,8 @@
+.IngredientItemWrapper{
+    display: flex;
+    flex-direction: raw;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px;
+    border-bottom: 1px solid #ccc;
+}

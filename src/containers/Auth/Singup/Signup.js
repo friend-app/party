@@ -213,7 +213,7 @@ class Signup extends Component {
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <img src={this.state.controls.file.tempUrl} />
+            <img src={this.state.controls.file.tempUrl} alt="icon"/>
             <Button btnType="AuthSubmit" disabled={!this.state.formIsValid}>
               SUBMIT
             </Button>

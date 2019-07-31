@@ -17,10 +17,9 @@ import EventForUser from "./containers/PartyEvents/EventForUser/EventForUser";
 import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCreator";
 import UserChoicesCards from "./containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards";
 import UpdateUserChoice from "./containers/PartyEvents/EventForUser/UpdateUserChoices/UpdateUserChoice";
-import FoodCreatorChoice from "./containers/PartyEvents/EventForCreator/FoodCreatorChoice/FoodCreatorChoice";
-import DrinkCreatorChoice from "./containers/PartyEvents/EventForCreator/DrinkCreatorChoice/DrinkCreatorChoice";
 import CreatorChoicesCards from "./containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards";
 import UpdateCreatorChoice from "./containers/PartyEvents/EventForCreator/UpdateCreatorChoices/UpdateCreatorChoice";
+import IngredientList from "./containers/PartyEvents/EventForCreator/IngredientList/IngredientList";
 import AddUserToEvent from "./containers/PartyEvents/AddUserToEvent/AddUserToEvent";
 import ChoicesUserTabComponent from "./containers/PartyEvents/EventForUser/ChoicesUserTabComponent/ChoicesUserTabComponent";
 import ChoicesCreatorTabComponent from "./containers/PartyEvents/EventForCreator/ChoicesCreatorTabComponent/ChoicesCreatorTabComponent";
@@ -95,16 +94,6 @@ class App extends Component {
             path="/events/eventForCreator"
             component={EventForCreator}
           />
-          {/* <Route
-            exact
-            path="/events/eventForCreator/foodCreatorChoice"
-            component={FoodCreatorChoice}
-          />
-          <Route
-            exact
-            path="/events/eventForCreator/drinkCreatorChoice"
-            component={DrinkCreatorChoice}
-          /> */}
           <Route
             exact
             path="/events/eventForCreator/updateCreatorChoice"
@@ -114,6 +103,11 @@ class App extends Component {
             exact
             path="/events/eventForCreator/CreatorChoicesCards"
             component={CreatorChoicesCards}
+          />
+          <Route
+            exact
+            path="/events/eventForCreator/ingredientList"
+            component={IngredientList}
           />
           <Route
             exact

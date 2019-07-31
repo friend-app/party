@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 import * as actions from "../../../../store/actions/index";
 import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
-import { makeChosenIngs } from "../../../../shared/makeChosenIngs";
 import EventControls from "../../../../components/EventSwitcher/EventControls/EventControls";
 import Button from "../../../../components/UI/Button/Button";
 
@@ -92,7 +91,6 @@ class UpdateCreatorChoice extends Component {
       <Redirect to="/events/eventForCreator/CreatorChoicesCards" />
     ) : null;
     let disabledMin = null;
-    let chosenIngs = null;
     if (typeof this.props.location.state !== "undefined") {
       disabledMin = {
         ...this.props[this.props.location.state.type]
@@ -102,7 +100,6 @@ class UpdateCreatorChoice extends Component {
         disabledMin[key] = disabledMin[key] <= 0;
       }
 
-      chosenIngs = makeChosenIngs(this.props[this.props.location.state.type]);
     }
     let event = <Spinner />;
     if (this.props.event) {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import classes from "./CreatorChoicesCards.module.css";
 import { connect } from "react-redux";
-// import { Redirect } from 'react-router-dom';
 import * as actions from "../../../../store/actions/index";
 import CreatorChoiceCards from "../../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
