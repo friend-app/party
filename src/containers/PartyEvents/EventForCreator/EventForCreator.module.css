@@ -1,33 +1,7 @@
-.EventWrapper {
-  width: 800px;
-  margin: 25px auto 15px auto;
-  background: #713674;
-  color: #fff;
-  padding: 10px 25px;
+.EventWrapper{
+  width: 100%;
+  color: #3b3e47;
   cursor: pointer;
   text-align: center;
 }
 
-.EventInside {
-  color: #fff;
-  font-size: 16px;
-}
-
-.ChoosesBox {
-  background-color: rgb(41, 41, 41);
-  width: 100%;
-  text-align: center;
-  height: 250px;
-  overflow-y: scroll;
-}
-
-.WhatsappShare {
-  display: flex !important;
-  justify-content: center !important;
-}
-
-.WhatsappShare:active,
-.WhatsappShare:focus {
-  outline: none;
-  border: none;
-}

@@ -1,25 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import classes from './UpdateCreatorChoice.module.css';
-import * as actions from '../../../../store/actions/index';
-import InsideCreatorMenu from '../../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
-import Spinner from '../../../../components/UI/Spinner/Spinner';
-import { makeChosenIngs } from '../../../../shared/makeChosenIngs';
-import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
-import Button from '../../../../components/UI/Button/Button';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import classes from "./UpdateCreatorChoice.module.css";
+import { Redirect } from "react-router-dom";
+import * as actions from "../../../../store/actions/index";
+import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
+import Spinner from "../../../../components/UI/Spinner/Spinner";
+import EventControls from "../../../../components/EventSwitcher/EventControls/EventControls";
+import Button from "../../../../components/UI/Button/Button";
 
 class UpdateCreatorChoice extends Component {
   state = {
+    editMode: false,
     event: null
   };
 
   componentDidMount() {
-    if (typeof this.props.location.state === 'undefined') {
+    if (!this.props.location.state && this.state.editMode === false) {
       this.props.history.push({
-        pathname: '/events'
+        pathname: "/events/eventForCreator/userChoicesCards"
       });
     }
-    if (this.state.event !== null) {
+    if (
+      this.state.event !== null &&
+      this.props.location.state &&
+      this.state.editMode === true
+    ) {
       this.props.onUpdateUserChoiceInit(
         this.props.location.state.type,
         this.props.location.state.userChoice.choice,
@@ -31,10 +36,10 @@ class UpdateCreatorChoice extends Component {
   static getDerivedStateFromProps(props, state) {
     if (props.event !== state.event) {
       return {
-        event: props.event
+        event: props.event,
+        editMode: true
       };
     }
-    // Return null if the state hasn't changed
     return null;
   }
 
@@ -82,9 +87,11 @@ class UpdateCreatorChoice extends Component {
   };
 
   render() {
+    const redirect = !this.state.editMode ? (
+      <Redirect to="/events/eventForCreator/CreatorChoicesCards" />
+    ) : null;
     let disabledMin = null;
-    let chosenIngs = null;
-    if (typeof this.props.location.state !== 'undefined') {
+    if (typeof this.props.location.state !== "undefined") {
       disabledMin = {
         ...this.props[this.props.location.state.type]
       };
@@ -93,18 +100,11 @@ class UpdateCreatorChoice extends Component {
         disabledMin[key] = disabledMin[key] <= 0;
       }
 
-      chosenIngs = makeChosenIngs(this.props[this.props.location.state.type]);
     }
     let event = <Spinner />;
     if (this.props.event) {
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
-          <h3>Change you ingredients</h3>
-          <div className={classes.ChoosesBox}>
-            <h2>Chosen Ingredient - Can be scrolled</h2>
-            {this.props.loading ? <Spinner /> : chosenIngs}
-          </div>
-          <div className={classes.EventInside}>
             <EventControls
               chosenIngs={this.props[this.props.location.state.type]}
               controls={this.props.event[this.props.location.state.type]}
@@ -113,19 +113,19 @@ class UpdateCreatorChoice extends Component {
               disabled={disabledMin}
             />
             <Button
-              btnType='SubmitUserChoice'
-              disabled=''
+              btnType="SubmitUserChoice"
+              disabled=""
               clicked={this.onSubmitHandler}
             >
               Submit
             </Button>
           </div>
-        </div>
       );
     }
 
     return (
       <div>
+        {redirect}
         <InsideCreatorMenu>{event}</InsideCreatorMenu>
       </div>
     );

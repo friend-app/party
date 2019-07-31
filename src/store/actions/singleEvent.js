@@ -33,11 +33,13 @@ export const fetchEventFail = error => ({
 });
 
 export const fetchSingleCreatedEvent = eventId => {
+
   return dispatch => {
     dispatch(fetchEventStart());
     axios
       .get("fetchSingleCreatedEvent/" + eventId)
       .then(response => {
+        console.log(response);
         localStorage.setItem("eventId", response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -47,12 +49,13 @@ export const fetchSingleCreatedEvent = eventId => {
         response.data.event.drinkIngredients.map(ingredient => {
           return (drinkIngredients[ingredient] = 0);
         });
+        const link = response.data.link ? response.data.link.link : null;
         dispatch(
           fetchEventSuccess(
             response.data.event,
             foodIngredients,
             drinkIngredients,
-            response.data.link.link
+            link
           )
         );
       })

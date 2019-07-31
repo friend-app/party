@@ -89,14 +89,21 @@ export const login = (email, password) => {
   };
 };
 
-export const signup = (email, password, name) => {
+export const signup = (email, password, name, image) => {
   return dispatch => {
     dispatch(authStart());
+    // const signupInfo = new FormData();
+    // signupInfo.append('image', image);
+    // signupInfo.append('password', password);
+    // signupInfo.append('nickname', name);
+    // signupInfo.append('email', email);
     const signupInfo = {
       email: email,
       password: password,
-      nickname: name
+      nickname: name,
+      image: image
     };
+    console.log(signupInfo);
     axios
       .post('http://localhost:4000/api/auth/register/', signupInfo)
       .then(response => {

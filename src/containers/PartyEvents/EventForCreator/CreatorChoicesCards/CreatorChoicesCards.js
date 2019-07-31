@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import classes from './CreatorChoicesCards.module.css';
-import { connect } from 'react-redux';
-// import { Redirect } from 'react-router-dom';
-import * as actions from '../../../../store/actions/index';
-import CreatorChoiceCards from '../../../../components/EventSwitcher/userChoiceCards/userChoiceCards';
-import Spinner from '../../../../components/UI/Spinner/Spinner';
-import Aux from '../../../../hoc/Auxillary/Auxillary';
-import InsideCreatorMenu from '../../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
+import React, { Component } from "react";
+import classes from "./CreatorChoicesCards.module.css";
+import { connect } from "react-redux";
+import * as actions from "../../../../store/actions/index";
+import CreatorChoiceCards from "../../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
+import Spinner from "../../../../components/UI/Spinner/Spinner";
+import Aux from "../../../../hoc/Auxillary/Auxillary";
+import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
 
 class CreatorChoicesCards extends Component {
   componentDidMount() {
-    if(!this.props.event && localStorage.getItem('eventId')){
-      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
-    } if ( !localStorage.getItem('eventId') ) {
+    if (!this.props.event && localStorage.getItem("eventId")) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
+    }
+    if (!localStorage.getItem("eventId")) {
       this.props.history.push({
         pathname: "/events"
       });
@@ -22,18 +22,18 @@ class CreatorChoicesCards extends Component {
   onUpdate = (userChoice, choiceLocationId, type) => {
     let convertedType = null;
     switch (type) {
-      case 'foodChoices':
-        convertedType = 'foodIngredients';
+      case "foodChoices":
+        convertedType = "foodIngredients";
         break;
-      case 'drinksChoices':
-        convertedType = 'drinkIngredients';
+      case "drinksChoices":
+        convertedType = "drinkIngredients";
         break;
       default:
         return null;
     }
 
     return this.props.history.push({
-      pathname: '/events/eventForCreator/updateCreatorChoice',
+      pathname: "/events/eventForCreator/updateCreatorChoice",
       state: {
         choiceType: type,
         type: convertedType,
@@ -75,7 +75,7 @@ class CreatorChoicesCards extends Component {
       foodCards = (
         <CreatorChoiceCards
           user={user}
-          choiceType='foodChoices'
+          choiceType="foodChoices"
           onDelete={this.onDelete}
           clicked={this.onUpdate}
         />
@@ -83,7 +83,7 @@ class CreatorChoicesCards extends Component {
       drinksCards = (
         <CreatorChoiceCards
           user={user}
-          choiceType='drinksChoices'
+          choiceType="drinksChoices"
           onDelete={this.onDelete}
           clicked={this.onUpdate}
         />
@@ -92,7 +92,8 @@ class CreatorChoicesCards extends Component {
 
     const allCards = (
       <Aux>
-        <h2>Food cards</h2> {foodCards} <h2>Drinks Cards</h2> {drinksCards}
+        {foodCards}
+        {drinksCards}
       </Aux>
     );
 
@@ -109,7 +110,7 @@ class CreatorChoicesCards extends Component {
 const mapStateToProps = state => ({
   event: state.singleEvent.event,
   userId: state.auth.userId,
-  loading: state.singleEvent.loading,
+  loading: state.singleEvent.loading
 });
 
 const mapDispatchToProps = dispatch => {

@@ -3,6 +3,7 @@
 }
 
 .BottomMenu{
+  box-shadow: 0px -4px 25px rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: 0px -4px 25px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0px -4px 25px rgba(0, 0, 0, 0.1);
   display: flex;

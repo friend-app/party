@@ -1,8 +1,5 @@
 .UserCardsWrapper{
-    width: 800px;
-    margin: 25px auto 15px auto;
-    background: #713674;
-    color: #fff;
-    padding: 10px 25px;
-    text-align: center;
+  width: 100%;
+  color: #3b3e47;
+  text-align: center;
   }
