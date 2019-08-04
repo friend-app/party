@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Input from "../../../components/UI/Forms/Input/Input";
 import Input from "@material-ui/core/Input";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -87,7 +86,9 @@ class Signup extends Component {
         [inputName]: {
           ...this.state.controls[inputName],
           value: event.target.files[0],
-          tempUrl: URL.createObjectURL(event.target.files[0]),
+          tempUrl: event.target.files[0]
+            ? URL.createObjectURL(event.target.files[0])
+            : null,
           valid: checkValidity(
             event.target.files[0],
             this.state.controls[inputName].validators
@@ -191,18 +192,6 @@ class Signup extends Component {
           ""
         )}
       </div>
-
-      // <Input
-      //   key={formEl.inputName}
-      //   label={formEl.properties.elementLabel}
-      //   inputType={formEl.properties.elementType}
-      //   elementConfig={formEl.properties.elementConfig}
-      //   value={formEl.properties.value}
-      //   changed={event => this.inputChangedHanlder(event, formEl.inputName)}
-      //   invalid={!formEl.properties.valid}
-      //   touched={formEl.properties.touched}
-      //   shouldValidate={formEl.properties.validators}
-      // />
     ));
     return (
       <div className={classes.SignupWrapper}>
@@ -213,7 +202,11 @@ class Signup extends Component {
         ) : (
           <form onSubmit={this.onSubmitHandler}>
             {formElements}
-            <img src={this.state.controls.file.tempUrl} alt="icon"/>
+            <div className={classes.Image}>
+              {this.state.controls.file.tempUrl ? (
+                <img src={this.state.controls.file.tempUrl} alt="icon" />
+              ) : null}
+            </div>
             <Button btnType="AuthSubmit" disabled={!this.state.formIsValid}>
               SUBMIT
             </Button>

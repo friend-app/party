@@ -1,12 +1,19 @@
-.CreateEventWrapper{
-    width: 450px;
-    background-color: #fff;
-    margin: 150px auto 0 auto;
-    box-shadow: 0 0 5px #ccc;
-    box-sizing: border-box;
-    padding: 10px 50px 40px 50px;
+.CreateEventWrapper {
+  width: 80%;
+  background-color: #fff;
+  margin: 150px auto 0 auto;
+  box-shadow: 0 0 5px #ccc;
+  box-sizing: border-box;
+  padding: 10px 50px 40px 50px;
 }
 
-.CreateEventWrapper h1, h2, h3{
-   text-align: center;
+.Image,
+.Image img {
+  max-width: 100%;
+}
+
+.CreateEventWrapper h1,
+h2,
+h3 {
+  text-align: center;
 }

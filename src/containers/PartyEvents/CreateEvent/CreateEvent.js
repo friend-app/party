@@ -1,24 +1,25 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import Input from '../../../components/UI/Forms/Input/Input';
-import classes from './CreateEvent.module.css';
-import { checkValidity } from '../../../shared/checkValidity';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import Button from '../../../components/UI/Button/Button';
-import Aux from '../../../hoc/Auxillary/Auxillary';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../../store/actions/index";
+import Input from "../../../components/UI/Forms/Input/Input";
+import InputUI from "@material-ui/core/Input";
+import classes from "./CreateEvent.module.css";
+import { checkValidity } from "../../../shared/checkValidity";
+import Spinner from "../../../components/UI/Spinner/Spinner";
+import Button from "../../../components/UI/Button/Button";
+import Aux from "../../../hoc/Auxillary/Auxillary";
 
 export class CreateEvent extends Component {
   state = {
     controls: {
       title: {
-        elementType: 'input',
-        elementLabel: 'Event title',
+        elementType: "input",
+        elementLabel: "Event title",
         elementConfig: {
-          type: 'text',
-          placeholder: 'Enter event title'
+          type: "text",
+          placeholder: "Enter event title"
         },
-        value: '',
+        value: "",
         validators: {
           required: true
         },
@@ -26,13 +27,13 @@ export class CreateEvent extends Component {
         valid: false
       },
       address: {
-        elementType: 'input',
-        elementLabel: 'Event address',
+        elementType: "input",
+        elementLabel: "Event address",
         elementConfig: {
-          type: 'text',
-          placeholder: 'Enter address of the event'
+          type: "text",
+          placeholder: "Enter address of the event"
         },
-        value: '',
+        value: "",
         validators: {
           required: true
         },
@@ -40,11 +41,11 @@ export class CreateEvent extends Component {
         valid: false
       },
       date: {
-        elementType: 'date-picker',
-        elementLabel: 'Choose event date & time',
+        elementType: "date-picker",
+        elementLabel: "Choose event date & time",
         elementConfig: {
-          type: '',
-          placeholder: 'Choose event date & time'
+          type: "",
+          placeholder: "Choose event date & time"
         },
         value: new Date(),
         startDate: new Date(),
@@ -55,20 +56,35 @@ export class CreateEvent extends Component {
         valid: false
       },
       description: {
-        elementType: 'textarea',
-        elementLabel: 'Event description',
+        elementType: "textarea",
+        elementLabel: "Event description",
         elementConfig: {
-          type: 'textarea',
-          placeholder: 'Enter address of the event',
+          type: "textarea",
+          placeholder: "Enter address of the event",
           rows: 6,
           cols: 10
         },
-        value: '',
+        value: "",
         validators: {
           required: true
         },
         touched: false,
         valid: false
+      },
+      file: {
+        elementType: "input",
+        elementLabel: "upload Image",
+        elementConfig: {
+          type: "File",
+          placeholder: ""
+        },
+        value: "",
+        tempUrl: null,
+        validators: {
+          fileSize: 1500000
+        },
+        touched: false,
+        valid: true
       }
     },
     formIsValid: false
@@ -86,7 +102,7 @@ export class CreateEvent extends Component {
   parseEventAndAddToState() {
     let updateControls = { ...this.state.controls };
     for (let key in this.state.controls) {
-      if (key === 'date') {
+      if (key === "date") {
         updateControls[key].value = new Date(this.props.event[key]);
         updateControls[key].valid = true;
       } else {
@@ -94,7 +110,7 @@ export class CreateEvent extends Component {
         updateControls[key].valid = true;
       }
     }
-    this.setState({ controls: updateControls, formIsValid: true});
+    this.setState({ controls: updateControls, formIsValid: true });
   }
 
   inputChangedHanlder = (event, inputName) => {
@@ -110,6 +126,22 @@ export class CreateEvent extends Component {
           value: event,
           valid: checkValidity(
             event,
+            this.state.controls[inputName].validators
+          ),
+          touched: true
+        }
+      };
+    } else if (event.target.files) {
+      updatedControls = {
+        ...this.state.controls,
+        [inputName]: {
+          ...this.state.controls[inputName],
+          value: event.target.files[0],
+          tempUrl: event.target.files[0]
+            ? URL.createObjectURL(event.target.files[0])
+            : null,
+          valid: checkValidity(
+            event.target.files[0],
             this.state.controls[inputName].validators
           ),
           touched: true
@@ -142,36 +174,37 @@ export class CreateEvent extends Component {
   onSubmitHandler = event => {
     event.preventDefault();
     if (!this.props.event) {
+      const image = this.state.controls.file.value;
       const createEventDetails = {
         title: this.state.controls.title.value,
         address: this.state.controls.address.value,
         date: this.state.controls.date.value,
         description: this.state.controls.description.value,
-        creatorId: localStorage.getItem('userId'),
-        nickname: localStorage.getItem('nickname'),
+        creatorId: localStorage.getItem("userId"),
+        nickname: localStorage.getItem("nickname"),
         users: [
           {
-            user: localStorage.getItem('userId'),
+            user: localStorage.getItem("userId"),
             foodChoices: [],
             drinksChoices: []
           }
         ]
       };
-      this.props.onCreateEvent(createEventDetails);
+      this.props.onCreateEvent(createEventDetails, image);
     } else {
       const updateEventDetails = {
         title: this.state.controls.title.value,
         address: this.state.controls.address.value,
         date: this.state.controls.date.value,
         description: this.state.controls.description.value,
-      }
+        image: this.state.controls.file.value
+      };
       this.props.onUpdateEvent(this.props.event._id, updateEventDetails);
     }
-    
   };
 
   OnAddIngsRedirect = eventId => {
-    this.props.history.push('/events/create-event/add-ingredients', {
+    this.props.history.push("/events/create-event/add-ingredients", {
       eventId: eventId
     });
   };
@@ -185,21 +218,66 @@ export class CreateEvent extends Component {
       });
     }
 
-    let formElements = formElementArr.map(formEl => (
-      <Input
-        selected={this.state.controls.date.value}
-        key={formEl.inputName}
-        label={formEl.properties.elementLabel}
-        inputType={formEl.properties.elementType}
-        elementConfig={formEl.properties.elementConfig}
-        value={formEl.properties.value}
-        changed={event => this.inputChangedHanlder(event, formEl.inputName)}
-        invalid={!formEl.properties.valid}
-        touched={formEl.properties.touched}
-        shouldValidate={formEl.properties.validators}
-      />
-    ));
-
+    let formElements = formElementArr.map(formEl => {
+      if (formEl.inputName === "date") {
+        return (
+          <Input
+            selected={this.state.controls.date.value}
+            key={formEl.inputName}
+            label={formEl.properties.elementLabel}
+            inputType={formEl.properties.elementType}
+            elementConfig={formEl.properties.elementConfig}
+            value={formEl.properties.value}
+            changed={event => this.inputChangedHanlder(event, formEl.inputName)}
+            invalid={!formEl.properties.valid}
+            touched={formEl.properties.touched}
+            shouldValidate={formEl.properties.validators}
+          />
+        );
+      } else {
+        return (
+          <div key={formEl.inputName}>
+            <label>{formEl.properties.elementLabel}</label>
+            <InputUI
+              inputComponent={formEl.properties.elementType}
+              inputProps={formEl.properties.elementConfig}
+              autoFocus={formEl.properties.elementConfig.type === "email"}
+              error={!formEl.properties.valid && formEl.properties.touched}
+              onChange={event =>
+                this.inputChangedHanlder(event, formEl.inputName)
+              }
+              fullWidth={true}
+              accept={
+                formEl.properties.elementConfig.type === "File"
+                  ? "image/*"
+                  : null
+              }
+              multipart={
+                formEl.properties.elementConfig.type === "File" ? "true" : null
+              }
+              style={
+                formEl.properties.elementConfig.type === "File"
+                  ? { display: "none" }
+                  : null
+              }
+              inputRef={
+                formEl.properties.elementConfig.type === "File"
+                  ? input => (this.fileInput = input)
+                  : null
+              }
+              // invalid={!formEl.properties.valid}
+              // touched={formEl.properties.touched}
+              // shouldValidate={formEl.properties.validators}
+            />
+            {formEl.properties.elementConfig.type === "File" ? (
+              <p onClick={() => this.fileInput.click()}>Upload File</p>
+            ) : (
+              ""
+            )}
+          </div>
+        );
+      }
+    });
     return (
       <div className={classes.CreateEventWrapper}>
         {this.props.event ? <h2>Update Event</h2> : <h2>Create Event</h2>}
@@ -209,13 +287,18 @@ export class CreateEvent extends Component {
           <Aux>
             <form onSubmit={this.onSubmitHandler}>
               {formElements}
-              <Button btnType='Success' disabled={!this.state.formIsValid}>
+              <div className={classes.Image}>
+                {this.state.controls.file.tempUrl ? (
+                  <img src={this.state.controls.file.tempUrl} alt="icon" />
+                ) : null}
+              </div>
+              <Button btnType="Success" disabled={!this.state.formIsValid}>
                 SUBMIT
               </Button>
             </form>
             {this.props.event ? (
               <Button
-                btnType='Success'
+                btnType="Success"
                 clicked={() => this.OnAddIngsRedirect(this.props.event)}
               >
                 Add Ingredients
@@ -236,14 +319,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCreateEvent: eventDetails => {
-      dispatch(actions.createEvent(eventDetails));
+    onCreateEvent: (eventDetails, image) => {
+      dispatch(actions.createEvent(eventDetails, image));
     },
     onCreateEventInit: () => {
       dispatch(actions.createEventInit());
     },
-    onUpdateEvent: (eventId, eventDetails) => {
-      dispatch(actions.updateCreatedEvent(eventId, eventDetails));
+    onUpdateEvent: (eventId, eventDetails, image) => {
+      dispatch(actions.updateCreatedEvent(eventId, eventDetails, image));
     },
     onSingleEventReset: () => dispatch(actions.singleEventReset())
   };
