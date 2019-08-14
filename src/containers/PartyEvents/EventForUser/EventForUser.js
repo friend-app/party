@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import classes from "./EventForUser.module.css";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import * as actions from "../../../store/actions/index";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Aux from "../../../hoc/Auxillary/Auxillary";
-
-import InsideUserMenu from "../../../hoc/InsideUserMenu/InsideUserMenu";
+import React, { Component } from 'react';
+import classes from './EventForUser.module.css';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Aux from '../../../hoc/Auxillary/Auxillary';
+import InsideUserMenu from '../../../hoc/InsideUserMenu/InsideUserMenu';
+import UserIcons from '../../../components/EventSwitcher/AllEventsPage/UserIcons/UserIcons';
+import UserUsersList from '../../../components/EventSwitcher/UserUsersList/UserUsersList';
 
 class EventForUser extends Component {
   componentDidMount() {
     if (
       !this.props.event &&
-      !localStorage.getItem("eventId") &&
+      !localStorage.getItem('eventId') &&
       this.props.location.state
     ) {
       this.props.onFetchSingleUserEvent(this.props.location.state.eventId);
     }
-    if (this.props.event && !localStorage.getItem("eventId")) {
-      localStorage.setItem("eventId", this.props.event._id);
+    if (this.props.event && !localStorage.getItem('eventId')) {
+      localStorage.setItem('eventId', this.props.event._id);
     }
-    if (!this.props.event && localStorage.getItem("eventId")) {
-      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
+    if (!this.props.event && localStorage.getItem('eventId')) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
     }
 
     if (
       !this.props.event &&
-      !localStorage.getItem("eventId") &&
+      !localStorage.getItem('eventId') &&
       !this.props.location.state
     ) {
       this.props.history.push({
-        pathname: "/events"
+        pathname: '/'
       });
     }
   }
@@ -38,30 +38,74 @@ class EventForUser extends Component {
   render() {
     let eventInfo = <Spinner />;
 
-    let usersList = null;
+    let userInfo = null;
 
     if (this.props.event) {
-      usersList = this.props.event.users.map(user => {
-        return <li key={user.user._id}>{user.user.nickname}</li>;
-      });
+      const date = new Date(this.props.event.date);
+
+      const updatedDate =
+        date.getDay() +
+        ' ' +
+        date.toLocaleString('default', { month: 'short' }) +
+        ', ' +
+        date.toLocaleString('default', { year: '2-digit' });
+
+      const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+        timeZone: 'Asia/Jerusalem'
+      };
 
       eventInfo = (
         <Aux>
-          <h3>{this.props.event.title}</h3>
-          <h4>
-            {new Date(this.props.event.date).toLocaleDateString("he-He")} -{" "}
-            {this.props.event.address}
-          </h4>
-          <p>{this.props.event.description}</p>
-          <ul>{usersList}</ul>
+          <div className={classes.ImgBox}>
+            <img
+              src={'http://localhost:4000/uploads/' + this.props.event.photo}
+              alt='event'
+            />
+          </div>
+          <div className={classes.MainInfo}>
+            <h2>{this.props.event.title}</h2>
+            <div className={classes.DateAndTime}>
+              <p className={classes.DateBox}>
+                <span className={classes.DateTitle}>date: </span>
+                {updatedDate}
+              </p>
+              <p className={classes.TimeBox}>
+                <span className={classes.DateTitle}>time: </span>
+                {new Date(this.props.event.date).toLocaleTimeString(
+                  'us-Us',
+                  options
+                )}
+              </p>
+            </div>
+            <div className={classes.Place}>
+              <p className={classes.PlaceTitle}>Place: </p>
+              <p className={classes.PlaceDesc}>{this.props.event.address}</p>
+            </div>
+            <div className={classes.Decription}>
+              <p>{this.props.event.description}</p>
+            </div>
+          </div>
         </Aux>
+      );
+
+      userInfo = (
+        <div className={classes.UsersInfo}>
+          <div className={classes.UserBox}>
+            <UserIcons users={this.props.event.users} />
+          </div>
+          <UserUsersList usersInfo={this.props.event.users} />
+        </div>
       );
     }
 
     return (
       <InsideUserMenu>
-        {!this.props.isAuth ? <Redirect to="/login" /> : null}
-        <div className={classes.EventWrapper}>{eventInfo}</div>
+        <div className={classes.EventWrapper}>
+          {eventInfo} {userInfo}
+        </div>
       </InsideUserMenu>
     );
   }

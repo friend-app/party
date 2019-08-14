@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Aux from '../Auxillary/Auxillary';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
+import classes from './Layout.module.css';
 
 const Layout = props => {
   return (
-    <div>
+    <div className={classes.Layout}>
       <Aux>
         <Toolbar isAuth={props.isAuth} />
-        <main style={{ marginTop: '56px' }}>{props.children}</main>
+        <main style={{ marginTop: '56px', marginBottom: '85px', position:'relative' }}>{props.children}</main>
       </Aux>
     </div>
   );

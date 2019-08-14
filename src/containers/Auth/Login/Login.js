@@ -97,7 +97,7 @@ class Login extends Component {
       );
     }
     if (this.props.isAuth && !localStorage.getItem('eventCode')) {
-      redirect = <Redirect to={'/events'} />;
+      redirect = <Redirect to={'/allEvents'} />;
     }
 
     if (this.props.message) {

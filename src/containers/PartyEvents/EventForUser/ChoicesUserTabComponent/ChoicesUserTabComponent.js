@@ -14,10 +14,6 @@ class ChoicesUserTabComponent extends Component {
     });
   }
 
-  componentDidUpdate() {
-    console.log(this.props.match.url);
-  }
-
   render() {
     return (
       <Aux>

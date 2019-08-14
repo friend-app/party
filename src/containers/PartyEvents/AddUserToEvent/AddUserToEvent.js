@@ -12,9 +12,8 @@ class AddUserToEvent extends Component {
       params[param[0]] = param[1];
     }
     if (Object.keys(params).length === 0) {
-      console.log("zalupa net");
       this.props.history.push({
-        pathname: "/events"
+        pathname: "/allEvents"
       });
     }
     if (
@@ -23,7 +22,6 @@ class AddUserToEvent extends Component {
       Object.keys(params).length > 0 &&
       Object.keys(params).length < 2
     ) {
-      console.log('zalupa da');
       this.props.onAddUserToEvent(params.eventCode);
     }
     if (
@@ -31,7 +29,6 @@ class AddUserToEvent extends Component {
       Object.keys(params).length > 0 &&
       Object.keys(params).length < 2
     ) {
-      console.log('huy da')
       localStorage.setItem("eventCode", params.eventCode);
       this.props.history.push({
         pathname: "/login"

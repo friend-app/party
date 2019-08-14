@@ -10,7 +10,6 @@ import Login from "./containers/Auth/Login/Login";
 import Signup from "./containers/Auth/Singup/Signup";
 import Logout from "./containers/Auth/Logout/Logout";
 import FrontPage from "./containers/FrontPage/FrontPage";
-import PartyEvents from "./containers/PartyEvents/PartyEvents";
 import CreateEvent from "./containers/PartyEvents/CreateEvent/CreateEvent";
 import AddIngredientsToEvent from "./containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent";
 import EventForUser from "./containers/PartyEvents/EventForUser/EventForUser";
@@ -23,6 +22,7 @@ import IngredientList from "./containers/PartyEvents/EventForCreator/IngredientL
 import AddUserToEvent from "./containers/PartyEvents/AddUserToEvent/AddUserToEvent";
 import ChoicesUserTabComponent from "./containers/PartyEvents/EventForUser/ChoicesUserTabComponent/ChoicesUserTabComponent";
 import ChoicesCreatorTabComponent from "./containers/PartyEvents/EventForCreator/ChoicesCreatorTabComponent/ChoicesCreatorTabComponent";
+import EventsTabComponent from './containers/PartyEvents/AllEvents/EventsTabComponent/EventsTabComponent';
 
 class App extends Component {
   componentDidMount() {
@@ -47,7 +47,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
-        <Route exact path="/events" component={PartyEvents} />
+        <Route exact path="/allEvents" component={EventsTabComponent} />
         <Route
             exact
             path="/events/addUserToEvent"
@@ -63,7 +63,11 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route path="/logout" component={Logout} />
-          <Route exact path="/events" component={PartyEvents} />
+          {/* <Route exact path="/events" component={EventsTabComponent} /> */}
+          <Route
+            path="/allEvents"
+            component={EventsTabComponent}
+          />
           <Route exact path="/events/create-event" component={CreateEvent} />
           <Route
             path="/events/eventForUser/userChoices"

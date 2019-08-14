@@ -1,0 +1,25 @@
+.UserIcons{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.UserIcons img:first-child {
+  margin-left: 0;
+}
+.UserIcons img {
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-left: -25px;
+  background-color: #fff;
+}
+
+
+.MembersCount{
+  font-weight: 600;
+  margin-left: 15px;
+  text-transform: capitalize;
+}

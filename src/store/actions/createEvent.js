@@ -24,10 +24,13 @@ export const createEventInit = () => ({
   type: actionTypes.CREATE_EVENT_INIT
 })
 
-export const createEvent = (eventDetails) => {
+export const createEvent = (eventDetails, image) => {
   return dispatch => {
     dispatch(createEventStart());
-    axios.post('/createEvent', eventDetails)
+    const eventInfo = new FormData();
+    eventInfo.append('jsonKeys', JSON.stringify(eventDetails));
+    eventInfo.append('eventPhoto', image);
+    axios.post('/createEvent', eventInfo)
     .then(response => {
       dispatch(createEventSuccess(response.data.event))
     }).catch(error => {
