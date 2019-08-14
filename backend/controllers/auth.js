@@ -34,7 +34,8 @@ module.exports.login = async function(req, res) {
         user: {
           userId: candidate._id,
           email: candidate.email,
-          nickname: candidate.nickname
+          nickname: candidate.nickname,
+          photo: candidate.photo
         }
       });
     } else {

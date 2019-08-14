@@ -9,6 +9,7 @@ const initialState = {
   loading: false,
   message: null,
   userId: null,
+  userImg: null,
   authRedirectPath: '/'
 };
 

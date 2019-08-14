@@ -78,6 +78,7 @@ export const login = (email, password) => {
         localStorage.setItem('nickname', response.data.user.nickname);
         localStorage.setItem('expirationDate', expirationDate);
         dispatch(loginSuccess(response.data));
+        console.log(response.data);
       })
       .catch(error => {
         if (typeof error.response !== 'undefined') {
@@ -92,21 +93,19 @@ export const login = (email, password) => {
 export const signup = (email, password, name, image) => {
   return dispatch => {
     dispatch(authStart());
-    // const signupInfo = new FormData();
-    // signupInfo.append('image', image);
-    // signupInfo.append('password', password);
-    // signupInfo.append('nickname', name);
-    // signupInfo.append('email', email);
-    const signupInfo = {
+    const signupInfo = new FormData();
+    signupInfo.append('eventPhoto', image);
+    const signupData = {
       email: email,
       password: password,
-      nickname: name,
-      image: image
+      nickname: name
     };
-    console.log(signupInfo);
+    JSON.stringify(signupData);
+    signupInfo.append('jsonKeys', JSON.stringify(signupData));
     axios
       .post('http://localhost:4000/api/auth/register/', signupInfo)
       .then(response => {
+        console.log(response);
         const expirationDate = new Date(
           new Date().getTime() + response.data.expirationDate * 1000
         );
