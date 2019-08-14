@@ -9,7 +9,7 @@ export function checkValidity(value, rules) {
   }
 
   if (value instanceof File) {
-      let valid = false; 
+   let valid = false; 
       switch (value.type) {
         case "image/png":
         case "image/jpg":

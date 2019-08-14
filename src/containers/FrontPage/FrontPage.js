@@ -8,10 +8,9 @@ class FrontPage extends Component {
   }
   
   render() {
-
     return (
       <div>
-        <Redirect to='/events' />
+        <Redirect to='/allEvents' />
         <h1>I'm front page!</h1>
       </div>
     )

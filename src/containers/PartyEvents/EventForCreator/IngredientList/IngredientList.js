@@ -60,30 +60,16 @@ class IngredientList extends Component {
     return drinkChoices;
   };
 
-  additionalItemsAndUserCount = () => {
-    let additionalItems = {};
-    for (let item of this.props.event.additionalItems){
-      additionalItems = {...additionalItems, [item]: this.props.event.users.length + ' users'}
-    }
-    return additionalItems;
-  };
-
   render() {
     let foodChoices = [];
     let drinkChoices = [];
-    let additionalItems = null;
     let food = null;
     let drink = null;
-    let items = null;
-
     if (this.props.event) {
       foodChoices = this.countFoodChoice();
       drinkChoices = this.countDrinkChoice();
-      additionalItems = this.additionalItemsAndUserCount();
-      console.log(foodChoices);
       food = <IngredientItems title="Food Ingredients" ings={foodChoices} />;
       drink = <IngredientItems title="Drink Ingredients" ings={drinkChoices} />;
-      items = <IngredientItems title="Additional Items" ings={additionalItems} />;
     }
 
     console.log(foodChoices, drinkChoices);
@@ -92,7 +78,6 @@ class IngredientList extends Component {
       <InsideCreatorMenu>
         {food}
         {drink}
-        {items}
       </InsideCreatorMenu>
     );
   }

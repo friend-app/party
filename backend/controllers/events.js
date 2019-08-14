@@ -6,6 +6,7 @@ const upload = require("../uploads/storage_model/Storage");
 
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
+  .populate("users.user", "-password")
     .then(events => {
       res.status(201).json({
         message: "Events Found!",
@@ -22,6 +23,7 @@ module.exports.fetchCreatedEvents = function(req, res) {
 
 module.exports.fetchUserEvents = function(req, res) {
   Event.find({ "users.user": req.user.id })
+  .populate("users.user", "-password")
     .then(events => {
       res.status(201).json({
         message: "Events Found!",
@@ -38,9 +40,7 @@ module.exports.fetchUserEvents = function(req, res) {
 
 module.exports.fetchSingleCreatedEvent = async function(req, res, next) {
   try {
-    const event = await Event.findById(req.params.eventId).populate([
-      "users.user"
-    ]);
+    const event = await Event.findById(req.params.eventId).populate("users.user", "-password");
 
     if (event) {
       const link = await Link.findOne({ eventId: req.params.eventId });
@@ -107,7 +107,11 @@ module.exports.createEvent = function(req, res) {
       return res.end("Error uploading file.");
     }
     const preEvent = JSON.parse(req.body.jsonKeys);
-    preEvent.photo = req.file.filename;
+    if(req.file) {
+      preEvent.photo = req.file.filename;
+    } else{
+      preEvent.photo = 'default.event.jpg';
+    }
     const event = new Event(preEvent);
     event
         .save()
