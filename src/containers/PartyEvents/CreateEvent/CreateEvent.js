@@ -97,6 +97,7 @@ export class CreateEvent extends Component {
     } else {
       this.parseEventAndAddToState();
     }
+      document.body.style = {backgroundColor: 'blue !important'};
   }
 
   parseEventAndAddToState() {
@@ -201,6 +202,7 @@ export class CreateEvent extends Component {
       };
       this.props.onUpdateEvent(this.props.event._id, updateEventDetails);
     }
+
   };
 
   OnAddIngsRedirect = eventId => {

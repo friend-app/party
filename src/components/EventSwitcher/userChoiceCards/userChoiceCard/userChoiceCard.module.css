@@ -1,8 +1,8 @@
-.MuiIcon {
+.UserChoiceCards .MuiIcon {
   color: orange;
 }
 
-.UserChoiceCardWrapper {
+.UserChoiceCards .UserChoiceCardWrapper {
   margin: 10px 24px !important;
   padding: 0;
   border-radius: 10px;
@@ -11,47 +11,47 @@
   box-shadow: 0 0 10px #ddd !important;
 }
 
-.UserChoiceCardWrapper:before {
+.UserChoiceCards .UserChoiceCardWrapper:before {
   background-color: transparent !important;
 }
 
-.Title {
+.UserChoiceCards .Title {
   font-size: 18px;
   font-weight: 700;
 }
 
-.ChoiceLine {
+.UserChoiceCards .ChoiceLine {
   display: flex;
   flex-direction: row;
   border-bottom: 1px solid #eee;
   padding: 15px 24px;
 }
 
-.Spacer {
+.UserChoiceCards .Spacer {
   flex: 1 1 auto;
 }
 
-.PanelDetails {
+.UserChoiceCards .PanelDetails {
   flex-direction: column;
   padding: 0 !important;
 }
 
-.PanelSummary{
+.UserChoiceCards .PanelSummary{
   border-bottom: 1px solid #eee !important;
   justify-content: space-between !important;
 
 }
-.PanelSummary div{
+.UserChoiceCards .PanelSummary div{
   flex-grow: 0;
   align-items: center !important;
 }
 
-.PanelSummary div img{
+.UserChoiceCards .PanelSummary div img{
   width: 25%;
   margin-right: 10px;
 }
 
-.Buttons{
+.UserChoiceCards .Buttons{
   padding: 10px 0;
   display: flex;
   flex-direction: row;

@@ -1,0 +1,17 @@
+.EveryChoiceWrapper {
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #ccc;
+}
+
+.EveryChoiceWrapper .Title {
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
+
+.EveryChoiceWrapper .Title img {
+  border-radius: 0;
+  max-width: 25px;
+  max-height: 25px;
+  overflow: hidden;
+}

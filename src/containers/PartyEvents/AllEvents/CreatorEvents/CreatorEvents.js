@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions/index';
 import Spinner from '../../../../components/UI/Spinner/Spinner';
-import AllEventsPage from '../../../../components/EventSwitcher/AllEventsPage/AllEventsPage';
+import CreatorEventPage from '../../../../components/EventSwitcher/CreatorEventPage/CreatorEventPage';
 
 class CreatorEvents extends Component {
   componentDidMount() {
@@ -29,7 +29,7 @@ class CreatorEvents extends Component {
 
     if (this.props.createdEvents) {
       createdEvents = this.props.createdEvents.map(event => (
-        <AllEventsPage
+        <CreatorEventPage
           key={event._id}
           eventInfo={event}
           clicked={() => this.eventSelectedHandler(event._id)}

@@ -46,6 +46,17 @@
   bottom: 65px;
 }
 
+.PublishEvent{
+  width: 100%;
+  background-color: #55c1bc;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 15px 0 !important;
+  position: fixed;
+  bottom: 65px;
+}
+
 .CardDelete{
   color: #3b3e47;
   margin: 10px 25px !important;

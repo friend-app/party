@@ -24,42 +24,47 @@ const userChoiceCard = props => {
 
   const color = props.type === 'foodChoices' ? '#f88007' : '#55c2bc';
   return (
-    <ExpansionPanel className={classes.UserChoiceCardWrapper} square={true}>
-      <ExpansionPanelSummary
-      className={classes.PanelSummary}
-        expandIcon={<ExpandMoreIcon style={{ color: color }} />}
-        aria-controls='panel1a-content'
-        id='panel1a-header'
-      >
-        <img src={props.type === 'foodChoices' ? foodImg : alcoholImg} alt="icon"></img><span className={classes.Title}>Order {props.orderNumber}</span>
-      </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.PanelDetails}>
-        <div>{ingredient}</div>
-        <div className={classes.Buttons}>
-          <Button
-            btnType='CardDelete'
-            clicked={() =>
-              props.onDelete(
-                props.choiceLocationId,
-                props.choice._id,
-                props.type
-              )
-            }
-          >
-            Delete Me
-          </Button>
-          <Button
-            
-            btnType='CardEdit'
-            clicked={() =>
-              props.onUpdate(props.choice, props.choiceLocationId, props.type)
-            }
-          >
-            Edit Me
-          </Button>
-        </div>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+    <div className={classes.UserChoiceCards}>
+      <ExpansionPanel className={classes.UserChoiceCardWrapper} square={true}>
+        <ExpansionPanelSummary
+          className={classes.PanelSummary}
+          expandIcon={<ExpandMoreIcon style={{ color: color }} />}
+          aria-controls='panel1a-content'
+          id='panel1a-header'
+        >
+          <img
+            src={props.type === 'foodChoices' ? foodImg : alcoholImg}
+            alt='icon'
+          />
+          <span className={classes.Title}>Order {props.orderNumber}</span>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails className={classes.PanelDetails}>
+          <div>{ingredient}</div>
+          <div className={classes.Buttons}>
+            <Button
+              btnType='CardDelete'
+              clicked={() =>
+                props.onDelete(
+                  props.choiceLocationId,
+                  props.choice._id,
+                  props.type
+                )
+              }
+            >
+              Delete Me
+            </Button>
+            <Button
+              btnType='CardEdit'
+              clicked={() =>
+                props.onUpdate(props.choice, props.choiceLocationId, props.type)
+              }
+            >
+              Edit Me
+            </Button>
+          </div>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    </div>
   );
 };
 

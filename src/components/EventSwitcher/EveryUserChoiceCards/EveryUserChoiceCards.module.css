@@ -1,0 +1,65 @@
+.EveryUserCardWrapper{
+  padding: 0 !important;
+}
+
+.EveryUserCardWrapper .UserChoiceCardWrapper {
+  margin: 10px 24px !important;
+  padding: 0;
+  border-radius: 10px;
+  margin: 10px auto;
+  -webkit-box-shadow: 0 0 10px #ddd !important;
+  box-shadow: 0 0 10px #ddd !important;
+}
+
+.EveryUserCardWrapper .UserChoiceCardWrapper img{
+  height: 40px;
+  width: 40px !important;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-right: 10px;
+  background-color: #fff;
+}
+
+.EveryUserCardWrapper .UserChoiceCardWrapper:before {
+  background-color: transparent !important;
+}
+
+.EveryUserCardWrapper .Title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.EveryUserCardWrapper .ChoiceLine {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #eee;
+  padding: 15px 24px;
+}
+
+.EveryUserCardWrapper .Spacer {
+  flex: 1 1 auto;
+}
+
+.EveryUserCardWrapper .PanelDetails {
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+.EveryUserCardWrapper .PanelSummary{
+  padding: 0 5px 0 5px;
+  border-bottom: 1px solid #eee !important;
+  justify-content: space-between !important;
+
+}
+
+.EveryUserCardWrapper .PanelSummary div{
+  margin: 2px 0;
+  flex-grow: 0;
+  align-items: center !important;
+}
+
+.EveryUserCardWrapper .PanelSummary div img{
+  width: 25%;
+  margin-right: 10px;
+}

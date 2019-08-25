@@ -1,17 +1,18 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../../../store/actions/index";
-import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
-import IngredientItems from "../../../../components/EventSwitcher/IngredientItems/IngredientItems";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../../store/actions/index';
+import InsideCreatorMenu from '../../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
+import IngredientItems from '../../../../components/EventSwitcher/IngredientItems/IngredientItems';
+import AdditionsItems from '../../../../components/EventSwitcher/AdditionsItems/AdditionsItems';
 
 class IngredientList extends Component {
   componentDidMount() {
-    if (!this.props.event && localStorage.getItem("eventId")) {
-      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
+    if (!this.props.event && localStorage.getItem('eventId')) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
     }
-    if (!localStorage.getItem("eventId")) {
+    if (!localStorage.getItem('eventId')) {
       this.props.history.push({
-        pathname: "/events"
+        pathname: '/events'
       });
     }
   }
@@ -65,19 +66,26 @@ class IngredientList extends Component {
     let drinkChoices = [];
     let food = null;
     let drink = null;
+    let additionalItems = null;
     if (this.props.event) {
       foodChoices = this.countFoodChoice();
       drinkChoices = this.countDrinkChoice();
-      food = <IngredientItems title="Food Ingredients" ings={foodChoices} />;
-      drink = <IngredientItems title="Drink Ingredients" ings={drinkChoices} />;
+      food = <IngredientItems title='Food Ingredients' ings={foodChoices} type="food" />;
+      drink = <IngredientItems title='Drink Ingredients' ings={drinkChoices} type="drink"/>;
+      additionalItems = (
+        <AdditionsItems
+          title='Additional Ingredients'
+          add={this.props.event.additionalItems}
+          usersAmount={this.props.event.users.length}
+        />
+      );
     }
-
-    console.log(foodChoices, drinkChoices);
 
     return (
       <InsideCreatorMenu>
         {food}
         {drink}
+        {additionalItems}
       </InsideCreatorMenu>
     );
   }
