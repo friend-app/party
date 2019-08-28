@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './AllEventsPage.module.css';
+import classes from './CreatorEventPage.module.css';
 import UserIcons from './UserIcons/UserIcons';
 
-const allEventsPage = props => {
+const creatorEventPage = props => {
   const date = new Date(props.eventInfo.date);
 
   const updatedDate =
@@ -45,4 +45,4 @@ const allEventsPage = props => {
   );
 };
 
-export default allEventsPage;
+export default creatorEventPage;

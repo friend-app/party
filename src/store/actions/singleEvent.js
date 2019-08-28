@@ -305,8 +305,7 @@ export const publishEvent = eventId => {
       .then(response => {
         dispatch(
           publishEventSuccess(
-            "http://localhost:3000/events/addUserToEvent?link=" +
-              response.data.link.link
+            response.data.link.link
           )
         );
       })

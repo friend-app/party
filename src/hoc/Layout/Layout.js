@@ -9,7 +9,7 @@ const Layout = props => {
     <div className={classes.Layout}>
       <Aux>
         <Toolbar isAuth={props.isAuth} />
-        <main style={{ marginTop: '56px', marginBottom: '85px', position:'relative' }}>{props.children}</main>
+        <main style={{ marginTop: '56px', position:'relative' }}>{props.children}</main>
       </Aux>
     </div>
   );

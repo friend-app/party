@@ -1,7 +1,137 @@
-.EventWrapper{
+.EventWrapper {
   width: 100%;
   color: #3b3e47;
-  cursor: pointer;
-  text-align: center;
 }
 
+.MainInfo {
+  position: relative;
+  background-color: #fff;
+  width: 85%;
+  margin: -70px auto auto auto;
+  box-shadow: 0 0 5px #ddd;
+  border-radius: 15px;
+  color: #000;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 10px 15px;
+}
+
+.MainInfo .ImgBox img {
+  width: 100%;
+}
+
+.MainInfo h2 {
+  padding: 0 0 15px 0;
+  font-size: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.ImgBox img {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.AllEventsPageInside {
+  color: #fff;
+  font-size: 16px;
+}
+
+.DateAndTime {
+  display: flex;
+  flex-direction: row;
+}
+
+.DateBox,
+.TimeBox {
+  width: 100%;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+.DateTitle,
+.TimeTitle {
+  color: #f57c30;
+  font-size: 15px;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.UserBox {
+  width: 100%;
+}
+
+.Place{
+  display: flex;
+  flex-direction: raw;
+}
+
+.PlaceTitle{
+  color: #f57c30;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.PlaceDesc{
+  margin-left: 5px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.UsersInfo{
+  position: relative;
+  background-color: #fff;
+  width: 85%;
+  margin: 25px auto;
+  box-shadow: 0 0 5px #ddd;
+  border-radius: 15px;
+  color: #000;
+  cursor: pointer;
+  box-sizing: border-box;
+  padding: 10px 15px;
+}
+
+.ShareButton{
+  display: flex;
+  flex-direction: raw;
+  align-items: center;
+  border-top: 1px solid #eee;
+}
+
+.WhatsappShare svg {
+  height: 47px;
+  width: 47px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-right: 15px;
+}
+
+.WhatsappShare {
+  display: flex;
+  flex-direction: raw;
+  align-items: center;
+  border-top: 1px solid #eee;
+}
+
+.WhatsappShare div {
+  width: auto !important;
+  height: auto !important;
+}
+
+.ShareButton img {
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-right: 15px;
+}
+
+
+@media (max-width: 676px) {
+  .ImgBox {
+    max-height: 140px;
+    overflow: hidden;
+  }
+}
