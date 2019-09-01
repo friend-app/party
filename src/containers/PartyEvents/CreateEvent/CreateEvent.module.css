@@ -1,15 +1,40 @@
 .CreateEventWrapper {
-  width: 80%;
+  width: 90%;
   background-color: #fff;
-  margin: 150px auto 0 auto;
+  border-radius: 15px;
+  margin: 80px auto 0 auto;
   box-shadow: 0 0 5px #ccc;
   box-sizing: border-box;
-  padding: 10px 50px 40px 50px;
+  padding: 25px 15px;
 }
 
 .Image,
 .Image img {
   max-width: 100%;
+  margin-top: 15px;
+}
+
+.AddFileBox{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.AddFileBox img{
+  margin-right: 15px;
+}
+
+.AddPlus{
+  background-color: #eee;
+  font-size: 22px;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  text-align: center;
+  margin-right: 15px;
 }
 
 .CreateEventWrapper h1,

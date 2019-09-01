@@ -10,14 +10,50 @@
   font-weight: bold;
 }
 
+.Button:disabled {
+  background-color: #ccc;
+  color: #fff;
+  text-align: center;
+  margin: 10px auto;
+  padding: 15px 0;
+}
+
 .Button:first-of-type {
   margin-left: 0;
   padding-left: 0;
 }
 
-.Button:disabled {
-  color: #ccc;
+.AddIngredient {
+  width: 100%;
+  background-color: rgb(248, 119, 13);
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+  padding: 25px 0 !important;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
+
+
+.CreateSubmit:not(:disabled) {
+  padding: 10px 25px;
+  background-color: #55c1bc;
+  text-align: center;
+  widows: 100%;
+  margin: 25px auto;
+  padding: 15px 25px;
+  width: 100%;
+}
+
+.CreateSubmit:disabled {
+  margin: 25px auto;
+  width: 100%;
+  padding: 15px 25px;
+}
+
+
 
 .Success {
   color: #5c9210;
@@ -27,15 +63,21 @@
   color: #944317;
 }
 
-.Remove{
-  color: #000;
+.RemoveDivButton button {
+  width: 25px;
+  height: 25px;
+  margin: 0 0 0 15px;
+  padding: 0;
+  border: 1.5px solid #aaa;
+  font-weight: 700;
+  transform: rotate(45deg);
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 0;
+  color: #aaa;
 }
 
-.RemoveDivButton{
-  margin-left: 15px;
-}
-
-.SubmitUserChoice{
+.SubmitUserChoice {
   width: 100%;
   background-color: #55c1bc;
   color: #fff !important;
@@ -46,7 +88,7 @@
   bottom: 65px;
 }
 
-.PublishEvent{
+.PublishEvent {
   width: 100%;
   background-color: #55c1bc;
   color: #fff !important;
@@ -57,14 +99,26 @@
   bottom: 65px;
 }
 
-.CardDelete{
+.AddSubmit{
+  width: 100%;
+  background-color: #55c1bc;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 15px 0 !important;
+  position: fixed;
+  bottom: 0;
+  margin: 0 !important;
+}
+
+.CardDelete {
   color: #3b3e47;
   margin: 10px 25px !important;
   padding: 5px 5px !important;
   text-transform: uppercase;
 }
 
-.CardEdit{
+.CardEdit {
   text-transform: uppercase;
   color: #55c2bc;
   border: 2px solid #55c2bc;
@@ -73,7 +127,7 @@
   padding: 5px 25px !important;
 }
 
-.AuthSubmit{
+.AuthSubmit {
   display: block;
   text-transform: uppercase;
   color: #55c2bc;
@@ -82,4 +136,3 @@
   margin: 50px auto 0 auto !important;
   padding: 5px 25px !important;
 }
-

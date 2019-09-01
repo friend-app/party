@@ -1,21 +1,83 @@
-.AddIngsWrapper{
-  width: 450px;
+.AddIngsWrapper:nth-child(1) {
+  margin: 75px auto 0 auto;
+}
+
+.AddIngsWrapper {
+  width: 90%;
+  border-radius: 15px;
   background-color: #fff;
-  margin: 150px auto 0 auto;
+  margin: 20px auto 0 auto;
   box-shadow: 0 0 5px #ccc;
   box-sizing: border-box;
-  padding: 10px 50px 40px 50px;
+  padding: 10px;
 }
 
-.AddIngsWrapper h1, .AddIngsWrapper h2, .AddIngsWrapper h3{
- text-align: center;
+.AddIngsWrapper h1,
+.AddIngsWrapper h2,
+.AddIngsWrapper h3 {
+  text-align: center;
 }
 
-.InputWrapper{
+.InputWrapper {
   display: flex;
   flex-direction: space-between;
+  align-items: center;
 }
 
+.AddIngsWrapper .Title {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
 
+.AddIngsWrapper .Title .FoodTitle {
+  color: #f57c30;
+}
 
+.AddIngsWrapper .Title .DrinkTitle {
+  color: #55c2bc;
+}
 
+.AddIngsWrapper .Title .AddTitle {
+  color: #4592d0;
+}
+
+.AddIngsWrapper .Title img {
+  margin-right: 15px;
+  max-width: 35px;
+  max-height: 35px;
+  width: 35px;
+  overflow: hidden;
+}
+
+.InputField {
+  margin: 10px auto;
+}
+
+.AddIngBox{
+  font-weight: 600;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #5d6170;
+}
+
+.AddPlus {
+  line-height: 1.5;
+  margin-right: 15px;
+  display: block;
+  background-color:#5d6170;
+  color: #fff;
+  font-size: 22px;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-weight: 700;
+  text-align: center;
+}
+
+.AddSubmit{
+  width: 90%;
+  margin: 0 auto;
+}
