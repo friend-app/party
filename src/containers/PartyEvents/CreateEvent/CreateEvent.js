@@ -8,6 +8,7 @@ import { checkValidity } from "../../../shared/checkValidity";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Aux from "../../../hoc/Auxillary/Auxillary";
+import addPhotoImg from "../../../assests/addPhoto.png";
 
 export class CreateEvent extends Component {
   state = {
@@ -55,6 +56,21 @@ export class CreateEvent extends Component {
         touched: false,
         valid: false
       },
+      file: {
+        elementType: "input",
+        elementLabel: "",
+        elementConfig: {
+          type: "File",
+          placeholder: ""
+        },
+        value: "",
+        tempUrl: null,
+        validators: {
+          fileSize: 1500000
+        },
+        touched: false,
+        valid: true
+      },
       description: {
         elementType: "textarea",
         elementLabel: "Event description",
@@ -70,21 +86,6 @@ export class CreateEvent extends Component {
         },
         touched: false,
         valid: false
-      },
-      file: {
-        elementType: "input",
-        elementLabel: "upload Image",
-        elementConfig: {
-          type: "File",
-          placeholder: ""
-        },
-        value: "",
-        tempUrl: null,
-        validators: {
-          fileSize: 1500000
-        },
-        touched: false,
-        valid: true
       }
     },
     formIsValid: false
@@ -97,7 +98,7 @@ export class CreateEvent extends Component {
     } else {
       this.parseEventAndAddToState();
     }
-      document.body.style = {backgroundColor: 'blue !important'};
+    document.body.style = { backgroundColor: "blue !important" };
   }
 
   parseEventAndAddToState() {
@@ -202,7 +203,6 @@ export class CreateEvent extends Component {
       };
       this.props.onUpdateEvent(this.props.event._id, updateEventDetails);
     }
-
   };
 
   OnAddIngsRedirect = eventId => {
@@ -243,7 +243,7 @@ export class CreateEvent extends Component {
             <InputUI
               inputComponent={formEl.properties.elementType}
               inputProps={formEl.properties.elementConfig}
-              autoFocus={formEl.properties.elementConfig.type === "email"}
+              autoFocus={formEl.properties.elementLavel === "input"}
               error={!formEl.properties.valid && formEl.properties.touched}
               onChange={event =>
                 this.inputChangedHanlder(event, formEl.inputName)
@@ -267,22 +267,27 @@ export class CreateEvent extends Component {
                   ? input => (this.fileInput = input)
                   : null
               }
-              // invalid={!formEl.properties.valid}
-              // touched={formEl.properties.touched}
-              // shouldValidate={formEl.properties.validators}
             />
             {formEl.properties.elementConfig.type === "File" ? (
-              <p onClick={() => this.fileInput.click()}>Upload File</p>
-            ) : (
-              ""
-            )}
+              <div
+                className={classes.AddFileBox}
+                onClick={() => this.fileInput.click()}
+              >
+                <img src={addPhotoImg} alt="addIcon" />
+                {!this.state.controls.file.value ? (
+                  <p>No Photo Chosen</p>
+                ) : (
+                  <p>Choose Another Photo</p>
+                )}
+              </div>
+            ) : null}
           </div>
         );
       }
     });
     return (
       <div className={classes.CreateEventWrapper}>
-        {this.props.event ? <h2>Update Event</h2> : <h2>Create Event</h2>}
+        {this.props.event ? <h3>Update Event</h3> : <h3>Create Event</h3>}
         {this.props.loading ? (
           <Spinner />
         ) : (
@@ -294,13 +299,13 @@ export class CreateEvent extends Component {
                   <img src={this.state.controls.file.tempUrl} alt="icon" />
                 ) : null}
               </div>
-              <Button btnType="Success" disabled={!this.state.formIsValid}>
+              <Button btnType="CreateSubmit" disabled={!this.state.formIsValid}>
                 SUBMIT
               </Button>
             </form>
             {this.props.event ? (
               <Button
-                btnType="Success"
+                btnType="AddIngredient"
                 clicked={() => this.OnAddIngsRedirect(this.props.event)}
               >
                 Add Ingredients
