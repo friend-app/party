@@ -1,4 +1,4 @@
-export { createEventInit, createEvent, addIngredients, updateCreatedEvent } from './createEvent';
+export { createEventInit, createEvent, addIngredients, updateCreatedEvent, createEventReset } from './createEvent';
 export { login, signup, logout, authCheckState } from './auth';
 export { fetchCreatedEvents, fetchUserEvents } from './partyEvents';
 export {
@@ -12,7 +12,8 @@ export {
   updateUserChoice,
   singleEventReset,
   updateChoiceReset,
-  publishEvent
+  publishEvent,
+  editEvent
 } from './singleEvent';
 
 export { addUserToEvent } from './addUserToEvent';

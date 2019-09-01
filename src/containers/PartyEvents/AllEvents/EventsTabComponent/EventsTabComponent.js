@@ -22,9 +22,6 @@ class EventsTabComponent extends Component {
   
 
   render() {
-    // if (!localStorage.getItem('token')) {
-    //   return <Redirect to='/login' />;
-    // }
     return (
       <div>
         <Aux>

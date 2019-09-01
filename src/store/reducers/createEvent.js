@@ -7,6 +7,9 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case actionTypes.CREATE_EVENT_RESET:
+      return { ...state, event: null, loading: false };
+
     case actionTypes.CREATE_EVENT_INIT:
       return { ...state, event: null };
 

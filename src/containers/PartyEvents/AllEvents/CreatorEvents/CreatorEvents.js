@@ -7,6 +7,7 @@ import CreatorEventPage from '../../../../components/EventSwitcher/CreatorEventP
 class CreatorEvents extends Component {
   componentDidMount() {
     this.props.onSingleEventReset();
+    this.props.onCreateEventReset();
     if (localStorage.getItem('token')) {
       this.props.onFetchCreatedEvents();
     } else {
@@ -51,7 +52,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchCreatedEvents: () => dispatch(actions.fetchCreatedEvents()),
     onFetchUserEvents: () => dispatch(actions.fetchUserEvents()),
-    onSingleEventReset: () => dispatch(actions.singleEventReset())
+    onSingleEventReset: () => dispatch(actions.singleEventReset()),
+    onCreateEventReset: () => dispatch(actions.createEventReset())
   };
 };
 

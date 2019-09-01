@@ -1,26 +1,26 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../../store/actions/index";
-import Input from "../../../components/UI/Forms/Input/Input";
-import InputUI from "@material-ui/core/Input";
-import classes from "./CreateEvent.module.css";
-import { checkValidity } from "../../../shared/checkValidity";
-import Spinner from "../../../components/UI/Spinner/Spinner";
-import Button from "../../../components/UI/Button/Button";
-import Aux from "../../../hoc/Auxillary/Auxillary";
-import addPhotoImg from "../../../assests/addPhoto.png";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+import Input from '../../../components/UI/Forms/Input/Input';
+import InputUI from '@material-ui/core/Input';
+import classes from './CreateEvent.module.css';
+import { checkValidity } from '../../../shared/checkValidity';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
+import Aux from '../../../hoc/Auxillary/Auxillary';
+import addPhotoImg from '../../../assests/addPhoto.png';
 
-export class CreateEvent extends Component {
+class CreateEvent extends Component {
   state = {
     controls: {
       title: {
-        elementType: "input",
-        elementLabel: "Event title",
+        elementType: 'input',
+        elementLabel: 'Event title',
         elementConfig: {
-          type: "text",
-          placeholder: "Enter event title"
+          type: 'text',
+          placeholder: 'Enter event title'
         },
-        value: "",
+        value: '',
         validators: {
           required: true
         },
@@ -28,13 +28,13 @@ export class CreateEvent extends Component {
         valid: false
       },
       address: {
-        elementType: "input",
-        elementLabel: "Event address",
+        elementType: 'input',
+        elementLabel: 'Event address',
         elementConfig: {
-          type: "text",
-          placeholder: "Enter address of the event"
+          type: 'text',
+          placeholder: 'Enter address of the event'
         },
-        value: "",
+        value: '',
         validators: {
           required: true
         },
@@ -42,11 +42,11 @@ export class CreateEvent extends Component {
         valid: false
       },
       date: {
-        elementType: "date-picker",
-        elementLabel: "Choose event date & time",
+        elementType: 'date-picker',
+        elementLabel: 'Choose event date & time',
         elementConfig: {
-          type: "",
-          placeholder: "Choose event date & time"
+          type: '',
+          placeholder: 'Choose event date & time'
         },
         value: new Date(),
         startDate: new Date(),
@@ -57,13 +57,13 @@ export class CreateEvent extends Component {
         valid: false
       },
       file: {
-        elementType: "input",
-        elementLabel: "",
+        elementType: 'input',
+        elementLabel: '',
         elementConfig: {
-          type: "File",
-          placeholder: ""
+          type: 'File',
+          placeholder: ''
         },
-        value: "",
+        value: '',
         tempUrl: null,
         validators: {
           fileSize: 1500000
@@ -72,15 +72,15 @@ export class CreateEvent extends Component {
         valid: true
       },
       description: {
-        elementType: "textarea",
-        elementLabel: "Event description",
+        elementType: 'textarea',
+        elementLabel: 'Event description',
         elementConfig: {
-          type: "textarea",
-          placeholder: "Enter address of the event",
+          type: 'textarea',
+          placeholder: 'Enter address of the event',
           rows: 6,
           cols: 10
         },
-        value: "",
+        value: '',
         validators: {
           required: true
         },
@@ -92,22 +92,27 @@ export class CreateEvent extends Component {
   };
 
   componentDidMount() {
+    console.log(this.props);
     this.props.onSingleEventReset();
     if (!this.props.event) {
       this.props.onCreateEventInit();
     } else {
       this.parseEventAndAddToState();
     }
-    document.body.style = { backgroundColor: "blue !important" };
+    document.body.style = { backgroundColor: 'blue !important' };
   }
 
   parseEventAndAddToState() {
     let updateControls = { ...this.state.controls };
     for (let key in this.state.controls) {
-      if (key === "date") {
+      if (key === 'date') {
         updateControls[key].value = new Date(this.props.event[key]);
         updateControls[key].valid = true;
-      } else {
+      } else if (key === 'file') {
+        updateControls[key].value = this.props.event['photo'];
+        updateControls[key].valid = true;
+      }
+      else {
         updateControls[key].value = this.props.event[key];
         updateControls[key].valid = true;
       }
@@ -182,11 +187,11 @@ export class CreateEvent extends Component {
         address: this.state.controls.address.value,
         date: this.state.controls.date.value,
         description: this.state.controls.description.value,
-        creatorId: localStorage.getItem("userId"),
-        nickname: localStorage.getItem("nickname"),
+        creatorId: localStorage.getItem('userId'),
+        nickname: localStorage.getItem('nickname'),
         users: [
           {
-            user: localStorage.getItem("userId"),
+            user: localStorage.getItem('userId'),
             foodChoices: [],
             drinksChoices: []
           }
@@ -194,24 +199,25 @@ export class CreateEvent extends Component {
       };
       this.props.onCreateEvent(createEventDetails, image);
     } else {
-      const updateEventDetails = {
-        title: this.state.controls.title.value,
-        address: this.state.controls.address.value,
-        date: this.state.controls.date.value,
-        description: this.state.controls.description.value,
-        image: this.state.controls.file.value
-      };
-      this.props.onUpdateEvent(this.props.event._id, updateEventDetails);
+      const image = this.state.controls.file.value;
+        const updateEventDetails = {
+          title: this.state.controls.title.value,
+          address: this.state.controls.address.value,
+          date: this.state.controls.date.value,
+          description: this.state.controls.description.value
+        };
+      this.props.onUpdateEvent(this.props.event._id, updateEventDetails, image);
     }
   };
 
   OnAddIngsRedirect = eventId => {
-    this.props.history.push("/events/create-event/add-ingredients", {
+    this.props.history.push('/events/create-event/add-ingredients', {
       eventId: eventId
     });
   };
 
   render() {
+    // console.log(this.state.controls.file);
     let formElementArr = [];
     for (let el in this.state.controls) {
       formElementArr.push({
@@ -219,9 +225,8 @@ export class CreateEvent extends Component {
         properties: this.state.controls[el]
       });
     }
-
     let formElements = formElementArr.map(formEl => {
-      if (formEl.inputName === "date") {
+      if (formEl.inputName === 'date') {
         return (
           <Input
             selected={this.state.controls.date.value}
@@ -243,37 +248,42 @@ export class CreateEvent extends Component {
             <InputUI
               inputComponent={formEl.properties.elementType}
               inputProps={formEl.properties.elementConfig}
-              autoFocus={formEl.properties.elementLavel === "input"}
+              autoFocus={formEl.properties.elementLavel === 'input'}
               error={!formEl.properties.valid && formEl.properties.touched}
               onChange={event =>
                 this.inputChangedHanlder(event, formEl.inputName)
               }
+              value={
+                formEl.properties.elementConfig.type !== 'File'
+                  ? formEl.properties.value
+                  : ''
+              }
               fullWidth={true}
               accept={
-                formEl.properties.elementConfig.type === "File"
-                  ? "image/*"
+                formEl.properties.elementConfig.type === 'File'
+                  ? 'image/*'
                   : null
               }
               multipart={
-                formEl.properties.elementConfig.type === "File" ? "true" : null
+                formEl.properties.elementConfig.type === 'File' ? 'true' : null
               }
               style={
-                formEl.properties.elementConfig.type === "File"
-                  ? { display: "none" }
+                formEl.properties.elementConfig.type === 'File'
+                  ? { display: 'none' }
                   : null
               }
               inputRef={
-                formEl.properties.elementConfig.type === "File"
+                formEl.properties.elementConfig.type === 'File'
                   ? input => (this.fileInput = input)
                   : null
               }
             />
-            {formEl.properties.elementConfig.type === "File" ? (
+            {formEl.properties.elementConfig.type === 'File' ? (
               <div
                 className={classes.AddFileBox}
                 onClick={() => this.fileInput.click()}
               >
-                <img src={addPhotoImg} alt="addIcon" />
+                <img src={addPhotoImg} alt='addIcon' />
                 {!this.state.controls.file.value ? (
                   <p>No Photo Chosen</p>
                 ) : (
@@ -285,6 +295,27 @@ export class CreateEvent extends Component {
         );
       }
     });
+
+    let imgThumb = null;
+
+    if (this.state.controls.file.tempUrl) {
+      imgThumb = <img src={this.state.controls.file.tempUrl} alt='icon' />;
+    } else if (
+      !this.state.controls.file.tempUrl &&
+      this.state.controls.file.value !== ''
+    ) {
+      imgThumb = (
+        <img
+          src={
+            'http://localhost:4000/uploads/' + this.state.controls.file.value
+          }
+          alt='icon'
+        />
+      );
+    } else {
+      imgThumb = null;
+    }
+    console.log(this.state.controls);
     return (
       <div className={classes.CreateEventWrapper}>
         {this.props.event ? <h3>Update Event</h3> : <h3>Create Event</h3>}
@@ -294,18 +325,14 @@ export class CreateEvent extends Component {
           <Aux>
             <form onSubmit={this.onSubmitHandler}>
               {formElements}
-              <div className={classes.Image}>
-                {this.state.controls.file.tempUrl ? (
-                  <img src={this.state.controls.file.tempUrl} alt="icon" />
-                ) : null}
-              </div>
-              <Button btnType="CreateSubmit" disabled={!this.state.formIsValid}>
+              <div className={classes.Image}>{imgThumb}</div>
+              <Button btnType='CreateSubmit' disabled={!this.state.formIsValid}>
                 SUBMIT
               </Button>
             </form>
             {this.props.event ? (
               <Button
-                btnType="AddIngredient"
+                btnType='AddIngredient'
                 clicked={() => this.OnAddIngsRedirect(this.props.event)}
               >
                 Add Ingredients

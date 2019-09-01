@@ -24,7 +24,8 @@ import AddUserToEvent from './containers/PartyEvents/AddUserToEvent/AddUserToEve
 import ChoicesUserTabComponent from './containers/PartyEvents/EventForUser/ChoicesUserTabComponent/ChoicesUserTabComponent';
 import ChoicesCreatorTabComponent from './containers/PartyEvents/EventForCreator/ChoicesCreatorTabComponent/ChoicesCreatorTabComponent';
 import EventsTabComponent from './containers/PartyEvents/AllEvents/EventsTabComponent/EventsTabComponent';
-import { green } from '@material-ui/core/colors';
+import EditEvent from './containers/PartyEvents/EventForCreator/EditEvent/EditEvent';
+import EditIngredients from './containers/PartyEvents/EventForCreator/EditEvent/EditIngredients/EditIngredients';
 
 class App extends Component {
   componentDidMount() {
@@ -96,6 +97,16 @@ class App extends Component {
             exact
             path='/events/eventForCreator'
             component={EventForCreator}
+          />
+          <Route
+            exact
+            path='/events/eventForCreator/editEvent'
+            component={EditEvent}
+          />
+          <Route
+            exact
+            path='/events/eventForCreator/editEvent/editIngredients'
+            component={EditIngredients}
           />
           <Route
             exact

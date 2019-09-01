@@ -131,6 +131,15 @@ export default (state = initialState, { type, payload }) => {
         loading: false
       };
 
+    case actionTypes.EDIT_EVENT_START:
+      return { ...state, loading: true };
+
+    case actionTypes.EDIT_EVENT_SUCCESS:
+      return { ...state, event: payload.event, loading: false };
+
+    case actionTypes.EDIT_EVENT_FAIL:
+      return { ...state, ...payload };
+
     default:
       return state;
   }

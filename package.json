@@ -10,6 +10,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-datetime-picker": "^2.4.0",
     "react-dom": "^16.8.6",
+    "react-frame-component": "^4.1.1",
     "react-redux": "^7.0.2",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
