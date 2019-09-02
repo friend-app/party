@@ -39,12 +39,15 @@ class EventForUser extends Component {
     let eventInfo = <Spinner />;
 
     let userInfo = null;
-
+   
     if (this.props.event) {
+      const creator = this.props.event.users.filter(
+        user => user.user._id === this.props.event.creatorId
+      );
       const date = new Date(this.props.event.date);
 
       const updatedDate =
-        date.getDay() +
+        date.getDate() +
         ' ' +
         date.toLocaleString('default', { month: 'short' }) +
         ', ' +
@@ -67,6 +70,13 @@ class EventForUser extends Component {
           </div>
           <div className={classes.MainInfo}>
             <h2>{this.props.event.title}</h2>
+            <div className={classes.Creator}>
+              <img
+                src={'http://localhost:4000/uploads/' + creator[0].user.photo}
+                alt='creatorPhoto'
+              />
+              <p>{creator[0].user.nickname}</p>
+            </div>
             <div className={classes.DateAndTime}>
               <p className={classes.DateBox}>
                 <span className={classes.DateTitle}>date: </span>

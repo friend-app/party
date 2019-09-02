@@ -127,20 +127,26 @@ module.exports.createEvent = function(req, res) {
       event: event
     });
   });
-
-
-
-
 };
 
 module.exports.updateCreatedEvent = function(req, res) {
-  console.log(req.body);
+
+  upload(req,res,function(err) {
+    if(err) {
+      console.log(err);
+      return res.end("Error uploading file.");
+    }
+    const preEvent = JSON.parse(req.body.jsonKeys);
+    const eventId = JSON.parse(req.body.eventId);
+    if(req.file) {
+      preEvent.photo = req.file.filename;
+    } 
   Event.findOneAndUpdate(
     {
-      _id: req.body.eventId
+      _id: eventId
     },
     {
-      $set: req.body.eventDetails
+      $set: preEvent
     },
     { new: true, useFindAndModify: false }
   )
@@ -156,6 +162,7 @@ module.exports.updateCreatedEvent = function(req, res) {
         message: "Ingredients Failed"
       });
     });
+  });
 };
 
 module.exports.addIngredientsToEvent = function(req, res) {
@@ -189,6 +196,47 @@ module.exports.addIngredientsToEvent = function(req, res) {
       });
     });
 };
+
+
+
+module.exports.editEvent = function(req, res) {
+
+  upload(req,res,function(err) {
+    if(err) {
+      console.log(err);
+      return res.end("Error uploading file.");
+    }
+    const preEvent = JSON.parse(req.body.jsonKeys);
+    const eventId = JSON.parse(req.body.eventId);
+    if(req.file) {
+      preEvent.photo = req.file.filename;
+    } 
+  Event.findOneAndUpdate(
+    {
+      _id: eventId
+    },
+    {
+      $set: preEvent
+    },
+    { new: true, useFindAndModify: false }
+  )
+    .then(event => {
+      res.status(201).json({
+        message: "Ingredients Added",
+        event: event
+      });
+    })
+    .catch(error => {
+      res.status(404).json({
+        error: error,
+        message: "Ingredients Failed"
+      });
+    });
+  });
+};
+
+
+
 
 module.exports.addFoodChoices = function(req, res) {
   const foodChoice = req.body.foodChoice;

@@ -314,3 +314,39 @@ export const publishEvent = eventId => {
       });
   };
 };
+
+
+export const editEventStart = () => ({
+  type: actionTypes.EDIT_EVENT_START,
+})
+
+export const editEventSuccess = (event) => ({
+  type: actionTypes.EDIT_EVENT_SUCCESS,
+  payload: {
+    event: event
+  }
+})
+
+export const editEventFail = (error) => ({
+  type: actionTypes.EDIT_EVENT_FAIL,
+  payload: {
+    error: error
+  }
+})
+
+export const editEvent = (eventId, eventDetails, image) => {
+  return dispatch => {
+    dispatch(editEventStart());
+    const eventInfo = new FormData();
+    eventInfo.append('jsonKeys', JSON.stringify(eventDetails));
+    eventInfo.append('eventId', JSON.stringify(eventId));
+    eventInfo.append('eventPhoto', image);
+    axios.post('/editEvent', eventInfo)
+    .then(response => {
+      localStorage.setItem("eventId", response.data.event._id);
+      dispatch(editEventSuccess(response.data.event))
+    }).catch(error => {
+      dispatch(editEventFail(error.response.data.message))
+    })
+  }
+}

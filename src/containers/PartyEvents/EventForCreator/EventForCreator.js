@@ -11,7 +11,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import inviteImg from '../../../assests/invite.png';
 import CreatorIcons from '../../../components/EventSwitcher/CreatorEventPage/UserIcons/UserIcons';
 import CreatorUsersList from '../../../components/EventSwitcher/CreatorUsersList/CreatorUsersList';
-
+import editImg from '../../../assests/edit.png';
 import InsideCreatorMenu from '../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
 
 class EventForCreator extends Component {
@@ -45,13 +45,24 @@ class EventForCreator extends Component {
     this.props.onPublishEvent(this.props.event._id);
   };
 
+  editEventRedirect = () => {
+    this.props.history.push({
+      pathname: '/events/eventForCreator/editEvent'
+    });
+  };
+
   render() {
     let eventInfo = <Spinner />;
     if (this.props.event && this.props.loading === false) {
+
+      const creator = this.props.event.users.filter(
+        user => user.user._id === this.props.event.creatorId
+      );
+
       const date = new Date(this.props.event.date);
 
       const updatedDate =
-        date.getDay() +
+        date.getDate() +
         ' ' +
         date.toLocaleString('default', { month: 'short' }) +
         ', ' +
@@ -72,7 +83,6 @@ class EventForCreator extends Component {
 
       let shareWhatsappButton = null;
       let shareLinkButton = null;
-
       if (this.props.link) {
         shareWhatsappButton = (
           <WhatsappShareButton
@@ -115,7 +125,21 @@ class EventForCreator extends Component {
             />
           </div>
           <div className={classes.MainInfo}>
-            <h2>{this.props.event.title}</h2>
+            <div className={classes.Title}>
+              <h2>{this.props.event.title}</h2>
+              <img
+                src={editImg}
+                alt='editIcon'
+                onClick={() => this.editEventRedirect()}
+              />
+            </div>
+            <div className={classes.Creator}>
+              <img
+                src={'http://localhost:4000/uploads/' + creator[0].user.photo}
+                alt='creatorPhoto'
+              />
+              <p>{creator[0].user.nickname}</p>
+            </div>
             <div className={classes.DateAndTime}>
               <p className={classes.DateBox}>
                 <span className={classes.DateTitle}>date: </span>
@@ -146,7 +170,7 @@ class EventForCreator extends Component {
             {shareLinkButton}
             <CreatorUsersList usersInfo={this.props.event.users} />
           </div>
-          { !this.props.link ? publishButton : null }
+          {!this.props.link ? publishButton : null}
         </Aux>
       );
     }

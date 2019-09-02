@@ -6,7 +6,7 @@ const allEventsPage = props => {
   const date = new Date(props.eventInfo.date);
 
   const updatedDate =
-    date.getDay() +
+    date.getDate() +
     ' ' +
     date.toLocaleString('default', { month: 'short' }) +
     ', ' +

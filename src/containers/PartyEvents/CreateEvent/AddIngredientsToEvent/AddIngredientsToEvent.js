@@ -1,25 +1,26 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../../../../store/actions/index";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../../../../store/actions/index';
 import { Redirect } from 'react-router-dom';
-import Input from "@material-ui/core/Input";
-import Button from "../../../../components/UI/Button/Button";
-import classes from "./AddIngredientsToEvent.module.css";
-import { checkValidity } from "../../../../shared/checkValidity";
-import foodImg from "../../../../assests/food.png";
-import drinkImg from "../../../../assests/alcohol.png";
-import AdditionalImg from "../../../../assests/additional.png";
+import Input from '@material-ui/core/Input';
+import Button from '../../../../components/UI/Button/Button';
+import classes from './AddIngredientsToEvent.module.css';
+import { checkValidity } from '../../../../shared/checkValidity';
+import foodImg from '../../../../assests/food.png';
+import drinkImg from '../../../../assests/alcohol.png';
+import AdditionalImg from '../../../../assests/additional.png';
+import Spinner from '../../../../components/UI/Spinner/Spinner';
 
 class AddIngredientsToEvent extends Component {
   state = {
     foodControls: [
       {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Add an ingredient"
+          type: 'text',
+          placeholder: 'Add an ingredient'
         },
-        value: "",
+        value: '',
         validators: {
           required: true
         },
@@ -29,12 +30,12 @@ class AddIngredientsToEvent extends Component {
     ],
     drinkControls: [
       {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Add an ingredient"
+          type: 'text',
+          placeholder: 'Add an ingredient'
         },
-        value: "",
+        value: '',
         validators: {
           required: true
         },
@@ -44,12 +45,12 @@ class AddIngredientsToEvent extends Component {
     ],
     additionalControls: [
       {
-        elementType: "input",
+        elementType: 'input',
         elementConfig: {
-          type: "text",
-          placeholder: "Add an ingredient"
+          type: 'text',
+          placeholder: 'Add an ingredient'
         },
-        value: "",
+        value: '',
         validators: {
           required: true
         },
@@ -60,16 +61,26 @@ class AddIngredientsToEvent extends Component {
     formIsValid: false
   };
 
-  componentDidMount() {}
+    componentDidMount() {
+      if ( !localStorage.getItem('token')) {
+        this.props.history.push({
+          pathname: "/login"
+        });
+      } if(!localStorage.getItem('eventId')){
+        this.props.history.push({
+          pathname: "/events"
+        });
+      } 
+    }
 
   onAddInput = type => {
     const input = {
-      elementType: "input",
+      elementType: 'input',
       elementConfig: {
-        type: "text",
-        placeholder: "Add an ingredient"
+        type: 'text',
+        placeholder: 'Add an ingredient'
       },
-      value: "",
+      value: '',
       validators: {
         required: true
       },
@@ -78,13 +89,13 @@ class AddIngredientsToEvent extends Component {
     };
 
     switch (type) {
-      case "foodControls":
+      case 'foodControls':
         this.setState(prevState => ({
           foodControls: [...prevState.foodControls, input]
         }));
         break;
 
-      case "drinkControls":
+      case 'drinkControls':
         this.setState(prevState => ({
           drinkControls: [...prevState.drinkControls, input]
         }));
@@ -104,7 +115,7 @@ class AddIngredientsToEvent extends Component {
     let updatedAdditionalControls = [...this.state.additionalControls];
 
     switch (type) {
-      case "foodControls":
+      case 'foodControls':
         updatedFoodControls = Object.assign([...this.state.foodControls], {
           [index]: {
             ...this.state.foodControls[index],
@@ -117,7 +128,7 @@ class AddIngredientsToEvent extends Component {
           }
         });
         break;
-      case "drinkControls":
+      case 'drinkControls':
         updatedDrinkControls = Object.assign([...this.state.drinkControls], {
           [index]: {
             ...this.state.drinkControls[index],
@@ -174,12 +185,12 @@ class AddIngredientsToEvent extends Component {
     let updatedDrinkControls = [...this.state.drinkControls];
     let updatedAdditionalControls = [...this.state.additionalControls];
     switch (type) {
-      case "foodControls":
+      case 'foodControls':
         updatedFoodControls = [...this.state.foodControls];
         updatedFoodControls.splice(index, 1);
         break;
 
-      case "drinkControls":
+      case 'drinkControls':
         updatedDrinkControls = [...this.state.drinkControls];
         updatedDrinkControls.splice(index, 1);
         break;
@@ -221,8 +232,9 @@ class AddIngredientsToEvent extends Component {
   };
 
   render() {
+    console.log(this.state.controls);
     if (!this.props.createEvent) {
-      return <Redirect to="" />;
+      return <Redirect to='' />;
     }
 
     const formFoodIngElements = this.state.foodControls.map((formEl, index) => (
@@ -233,15 +245,15 @@ class AddIngredientsToEvent extends Component {
           inputProps={formEl.elementConfig}
           value={formEl.value}
           onChange={event =>
-            this.inputChangedHanlder(event, index, "foodControls")
+            this.inputChangedHanlder(event, index, 'foodControls')
           }
           error={!formEl.valid && formEl.touched}
           fullWidth={true}
         />
         <Button
-          btnDivStyle={["RemoveDivButton"]}
-          bType="button"
-          clicked={() => this.onDeleteHandler(index, "foodControls")}
+          btnDivStyle={['RemoveDivButton']}
+          bType='button'
+          clicked={() => this.onDeleteHandler(index, 'foodControls')}
         >
           +
         </Button>
@@ -257,23 +269,21 @@ class AddIngredientsToEvent extends Component {
             inputProps={formEl.elementConfig}
             value={formEl.value}
             onChange={event =>
-              this.inputChangedHanlder(event, index, "drinkControls")
+              this.inputChangedHanlder(event, index, 'drinkControls')
             }
             error={!formEl.valid && formEl.touched}
             fullWidth={true}
           />
           <Button
-            btnDivStyle={["RemoveDivButton"]}
-            bType="button"
-            clicked={() => this.onDeleteHandler(index, "drinkControls")}
+            btnDivStyle={['RemoveDivButton']}
+            bType='button'
+            clicked={() => this.onDeleteHandler(index, 'drinkControls')}
           >
             +
           </Button>
         </div>
       )
     );
-
-    console.log(this.state);
     const formAddintionalElements = this.state.additionalControls.map(
       (formEl, index) => (
         <div key={formEl.elementType + index} className={classes.InputWrapper}>
@@ -287,8 +297,8 @@ class AddIngredientsToEvent extends Component {
             fullWidth={true}
           />
           <Button
-            btnDivStyle={["RemoveDivButton"]}
-            bType="button"
+            btnDivStyle={['RemoveDivButton']}
+            bType='button'
             clicked={() => this.onDeleteHandler(index)}
           >
             +
@@ -296,19 +306,22 @@ class AddIngredientsToEvent extends Component {
         </div>
       )
     );
-    return (
-      <div>
+
+    let form = <Spinner />;
+
+    if (!this.props.loading) {
+      form = (
         <form onSubmit={this.onSubmitHandler}>
           <div className={classes.AddIngsWrapper}>
             <div className={classes.Title}>
-              <img src={foodImg} alt="foodIncon" />
+              <img src={foodImg} alt='foodIncon' />
               <span className={classes.FoodTitle}>Main Couse</span>
             </div>
 
             {formFoodIngElements}
             <div
               className={classes.AddIngBox}
-              onClick={() => this.onAddInput("foodControls")}
+              onClick={() => this.onAddInput('foodControls')}
             >
               <span className={classes.AddPlus}>+</span>
               <span>ADD INGREDIENT</span>
@@ -316,13 +329,13 @@ class AddIngredientsToEvent extends Component {
           </div>
           <div className={classes.AddIngsWrapper}>
             <div className={classes.Title}>
-              <img src={drinkImg} alt="foodIncon" />
+              <img src={drinkImg} alt='foodIncon' />
               <span className={classes.DrinkTitle}>Alcohol & Drinks</span>
             </div>
             {formDrinkIngElements}
             <div
               className={classes.AddIngBox}
-              onClick={() => this.onAddInput("drinkControls")}
+              onClick={() => this.onAddInput('drinkControls')}
             >
               <span className={classes.AddPlus}>+</span>
               <span>ADD INGREDIENT</span>
@@ -330,30 +343,32 @@ class AddIngredientsToEvent extends Component {
           </div>
           <div className={classes.AddIngsWrapper}>
             <div className={classes.Title}>
-              <img src={AdditionalImg} alt="foodIncon" />
+              <img src={AdditionalImg} alt='foodIncon' />
               <span className={classes.AddTitle}>Additional</span>
             </div>
             {formAddintionalElements}
             <div
               className={classes.AddIngBox}
-              onClick={() => this.onAddInput("additionalControls")}
+              onClick={() => this.onAddInput('additionalControls')}
             >
               <span className={classes.AddPlus}>+</span>
               <span>ADD INGREDIENT</span>
             </div>
           </div>
-          <Button btnType="AddSubmit" disabled={!this.state.formIsValid}>
+          <Button btnType='AddSubmit' disabled={!this.state.formIsValid}>
             SUBMIT
           </Button>
-         
         </form>
-      </div>
-    );
+      );
+    }
+
+    return <div>{form}</div>;
   }
 }
 
 const mapStateToProps = state => ({
-  createEvent: state.createEvent.event
+  createEvent: state.createEvent.event,
+  loading: state.createEvent.loading
 });
 
 const mapDispatchToProps = dispatch => {

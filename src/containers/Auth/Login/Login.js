@@ -111,7 +111,6 @@ class Login extends Component {
         properties: this.state.controls[el]
       });
     }
-
     let formElements = formElementArr.map(formEl => (
       <div key={formEl.inputName}>
         <label>{formEl.properties.elementLabel}</label>
@@ -122,26 +121,10 @@ class Login extends Component {
           error={!formEl.properties.valid && formEl.properties.touched}
           onChange={event => this.inputChangedHanlder(event, formEl.inputName)}
           fullWidth={true}
-          // invalid={!formEl.properties.valid}
-          // touched={formEl.properties.touched}
-          // shouldValidate={formEl.properties.validators}
+          value={formEl.properties.value}
         />
       </div>
-
-      // <Input
-      //   key={formEl.inputName}
-      //   label={formEl.properties.elementLabel}
-      // inputType={formEl.properties.elementType}
-      // elementConfig={formEl.properties.elementConfig}
-      // value={formEl.properties.value}
-      // error={true}
-      // onChange={event => this.inputChangedHanlder(event, formEl.inputName)}
-      // invalid={!formEl.properties.valid}
-      // touched={formEl.properties.touched}
-      // shouldValidate={formEl.properties.validators}
-      // />
     ));
-
     return (
       <div className={classes.LoginWrapper}>
         {redirect}

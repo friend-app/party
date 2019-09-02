@@ -52,6 +52,13 @@ router.put(
   controller.addIngredientsToEvent
 );
 
+// localhost:4000/api/events/editEvent
+router.post(
+  '/editEvent',
+  passport.authenticate('jwt', { session: false }),
+  controller.editEvent
+);
+
 // localhost:4000/api/events/addFoodChoices
 router.put(
   '/addFoodChoices',

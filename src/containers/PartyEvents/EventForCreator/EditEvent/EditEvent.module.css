@@ -1,0 +1,44 @@
+.EditEventWrapper {
+  width: 90%;
+  background-color: #fff;
+  border-radius: 15px;
+  margin: 80px auto 0 auto;
+  box-shadow: 0 0 5px #ccc;
+  box-sizing: border-box;
+  padding: 25px 15px;
+}
+
+.EditEventWrapper .Image,
+.EditEventWrapper .Image img {
+  max-width: 100%;
+  margin-top: 15px;
+}
+
+.EditEventWrapper .AddFileBox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.EditEventWrapper .AddFileBox img {
+  margin-right: 15px;
+}
+
+.EditEventWrapper .AddPlus {
+  background-color: #eee;
+  font-size: 22px;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  text-align: center;
+  margin-right: 15px;
+}
+
+.EditEventWrapper h1,
+.EditEventWrapper h2,
+.EditEventWrapper h3 {
+  text-align: center;
+}

@@ -7,6 +7,7 @@ import AllEventsPage from '../../../../components/EventSwitcher/AllEventsPage/Al
 class UserEvents extends Component {
   componentDidMount() {
     this.props.onSingleEventReset();
+    this.props.onCreateEventReset();
     if (localStorage.getItem('token')) {
       this.props.onFetchUserEvents();
     } else {
@@ -53,7 +54,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUserEvents: () => dispatch(actions.fetchUserEvents()),
-    onSingleEventReset: () => dispatch(actions.singleEventReset())
+    onSingleEventReset: () => dispatch(actions.singleEventReset()),
+    onCreateEventReset: () => dispatch(actions.createEventReset())
   };
 };
 
