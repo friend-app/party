@@ -4,15 +4,27 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0,0,0, 0.8);
+  background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   box-sizing: border-box;
   z-index: 90;
+  transition: transform 0.3s ease-out;
+  box-shadow: 0 2px 15px 1px rgba(100,100,100, 0.1);
+  
 }
 
 .Toolbar nav{
   /* height: 100%; */
+}
+
+
+.Toolbar.MenuOpen{
+  transform: translateX(270px);
+}
+
+.Toolbar.MenuClose{
+  transform: translateX(0);
 }

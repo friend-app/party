@@ -54,6 +54,7 @@ export const logout = () => {
   localStorage.removeItem('nickname');
   localStorage.removeItem('expirationDate');
   localStorage.removeItem('eventId');
+  localStorage.removeItem('photo');
   return {
     type: actionTypes.AUTH_LOGOUT,
     payload: {}
@@ -77,6 +78,7 @@ export const login = (email, password) => {
         localStorage.setItem('userId', response.data.user.userId);
         localStorage.setItem('nickname', response.data.user.nickname);
         localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('photo', response.data.user.photo);
         dispatch(loginSuccess(response.data));
         console.log(response.data);
       })
@@ -113,6 +115,7 @@ export const signup = (email, password, name, image) => {
         localStorage.setItem('userId', response.data.user.userId);
         localStorage.setItem('nickname', response.data.user.nickname);
         localStorage.setItem('expirationDate', expirationDate);
+        localStorage.setItem('photo', response.data.user.photo);
         dispatch(signupSuccess(response.data));
       })
       .catch(error => {

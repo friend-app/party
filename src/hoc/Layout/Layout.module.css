@@ -2,3 +2,18 @@
   max-width: 600px;
   margin: 0 auto;
 } */
+
+.Main {
+  padding-top: 56px;
+  position: relative;
+  width: 100%;
+  transition: 0.3s ease-out;
+}
+
+.Main.MenuOpen{
+  left: 270px;;
+}
+
+.Main.MenuClose{
+  left: 0px;
+}

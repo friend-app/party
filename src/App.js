@@ -33,10 +33,6 @@ class App extends Component {
     this.setupBeforeUnloadListener();
   }
 
-  changeBgColor = (color) => {
-    return 'white';
-  }
-
   doSomethingBeforeUnload = () => {
     // localStorage.clear();
   };
@@ -139,7 +135,7 @@ class App extends Component {
     }
 
     return (
-      <div className='App' style={{backgroundColor: this.changeBgColor}}>
+      <div className='App'>
         <Layout>{routes}</Layout>
       </div>
     );

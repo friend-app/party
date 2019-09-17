@@ -1,0 +1,49 @@
+.SideDrawer{
+    position: fixed;
+    width: 280px;
+    max-width: 70%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-out;
+    box-shadow: inset -7px 0 15px -7px rgba(0,0,0,0.1);
+}
+
+.SideDrawer .drawerImg{
+    width: 100%;
+}
+
+.SideDrawer .drawerImg img{
+    width: 100%;
+}
+
+.SideDrawer .DrawerUserIcon{
+    margin: -50px auto 15px auto;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    border: 5px solid #fff;
+}
+
+.SideDrawer .DrawerUserIcon img{
+    margin: 0 auto;
+    border-radius: 50%;
+    width: 75px;
+    border: 3px solid #fff;
+}
+
+.Open{
+    transform: translateX(0);
+}
+
+.Close{
+    transform: translateX(-102%);
+}
+
+.SideDrawer h3{
+    text-align: center;
+    text-transform: capitalize;
+}
