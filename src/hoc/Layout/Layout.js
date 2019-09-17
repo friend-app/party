@@ -7,7 +7,7 @@ import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
 
 class Layout extends Component {
   state = {
-    showSideDrawer: true
+    showSideDrawer: false
   };
 
   sidedrawerClosedHandler = () => {
@@ -15,24 +15,33 @@ class Layout extends Component {
   };
 
   sideDrawerToggleHandler = () => {
-    this.setState({showSideDrawer: !this.showSideDrawer})
-  }
+    this.setState(prevState => {
+      return { showSideDrawer: !prevState.showSideDrawer };
+    });
+  };
 
   render() {
     let mainClasses = [classes.Main, classes.MenuClose];
+    let mainlost = "MenuClose";
     if (this.state.showSideDrawer) {
       mainClasses = [classes.Main, classes.MenuOpen];
+      mainlost = "MenuOpen";
     }
 
     return (
       <div className={classes.Layout}>
         <Aux>
-          <Toolbar isAuth={this.props.isAuth} />
           <SideDrawer
+          isAuth={this.props.isAuth}
             closed={this.sidedrawerClosedHandler}
             isOpen={this.state.showSideDrawer}
           />
-          <main className={mainClasses.join(' ')}>{this.props.children}</main>
+          <Toolbar
+            isAuth={this.props.isAuth}
+            drawerStatus={mainlost}
+            drawerToggleClick={this.sideDrawerToggleHandler}
+          />
+          <main className={mainClasses.join(" ")}>{this.props.children}</main>
         </Aux>
       </div>
     );

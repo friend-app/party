@@ -1,13 +1,14 @@
 import React from 'react';
 import classes from './Toolbar.module.css';
-import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
+import logoImg from '../../../assests/logo.png';
 
 const Toolbar = (props) => {
+  let toolbarClasses = [classes.Toolbar, classes[props.drawerStatus]];
   return (
-    <div className={classes.Toolbar}>
-      <DrawerToggle clicked={props.drawerToggleClicked} />
-      <nav><NavigationItems isAuth={props.isAuth}/></nav>
+    <div className={[toolbarClasses.join(" ")]}>
+      <DrawerToggle clicked={props.drawerToggleClick} />
+      <img src={logoImg} alt="logo" />
     </div>
   )
 }

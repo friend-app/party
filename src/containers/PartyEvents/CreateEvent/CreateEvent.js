@@ -100,6 +100,11 @@ class CreateEvent extends Component {
       this.parseEventAndAddToState();
     }
     document.body.style = { backgroundColor: 'blue !important' };
+    document.body.style = 'background: #f3daca;'
+  }
+
+  componentWillUnmount(){
+    document.body.style = 'background: #fff;'
   }
 
   parseEventAndAddToState() {

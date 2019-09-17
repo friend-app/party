@@ -4,16 +4,16 @@
 } */
 
 .Main {
-  margin-top: 56px;
+  padding-top: 56px;
   position: relative;
   width: 100%;
-  transition: transform 0.3s ease-out;
+  transition: 0.3s ease-out;
 }
 
-.MenuOpen{
-  transform: translateX(250px);
+.Main.MenuOpen{
+  left: 270px;;
 }
 
-.MenuClose{
-  transform: translateX(0);
+.Main.MenuClose{
+  left: 0px;
 }
