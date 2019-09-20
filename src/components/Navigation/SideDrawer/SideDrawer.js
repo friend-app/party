@@ -3,7 +3,8 @@ import NavigationItems from "../NavigationItems/NavigationItems";
 import classes from "./SideDrawer.module.css";
 import Backdrop from "../../UI/Backdrop/Backdrop";
 import Aux from "../../../hoc/Auxillary/Auxillary";
-import drawerImg from '../../../assests/pary_img.jpg'
+import drawerImg from '../../../assests/pary_img.jpg';
+import { UPLOADS_BASE_URL } from '../../../shared/URLS';
 
 const SideDrawer = props => {
     let BdClasses = [classes.SideDrawer, classes.Close];
@@ -18,7 +19,7 @@ const SideDrawer = props => {
         <img src={drawerImg} alt="drawerImg" />
         </div>
         <div className={classes.DrawerUserIcon}>
-        {props.isAuth ? <img src={'http://localhost:4000/uploads/' + localStorage.getItem('photo')} alt="drawerImg" /> : null}
+        {props.isAuth ? <img src={UPLOADS_BASE_URL + localStorage.getItem('photo')} alt="drawerImg" /> : null}
         </div>
         <h3>{localStorage.getItem('nickname')}</h3>
         <nav>

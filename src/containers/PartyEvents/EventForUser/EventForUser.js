@@ -7,6 +7,7 @@ import Aux from '../../../hoc/Auxillary/Auxillary';
 import InsideUserMenu from '../../../hoc/InsideUserMenu/InsideUserMenu';
 import UserIcons from '../../../components/EventSwitcher/AllEventsPage/UserIcons/UserIcons';
 import UserUsersList from '../../../components/EventSwitcher/UserUsersList/UserUsersList';
+import { UPLOADS_BASE_URL } from '../../../shared/URLS';
 
 class EventForUser extends Component {
   componentDidMount() {
@@ -64,7 +65,7 @@ class EventForUser extends Component {
         <Aux>
           <div className={classes.ImgBox}>
             <img
-              src={'http://localhost:4000/uploads/' + this.props.event.photo}
+              src={UPLOADS_BASE_URL + this.props.event.photo}
               alt='event'
             />
           </div>
@@ -72,7 +73,7 @@ class EventForUser extends Component {
             <h2>{this.props.event.title}</h2>
             <div className={classes.Creator}>
               <img
-                src={'http://localhost:4000/uploads/' + creator[0].user.photo}
+                src={UPLOADS_BASE_URL + creator[0].user.photo}
                 alt='creatorPhoto'
               />
               <p>{creator[0].user.nickname}</p>

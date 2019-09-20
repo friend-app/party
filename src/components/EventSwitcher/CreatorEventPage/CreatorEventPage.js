@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './CreatorEventPage.module.css';
 import UserIcons from './UserIcons/UserIcons';
+import { UPLOADS_BASE_URL } from '../../../shared/URLS';
 
 const creatorEventPage = props => {
   const date = new Date(props.eventInfo.date);
@@ -23,7 +24,7 @@ const creatorEventPage = props => {
     <div className={classes.AllEventsPageWrapper} onClick={props.clicked}>
       <div className={classes.ImgBox}>
         <img
-          src={'http://localhost:4000/uploads/' + props.eventInfo.photo}
+          src={UPLOADS_BASE_URL + props.eventInfo.photo}
           alt='main'
         />
       </div>

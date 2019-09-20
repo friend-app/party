@@ -1,11 +1,11 @@
 .EventControl {
+  display: -webkit-flex;
   display: flex;
   align-items: center;
   margin: 5px 0;
   padding: 10px 25px;
   border-bottom: 1px solid #ccc;
 }
-
 
 .EventControl button {
   display: block;

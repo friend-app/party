@@ -27,7 +27,7 @@
 }
 
 .ImgBox img {
-  height: 100%;
+  min-height: 100px;
   width: 100%;
   overflow: hidden;
 }
