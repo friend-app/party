@@ -8,13 +8,13 @@
   padding: 25px 15px;
 }
 
-.Image,
-.Image img {
+.CreateEventWrapper .Image,
+.CreateEventWrapper .Image img {
   max-width: 100%;
   margin-top: 15px;
 }
 
-.AddFileBox{
+.CreateEventWrapper .AddFileBox{
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,11 +22,11 @@
   font-weight: 700;
 }
 
-.AddFileBox img{
+.CreateEventWrapper .AddFileBox img{
   margin-right: 15px;
 }
 
-.AddPlus{
+.CreateEventWrapper .AddPlus{
   background-color: #eee;
   font-size: 22px;
   width: 32px;

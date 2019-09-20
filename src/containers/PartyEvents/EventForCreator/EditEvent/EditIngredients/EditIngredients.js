@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../../../../store/actions/index';
-import { Redirect } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
 import Button from '../../../../../components/UI/Button/Button';
 import classes from './EditIngredients.module.css';
