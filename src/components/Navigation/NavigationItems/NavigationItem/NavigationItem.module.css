@@ -25,13 +25,22 @@
   .NavigationItem{
     margin: 5px 10px;
     box-sizing: border-box;
-    display: block;
+    display: flex;
+    justify-content: space-between;
     width: auto;
   }
   
   .NavigationItem a{
+    display: flex;
+    justify-content: space-between;
     padding: 5px 10px;
     color: #000;
+  }
+
+  .NavigationItem img{
+    margin-right:  15px;
+    width: 22px;
+    height: 22px
   }
   
   .NavigationItem a:hover,

@@ -95,6 +95,11 @@ class EditEvent extends Component {
     if (this.props.event) {
       this.parseEventAndAddToState();
     }
+    if (!this.props.event && localStorage.getItem('eventId')) {
+      this.props.history.push({
+        pathname: '/events/eventForCreator'
+      });
+    }
     if (!localStorage.getItem('token')) {
       this.props.history.push({
         pathname: '/login'
@@ -201,7 +206,6 @@ class EditEvent extends Component {
   };
 
   render() {
-    console.log('inside', this.props);
     let formElementArr = [];
     for (let el in this.state.controls) {
       formElementArr.push({

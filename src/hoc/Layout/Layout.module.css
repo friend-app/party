@@ -5,15 +5,16 @@
 
 .Main {
   padding-top: 56px;
-  position: relative;
   width: 100%;
-  transition: 0.3s ease-out;
+  transition: all 0.3s ease-out;
 }
 
 .Main.MenuOpen{
-  left: 270px;;
+  left: 270px;
+  position: fixed;
 }
 
 .Main.MenuClose{
+  position: relative;
   left: 0px;
 }
