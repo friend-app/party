@@ -1,12 +1,13 @@
 import React from 'react';
 import classes from './UserIcons.module.css';
+import { UPLOADS_BASE_URL } from '../../../../shared/URLS';
 
 const UserIcons = props => {
   const users = props.users.slice(0, 3).map((user, index) => {
     return (
       <img
         key={index}
-        src={'http://localhost:4000/uploads/' + user.user.photo}
+        src={UPLOADS_BASE_URL + user.user.photo}
         alt='user-icon'
       />
     );

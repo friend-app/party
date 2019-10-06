@@ -92,7 +92,11 @@ class CreateEvent extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
+    if ( !localStorage.getItem('token')) {
+      this.props.history.push({
+        pathname: "/login"
+      });
+    }
     this.props.onSingleEventReset();
     if (!this.props.event) {
       this.props.onCreateEventInit();

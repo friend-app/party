@@ -1,11 +1,12 @@
+
 import React from 'react';
 import classes from './EventControl.module.css';
 
-const EventControl = props => {
-  return (
-    <div className={classes.EventControl}>
+const EventControl = props => (
+    <div className={classes.EventControlWrapper}>
+
       <div className={classes.Label}>{props.label}</div>
-      <span className={classes.spacer}></span>
+      <span className={classes.Spacer}></span>
       <button
         className={classes.Less}
         onClick={props.removed}
@@ -17,8 +18,8 @@ const EventControl = props => {
       <button className={classes.More} onClick={props.added}>
         <span> + </span>
       </button>
+
     </div>
   );
-};
 
 export default EventControl;

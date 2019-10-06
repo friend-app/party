@@ -13,7 +13,7 @@ import CreatorIcons from '../../../components/EventSwitcher/CreatorEventPage/Use
 import CreatorUsersList from '../../../components/EventSwitcher/CreatorUsersList/CreatorUsersList';
 import editImg from '../../../assests/edit.png';
 import InsideCreatorMenu from '../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
-import { UPLOADS_BASE_URL } from '../../../shared/URLS';
+import { UPLOADS_BASE_URL, BASE_URL, BASE_URL_WITHOUT_PORT } from '../../../shared/URLS';
 
 class EventForCreator extends Component {
   componentDidMount() {
@@ -90,8 +90,8 @@ class EventForCreator extends Component {
             className={classes.WhatsappShare}
             url={
               'Join to ' +
-              this.props.event.title +
-              ' http://localhost:3000/events/addUserToEvent?eventCode=' +
+              this.props.event.title + ' ' + BASE_URL_WITHOUT_PORT +
+              'events/addUserToEvent?eventCode=' +
               this.props.link
             }
           >
@@ -102,7 +102,7 @@ class EventForCreator extends Component {
         shareLinkButton = (
           <CopyToClipboard
             text={
-              'http://localhost:3000/events/addUserToEvent?eventCode=' +
+              BASE_URL_WITHOUT_PORT + 'events/addUserToEvent?eventCode=' +
               this.props.link
             }
             onCopy={() => this.setState({ copied: true })}
