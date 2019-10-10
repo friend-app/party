@@ -9,7 +9,7 @@ const InsideUserMenu = props => {
     <div>
       <div className={classes.Children}>{props.children}</div>
       <div className={classes.BottomMenu}>
-      <UserBottomNavigationItems />
+      <UserBottomNavigationItems choicesAmount={props.choicesAmount}/>
       </div>
     </div>
   );

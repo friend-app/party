@@ -18,12 +18,12 @@ const SideDrawer = props => {
         <div className={classes.drawerImg}>
           <img src={drawerImg} alt='drawerImg' />
         </div>
-        <div className={classes.DrawerUserIcon}>
-          {props.isAuth ? (
+        {props.isAuth ? (
+          <div className={classes.DrawerUserIcon}>
             <div
               className={classes.BgUserImg}
               style={{
-                'background-image':
+                backgroundImage:
                   'url(' +
                   UPLOADS_BASE_URL +
                   localStorage.getItem('photo') +
@@ -32,14 +32,8 @@ const SideDrawer = props => {
             >
               {' '}
             </div>
-          ) : null}
-          {/* {props.isAuth ? (
-            <img
-              src={UPLOADS_BASE_URL + localStorage.getItem('photo')}
-              alt='drawerImg'
-            />
-          ) : null} */}
-        </div>
+          </div>
+        ) : null}
         <h3>{localStorage.getItem('nickname')}</h3>
         <nav>
           <NavigationItems isAuth={props.isAuth} />

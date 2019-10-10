@@ -3,9 +3,7 @@ import UserChoiceCard from './userChoiceCard/userChoiceCard';
 import classes from './userChoiceCards.module.css';
 
 const userChoiceCards = props => {
-  // console.log(props.user);
   const card = props.user[props.choiceType].map((singleChoice, index) => {
-    // console.log(singleChoice)
     return (
     <UserChoiceCard
       orderNumber={index + 1}

@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionTypes";
-import axios from "../../axios-events";
+import * as actionTypes from './actionTypes';
+import axios from '../../axios-events';
 
 export const singleEventReset = () => ({
   type: actionTypes.SINGLE_EVENT_RESET
@@ -33,14 +33,13 @@ export const fetchEventFail = error => ({
 });
 
 export const fetchSingleCreatedEvent = eventId => {
-
   return dispatch => {
     dispatch(fetchEventStart());
     axios
-      .get("fetchSingleCreatedEvent/" + eventId)
+      .get('fetchSingleCreatedEvent/' + eventId)
       .then(response => {
         console.log(response);
-        localStorage.setItem("eventId", response.data.event._id);
+        localStorage.setItem('eventId', response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {
@@ -69,9 +68,9 @@ export const fetchSingleUserEvent = eventId => {
   return dispatch => {
     dispatch(fetchEventStart());
     axios
-      .get("fetchSingleUserEvent/" + eventId)
+      .get('fetchSingleUserEvent/' + eventId)
       .then(response => {
-        localStorage.setItem("eventId", response.data.event._id);
+        localStorage.setItem('eventId', response.data.event._id);
         let foodIngredients = {};
         let drinkIngredients = {};
         response.data.event.foodIngredients.map(ingredient => {
@@ -125,7 +124,7 @@ export const addFoodChoice = (userChoice, eventId) => {
       eventId: eventId
     };
     axios
-      .put("addFoodChoices", data)
+      .put('addFoodChoices', data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -157,7 +156,7 @@ export const addDrinksChoice = (userChoice, eventId) => {
       eventId: eventId
     };
     axios
-      .put("addDrinkChoices", data)
+      .put('addDrinkChoices', data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -251,7 +250,7 @@ export const updateUserChoice = (
       eventId: eventId
     };
     axios
-      .put("updateUserChoice", data)
+      .put('updateUserChoice', data)
       .then(response => {
         let foodIngredients = {};
         let drinkIngredients = {};
@@ -301,13 +300,9 @@ export const publishEvent = eventId => {
       eventId: eventId
     };
     axios
-      .post("createLinkEvent", data)
+      .post('createLinkEvent', data)
       .then(response => {
-        dispatch(
-          publishEventSuccess(
-            response.data.link.link
-          )
-        );
+        dispatch(publishEventSuccess(response.data.link.link));
       })
       .catch(error => {
         dispatch(publishEventFail(error.response.data.message));
@@ -315,24 +310,23 @@ export const publishEvent = eventId => {
   };
 };
 
-
 export const editEventStart = () => ({
-  type: actionTypes.EDIT_EVENT_START,
-})
+  type: actionTypes.EDIT_EVENT_START
+});
 
-export const editEventSuccess = (event) => ({
+export const editEventSuccess = event => ({
   type: actionTypes.EDIT_EVENT_SUCCESS,
   payload: {
     event: event
   }
-})
+});
 
-export const editEventFail = (error) => ({
+export const editEventFail = error => ({
   type: actionTypes.EDIT_EVENT_FAIL,
   payload: {
     error: error
   }
-})
+});
 
 export const editEvent = (eventId, eventDetails, image) => {
   return dispatch => {
@@ -341,12 +335,14 @@ export const editEvent = (eventId, eventDetails, image) => {
     eventInfo.append('jsonKeys', JSON.stringify(eventDetails));
     eventInfo.append('eventId', JSON.stringify(eventId));
     eventInfo.append('eventPhoto', image);
-    axios.post('/editEvent', eventInfo)
-    .then(response => {
-      localStorage.setItem("eventId", response.data.event._id);
-      dispatch(editEventSuccess(response.data.event))
-    }).catch(error => {
-      dispatch(editEventFail(error.response.data.message))
-    })
-  }
-}
+    axios
+      .post('/editEvent', eventInfo)
+      .then(response => {
+        localStorage.setItem('eventId', response.data.event._id);
+        dispatch(editEventSuccess(response.data.event));
+      })
+      .catch(error => {
+        dispatch(editEventFail(error.response.data.message));
+      });
+  };
+};

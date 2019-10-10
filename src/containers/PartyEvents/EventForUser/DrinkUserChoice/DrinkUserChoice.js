@@ -35,6 +35,7 @@ class DrinkUserChoice extends Component {
     };
 
     let disableButton = true;
+    let choicesAmount = null;
 
     for (let key in this.props.drinkIngs) {
       if (disabledMin[key] > 0) {
@@ -46,29 +47,33 @@ class DrinkUserChoice extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
       event = (
         <div className={classes.EventWrapper}>
-            <EventControls
-              chosenIngs={this.props.drinkIngs}
-              controls={this.props.event.drinkIngredients}
-              ingredientAdded={this.props.onIngredientAdded}
-              ingredientRemoved={this.props.onIngredientRemoved}
-              disabled={disabledMin}
-            />
-            <Button
-              btnType='SubmitUserChoice'
-              disabled={disableButton}
-              clicked={this.onSubmitHandler}
-            >
-              Submit
-            </Button>
+          <EventControls
+            chosenIngs={this.props.drinkIngs}
+            controls={this.props.event.drinkIngredients}
+            ingredientAdded={this.props.onIngredientAdded}
+            ingredientRemoved={this.props.onIngredientRemoved}
+            disabled={disabledMin}
+          />
+          <Button
+            btnType='SubmitUserChoice'
+            disabled={disableButton}
+            clicked={this.onSubmitHandler}
+          >
+            Submit
+          </Button>
         </div>
       );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
     }
 
     return (
       <div>
-        <InsideUserMenu>{event}</InsideUserMenu>
+        <InsideUserMenu choicesAmount={choicesAmount}>{event}</InsideUserMenu>
       </div>
     );
   }
