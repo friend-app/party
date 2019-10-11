@@ -9,6 +9,7 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Aux from "../../../hoc/Auxillary/Auxillary";
 import addPhotoImg from "../../../assests/addPhoto.png";
+import Img from 'react-fix-image-orientation'
 
 class CreateEvent extends Component {
   state = {
@@ -66,7 +67,7 @@ class CreateEvent extends Component {
         value: "",
         tempUrl: null,
         validators: {
-          fileSize: 1500000
+          fileSize: 5000000
         },
         touched: false,
         valid: true
@@ -92,7 +93,11 @@ class CreateEvent extends Component {
   };
 
   componentDidMount() {
-    console.log(this.props);
+    if ( !localStorage.getItem('token')) {
+      this.props.history.push({
+        pathname: "/login"
+      });
+    }
     this.props.onSingleEventReset();
     if (!this.props.event) {
       this.props.onCreateEventInit();
@@ -220,7 +225,9 @@ class CreateEvent extends Component {
     });
   };
 
+
   render() {
+
     console.log(this.state.controls.file);
     let formElementArr = [];
     for (let el in this.state.controls) {
@@ -303,13 +310,13 @@ class CreateEvent extends Component {
     let imgThumb = null;
 
     if (this.state.controls.file.tempUrl) {
-      imgThumb = <img src={this.state.controls.file.tempUrl} alt="icon" />;
+      imgThumb = <Img src={this.state.controls.file.tempUrl} alt="icon" />;
     } else if (
       !this.state.controls.file.tempUrl &&
       this.state.controls.file.value !== ""
     ) {
       imgThumb = (
-        <img
+        <Img
           src={
             "http://localhost:4000/uploads/" + this.state.controls.file.value
           }

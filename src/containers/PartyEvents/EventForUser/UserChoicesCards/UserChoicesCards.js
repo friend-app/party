@@ -80,6 +80,7 @@ class UserChoicesCards extends Component {
   };
 
   render() {
+    let choicesAmount = null;
     let foodCards = null;
     let drinksCards = null;
     if (this.props.event) {
@@ -103,8 +104,8 @@ class UserChoicesCards extends Component {
           clicked={this.onUpdate}
         />
       );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
     }
-
     const allCards = (
       <Aux>
         {foodCards} {drinksCards}
@@ -112,7 +113,7 @@ class UserChoicesCards extends Component {
     );
 
     return (
-      <InsideUserMenu>
+      <InsideUserMenu choicesAmount={choicesAmount}>
         <div className={classes.UserCardsWrapper}>
           {this.onRedirect()}
           {this.props.loading ? <Spinner /> : allCards}

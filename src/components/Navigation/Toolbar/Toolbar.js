@@ -9,7 +9,7 @@ const Toolbar = (props) => {
   return (
     <div className={[toolbarClasses.join(" ")]}>
       <DrawerToggle clicked={props.drawerToggleClick} />
-      <NavLink to="/allEvents"><img src={logoImg} alt="logo" /></NavLink>
+      <NavLink to="/allEvents"><img style={{'display': 'flex'}} src={logoImg} alt="logo" /></NavLink>
     </div>
   )
 }

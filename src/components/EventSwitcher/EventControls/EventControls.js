@@ -13,7 +13,7 @@ const EventControls = props => {
   });
 
   return (
-    <div className={classes.EventControlsWrapper}>
+    <div>
       {controls.map((control, index) => (
         <EventControl
           key={index}

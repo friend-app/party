@@ -7,6 +7,7 @@ import Aux from '../../../hoc/Auxillary/Auxillary';
 import InsideUserMenu from '../../../hoc/InsideUserMenu/InsideUserMenu';
 import UserIcons from '../../../components/EventSwitcher/AllEventsPage/UserIcons/UserIcons';
 import UserUsersList from '../../../components/EventSwitcher/UserUsersList/UserUsersList';
+import { UPLOADS_BASE_URL } from '../../../shared/URLS';
 
 class EventForUser extends Component {
   componentDidMount() {
@@ -39,10 +40,14 @@ class EventForUser extends Component {
     let eventInfo = <Spinner />;
 
     let userInfo = null;
-   
+    let choicesAmount = null;
+
     if (this.props.event) {
-      const creator = this.props.event.users.filter(
+      const creator = this.props.event.users.find(
         user => user.user._id === this.props.event.creatorId
+      );
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
       );
       const date = new Date(this.props.event.date);
 
@@ -63,19 +68,16 @@ class EventForUser extends Component {
       eventInfo = (
         <Aux>
           <div className={classes.ImgBox}>
-            <img
-              src={'http://localhost:4000/uploads/' + this.props.event.photo}
-              alt='event'
-            />
+            <img src={UPLOADS_BASE_URL + this.props.event.photo} alt='event' />
           </div>
           <div className={classes.MainInfo}>
             <h2>{this.props.event.title}</h2>
             <div className={classes.Creator}>
               <img
-                src={'http://localhost:4000/uploads/' + creator[0].user.photo}
+                src={UPLOADS_BASE_URL + creator.user.photo}
                 alt='creatorPhoto'
               />
-              <p>{creator[0].user.nickname}</p>
+              <p>{creator.user.nickname}</p>
             </div>
             <div className={classes.DateAndTime}>
               <p className={classes.DateBox}>
@@ -109,10 +111,11 @@ class EventForUser extends Component {
           <UserUsersList usersInfo={this.props.event.users} />
         </div>
       );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
     }
 
     return (
-      <InsideUserMenu>
+      <InsideUserMenu choicesAmount={choicesAmount}>
         <div className={classes.EventWrapper}>
           {eventInfo} {userInfo}
         </div>

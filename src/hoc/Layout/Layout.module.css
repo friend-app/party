@@ -4,13 +4,13 @@
 } */
 
 .Main {
-  padding-top: 56px;
+  padding-top: 45px;
   width: 100%;
   transition: all 0.3s ease-out;
 }
 
 .Main.MenuOpen{
-  left: 270px;
+  left: 260px;
   position: fixed;
 }
 

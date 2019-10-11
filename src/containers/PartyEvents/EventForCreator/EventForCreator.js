@@ -13,6 +13,7 @@ import CreatorIcons from '../../../components/EventSwitcher/CreatorEventPage/Use
 import CreatorUsersList from '../../../components/EventSwitcher/CreatorUsersList/CreatorUsersList';
 import editImg from '../../../assests/edit.png';
 import InsideCreatorMenu from '../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
+import { UPLOADS_BASE_URL, BASE_URL, BASE_URL_WITHOUT_PORT } from '../../../shared/URLS';
 
 class EventForCreator extends Component {
   componentDidMount() {
@@ -89,8 +90,8 @@ class EventForCreator extends Component {
             className={classes.WhatsappShare}
             url={
               'Join to ' +
-              this.props.event.title +
-              ' http://localhost:3000/events/addUserToEvent?eventCode=' +
+              this.props.event.title + ' ' + BASE_URL_WITHOUT_PORT +
+              'events/addUserToEvent?eventCode=' +
               this.props.link
             }
           >
@@ -101,7 +102,7 @@ class EventForCreator extends Component {
         shareLinkButton = (
           <CopyToClipboard
             text={
-              'http://localhost:3000/events/addUserToEvent?eventCode=' +
+              BASE_URL_WITHOUT_PORT + 'events/addUserToEvent?eventCode=' +
               this.props.link
             }
             onCopy={() => this.setState({ copied: true })}
@@ -120,7 +121,7 @@ class EventForCreator extends Component {
         <Aux>
           <div className={classes.ImgBox}>
             <img
-              src={'http://localhost:4000/uploads/' + this.props.event.photo}
+              src={ UPLOADS_BASE_URL + this.props.event.photo}
               alt='event'
             />
           </div>
@@ -135,7 +136,7 @@ class EventForCreator extends Component {
             </div>
             <div className={classes.Creator}>
               <img
-                src={'http://localhost:4000/uploads/' + creator[0].user.photo}
+                src={UPLOADS_BASE_URL + creator[0].user.photo}
                 alt='creatorPhoto'
               />
               <p>{creator[0].user.nickname}</p>

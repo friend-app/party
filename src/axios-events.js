@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { BASE_URL } from './shared/URLS';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:4000/api/events/',
+  baseURL: BASE_URL + 'api/events/',
 });
 
 instance.interceptors.request.use (

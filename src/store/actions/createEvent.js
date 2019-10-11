@@ -2,7 +2,6 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios-events';
 
 
-
 export const createEventStart = () => ({
   type: actionTypes.CREATE_EVENT_START,
 })

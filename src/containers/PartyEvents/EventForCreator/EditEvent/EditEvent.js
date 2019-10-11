@@ -9,6 +9,7 @@ import Spinner from '../../../../components/UI/Spinner/Spinner';
 import Button from '../../../../components/UI/Button/Button';
 import Aux from '../../../../hoc/Auxillary/Auxillary';
 import addPhotoImg from '../../../../assests/addPhoto.png';
+import { UPLOADS_BASE_URL } from '../../../../shared/URLS';
 
 class EditEvent extends Component {
   state = {
@@ -295,7 +296,7 @@ class EditEvent extends Component {
       imgThumb = (
         <img
           src={
-            'http://localhost:4000/uploads/' + this.state.controls.file.value
+            UPLOADS_BASE_URL + this.state.controls.file.value
           }
           alt='icon'
         />

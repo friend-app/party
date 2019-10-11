@@ -5,6 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import classes from './EveryUserChoiceCards.module.css';
 import EveryUserChoiceItems from './EveryUserChoiceItems/EveryUserChoiceItems';
+import { UPLOADS_BASE_URL } from '../../../shared/URLS';
 
 const EveryUserChoiceCards = (props) => {
   const foodChoice = props.user.foodChoices.map((choice, index) => (
@@ -23,7 +24,7 @@ const EveryUserChoiceCards = (props) => {
       aria-controls='panel1a-content'
       id='panel1a-header'
     >
-       <img src={'http://localhost:4000/uploads/' + props.user.user.photo} alt="icon"></img><span className={classes.Title}>{props.user.user.nickname} {props.orderNumber}</span>
+       <img src={UPLOADS_BASE_URL + props.user.user.photo} alt="icon"></img><span className={classes.Title}>{props.user.user.nickname} {props.orderNumber}</span>
     </ExpansionPanelSummary>
     <ExpansionPanelDetails className={classes.PanelDetails}>
       {foodChoice}

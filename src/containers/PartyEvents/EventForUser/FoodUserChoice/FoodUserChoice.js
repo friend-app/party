@@ -1,19 +1,20 @@
-import React, { Component } from "react";
-import classes from "./FoodUserChoice.module.css";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import classes from './FoodUserChoice.module.css';
+import { connect } from 'react-redux';
 import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
-import * as actions from "../../../../store/actions/index";
-import Spinner from "../../../../components/UI/Spinner/Spinner";
-import EventControls from "../../../../components/EventSwitcher/EventControls/EventControls";
-import Button from "../../../../components/UI/Button/Button";
+import * as actions from '../../../../store/actions/index';
+import Spinner from '../../../../components/UI/Spinner/Spinner';
+import EventControls from '../../../../components/EventSwitcher/EventControls/EventControls';
+import Button from '../../../../components/UI/Button/Button';
 
 class FoodUserChoice extends Component {
   componentDidMount() {
-    if(!this.props.event && localStorage.getItem('eventId')){
+    if (!this.props.event && localStorage.getItem('eventId')) {
       this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
-    } if ( !localStorage.getItem('eventId') ) {
+    }
+    if (!localStorage.getItem('eventId')) {
       this.props.history.push({
-        pathname: "/events"
+        pathname: '/events'
       });
     }
   }
@@ -34,6 +35,7 @@ class FoodUserChoice extends Component {
     };
 
     let disableButton = true;
+    let choicesAmount = null;
 
     for (let key in this.props.foodIngs) {
       if (disabledMin[key] > 0) {
@@ -45,6 +47,9 @@ class FoodUserChoice extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
           <div className={classes.EventInside}>
@@ -56,7 +61,7 @@ class FoodUserChoice extends Component {
               disabled={disabledMin}
             />
             <Button
-              btnType="SubmitUserChoice"
+              btnType='SubmitUserChoice'
               disabled={disableButton}
               clicked={this.onSubmitHandler}
             >
@@ -65,9 +70,14 @@ class FoodUserChoice extends Component {
           </div>
         </div>
       );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
     }
 
-    return <div><InsideUserMenu>{event}</InsideUserMenu></div>;
+    return (
+      <div>
+        <InsideUserMenu choicesAmount={choicesAmount}>{event}</InsideUserMenu>
+      </div>
+    );
   }
 }
 
@@ -83,8 +93,10 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchSingleUserEvent: eventId =>
       dispatch(actions.fetchSingleUserEvent(eventId)),
-    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName, 'foodIngredients')),
-    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName, 'foodIngredients')),
+    onIngredientAdded: ingName =>
+      dispatch(actions.addIngredient(ingName, 'foodIngredients')),
+    onIngredientRemoved: ingName =>
+      dispatch(actions.removeIngredient(ingName, 'foodIngredients')),
     onUserChoice: (userChoice, eventId) =>
       dispatch(actions.addFoodChoice(userChoice, eventId)),
     onUpdateUserChoice: (choice, choiceLocationId, eventId) =>

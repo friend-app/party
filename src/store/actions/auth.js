@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import { BASE_URL } from '../../shared/URLS';
 
 export const authStart = payload => ({
   type: actionTypes.AUTH_START,
@@ -69,7 +70,7 @@ export const login = (email, password) => {
       password: password
     };
     axios
-      .post('http://localhost:4000/api/auth/login/', loginInfo)
+      .post(BASE_URL + 'api/auth/login/', loginInfo)
       .then(response => {
         const expirationDate = new Date(
           new Date().getTime() + response.data.expirationDate * 1000
@@ -105,7 +106,7 @@ export const signup = (email, password, name, image) => {
     JSON.stringify(signupData);
     signupInfo.append('jsonKeys', JSON.stringify(signupData));
     axios
-      .post('http://localhost:4000/api/auth/register/', signupInfo)
+      .post( BASE_URL + 'api/auth/register/', signupInfo)
       .then(response => {
         console.log(response);
         const expirationDate = new Date(
