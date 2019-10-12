@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './EventControls.module.css';
 import EventControl from './EventControl/EventControl';
 
 const EventControls = props => {

@@ -4,7 +4,7 @@ import classes from './EveryUserChoiceItem.module.css';
 const EveryUserChoiceItem = props => {
   return (
     <div className={classes.EveryUserChoiceItemWrapper}>
-      <span>{props.ing}</span>
+      <span className={classes.Title}>{props.ing}</span>
       <span> {props.amount}</span>
     </div>
   );

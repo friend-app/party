@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import * as actions from "../../../../store/actions/index";
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
-import EveryUserChoiceCards
-    from '../../../../components/EventSwitcher/EveryUserChoiceCards/EveryUserChoiceCards';
+import EveryUserChoiceCards from "../../../../components/EventSwitcher/EveryUserChoiceCards/EveryUserChoiceCards";
 
 class AllChoices extends Component {
   componentDidMount() {
@@ -19,20 +18,23 @@ class AllChoices extends Component {
     }
   }
 
-
   render() {
     let allUserChocies = null;
+    let choicesAmount = null;
+
     if (this.props.event) {
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
+
       allUserChocies = this.props.event.users.map((user, index) => (
-        <EveryUserChoiceCards
-        key={index}
-        user={user}
-      />
-      ))
+        <EveryUserChoiceCards key={index} user={user} />
+      ));
     }
 
     return (
-      <InsideCreatorMenu>
+      <InsideCreatorMenu choicesAmount={choicesAmount}>
         <div className={classes.UserCardsWrapper}>
           {this.props.loading ? <Spinner /> : allUserChocies}
         </div>

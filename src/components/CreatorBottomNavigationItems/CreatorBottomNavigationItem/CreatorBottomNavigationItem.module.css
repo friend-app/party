@@ -8,6 +8,7 @@
   width: 100%;
   text-align: center;
   justify-content: center;
+  position: relative;
 }
 
 .NavigationItem a {
@@ -46,6 +47,23 @@
   filter: grayscale(0);
 }
 
+.ChoicesAmount{
+  position: absolute;
+  display: flex;
+  top: 10%;
+  left: 25%;
+  font-size: 10px;
+  width: 13px;
+  height: 13px;
+  color: #fff;
+  background-color: #f0624e;
+  border-radius: 50%;
+  justify-content: center;
+  border: 1px solid #fff;
+  outline: none;
+  z-index: 150;
+}
+
 
 @media (max-width: 500px) {
   .NavigationItem{
@@ -61,3 +79,4 @@
   }
 
 }
+

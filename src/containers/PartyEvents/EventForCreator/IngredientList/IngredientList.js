@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import * as actions from '../../../../store/actions/index';
-import InsideCreatorMenu from '../../../../hoc/InsideCreatorMenu/InsideCreatorMenu';
-import IngredientItems from '../../../../components/EventSwitcher/IngredientItems/IngredientItems';
-import AdditionsItems from '../../../../components/EventSwitcher/AdditionsItems/AdditionsItems';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from "../../../../store/actions/index";
+import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
+import IngredientItems from "../../../../components/EventSwitcher/IngredientItems/IngredientItems";
+import AdditionsItems from "../../../../components/EventSwitcher/AdditionsItems/AdditionsItems";
 
 class IngredientList extends Component {
   componentDidMount() {
-    if (!this.props.event && localStorage.getItem('eventId')) {
-      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
+    if (!this.props.event && localStorage.getItem("eventId")) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
     }
-    if (!localStorage.getItem('eventId')) {
+    if (!localStorage.getItem("eventId")) {
       this.props.history.push({
-        pathname: '/events'
+        pathname: "/events"
       });
     }
   }
@@ -67,14 +67,33 @@ class IngredientList extends Component {
     let food = null;
     let drink = null;
     let additionalItems = null;
+    let choicesAmount = null;
+
     if (this.props.event) {
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
+
       foodChoices = this.countFoodChoice();
       drinkChoices = this.countDrinkChoice();
-      food = <IngredientItems title='Food Ingredients' ings={foodChoices} type="food" />;
-      drink = <IngredientItems title='Drink Ingredients' ings={drinkChoices} type="drink"/>;
+      food = (
+        <IngredientItems
+          title="Food Ingredients"
+          ings={foodChoices}
+          type="food"
+        />
+      );
+      drink = (
+        <IngredientItems
+          title="Drink Ingredients"
+          ings={drinkChoices}
+          type="drink"
+        />
+      );
       additionalItems = (
         <AdditionsItems
-          title='Additional Ingredients'
+          title="Additional Ingredients"
           add={this.props.event.additionalItems}
           usersAmount={this.props.event.users.length}
         />
@@ -82,7 +101,7 @@ class IngredientList extends Component {
     }
 
     return (
-      <InsideCreatorMenu>
+      <InsideCreatorMenu choicesAmount={choicesAmount}>
         {food}
         {drink}
         {additionalItems}
@@ -93,7 +112,8 @@ class IngredientList extends Component {
 
 const mapStateToProps = state => ({
   event: state.singleEvent.event,
-  loading: state.singleEvent.loading
+  loading: state.singleEvent.loading,
+  userId: state.auth.userId,
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,141 +1,164 @@
-import React, { Component } from 'react';
-import './App.css';
-import { Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actions from './store/actions/index';
+import React, { Component } from "react";
+import "./App.css";
+import { Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "./store/actions/index";
 
-import Layout from './hoc/Layout/Layout';
+import Layout from "./hoc/Layout/Layout";
 
-import Login from './containers/Auth/Login/Login';
-import Signup from './containers/Auth/Singup/Signup';
-import Logout from './containers/Auth/Logout/Logout';
-import FrontPage from './containers/FrontPage/FrontPage';
-import CreateEvent from './containers/PartyEvents/CreateEvent/CreateEvent';
-import AddIngredientsToEvent from './containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent';
-import EventForUser from './containers/PartyEvents/EventForUser/EventForUser';
-import EventForCreator from './containers/PartyEvents/EventForCreator/EventForCreator';
-import UserChoicesCards from './containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards';
-import UpdateUserChoice from './containers/PartyEvents/EventForUser/UpdateUserChoices/UpdateUserChoice';
-import CreatorChoicesCards from './containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards';
-import AllChoices from './containers/PartyEvents/EventForCreator/AllChoices/AllChoices';
-import UpdateCreatorChoice from './containers/PartyEvents/EventForCreator/UpdateCreatorChoices/UpdateCreatorChoice';
-import IngredientList from './containers/PartyEvents/EventForCreator/IngredientList/IngredientList';
-import AddUserToEvent from './containers/PartyEvents/AddUserToEvent/AddUserToEvent';
-import ChoicesUserTabComponent from './containers/PartyEvents/EventForUser/ChoicesUserTabComponent/ChoicesUserTabComponent';
-import ChoicesCreatorTabComponent from './containers/PartyEvents/EventForCreator/ChoicesCreatorTabComponent/ChoicesCreatorTabComponent';
-import EventsTabComponent from './containers/PartyEvents/AllEvents/EventsTabComponent/EventsTabComponent';
-import EditEvent from './containers/PartyEvents/EventForCreator/EditEvent/EditEvent';
-import EditIngredients from './containers/PartyEvents/EventForCreator/EditEvent/EditIngredients/EditIngredients';
+import Login from "./containers/Auth/Login/Login";
+import Signup from "./containers/Auth/Singup/Signup";
+import Logout from "./containers/Auth/Logout/Logout";
+import FrontPage from "./containers/FrontPage/FrontPage";
+import CreateEvent from "./containers/PartyEvents/CreateEvent/CreateEvent";
+import AddIngredientsToEvent from "./containers/PartyEvents/CreateEvent/AddIngredientsToEvent/AddIngredientsToEvent";
+import EventForUser from "./containers/PartyEvents/EventForUser/EventForUser";
+import EventForCreator from "./containers/PartyEvents/EventForCreator/EventForCreator";
+import UserChoicesCards from "./containers/PartyEvents/EventForUser/UserChoicesCards/UserChoicesCards";
+import UpdateUserChoice from "./containers/PartyEvents/EventForUser/UpdateUserChoices/UpdateUserChoice";
+import CreatorChoicesCards from "./containers/PartyEvents/EventForCreator/CreatorChoicesCards/CreatorChoicesCards";
+import AllChoices from "./containers/PartyEvents/EventForCreator/AllChoices/AllChoices";
+import UpdateCreatorChoice from "./containers/PartyEvents/EventForCreator/UpdateCreatorChoices/UpdateCreatorChoice";
+import IngredientList from "./containers/PartyEvents/EventForCreator/IngredientList/IngredientList";
+import AddUserToEvent from "./containers/PartyEvents/AddUserToEvent/AddUserToEvent";
+import ChoicesUserTabComponent from "./containers/PartyEvents/EventForUser/ChoicesUserTabComponent/ChoicesUserTabComponent";
+import ChoicesCreatorTabComponent from "./containers/PartyEvents/EventForCreator/ChoicesCreatorTabComponent/ChoicesCreatorTabComponent";
+import EventsTabComponent from "./containers/PartyEvents/AllEvents/EventsTabComponent/EventsTabComponent";
+import EditEvent from "./containers/PartyEvents/EventForCreator/EditEvent/EditEvent";
+import EditIngredients from "./containers/PartyEvents/EventForCreator/EditEvent/EditIngredients/EditIngredients";
 
 class App extends Component {
   componentDidMount() {
     this.props.onAuthCheckState();
-    this.setupBeforeUnloadListener();
+    if (window.innerWidth > 767) {
+      window.location.href = "/desktop.html";
+    } // window.location.href = "/allEvents"
+    // this.setupBeforeUnloadListener();
   }
 
-  doSomethingBeforeUnload = () => {
-    // localStorage.clear();
-  };
+  // doSomethingBeforeUnload = () => {
+
+  // };
 
   // Setup the `beforeunload` event listener
-  setupBeforeUnloadListener = () => {
-    window.addEventListener('beforeunload', ev => {
-      ev.preventDefault();
-      return this.doSomethingBeforeUnload();
-    });
-  };
+  // setupBeforeUnloadListener = () => {
+  //   window.addEventListener("beforeunload", ev => {
+  //     ev.preventDefault();
+  //     return this.doSomethingBeforeUnload();
+  //   });
+  // };
 
   render() {
+    // let redirect = null;
+    //     if (window.innerWidth > 767) {
+    //       redirect = <Redirect to="/desktop.html/" />;
+    //   };
+
     let routes = (
       <Switch>
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/signup' component={Signup} />
-        <Route exact path='/allEvents' component={EventsTabComponent} />
-        <Route exact path='/events/addUserToEvent' component={AddUserToEvent} />
-        <Route path='/' component={FrontPage} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
+        <Route exact path="/allEvents" component={EventsTabComponent} />
+        <Route exact path="/events/addUserToEvent" component={AddUserToEvent} />
+        <Route path="/" component={FrontPage} />
+        <Route
+          exact
+          path="/normal_redirect"
+          render={() => {
+            window.location.href = "/desktop.html";
+          }}
+        />
       </Switch>
     );
 
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem("token")) {
       routes = (
         <Switch>
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/signup' component={Signup} />
-          <Route path='/logout' component={Logout} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          <Route path="/logout" component={Logout} />
           {/* <Route exact path="/events" component={EventsTabComponent} /> */}
-          <Route path='/allEvents' component={EventsTabComponent} />
-          <Route exact path='/events/create-event' component={CreateEvent} />
+          <Route path="/allEvents" component={EventsTabComponent} />
+          <Route exact path="/events/create-event" component={CreateEvent} />
           <Route
-            path='/events/eventForUser/userChoices'
+            path="/events/eventForUser/userChoices"
             component={ChoicesUserTabComponent}
           />
           <Route
             exact
-            path='/events/create-event/add-ingredients'
+            path="/events/create-event/add-ingredients"
             component={AddIngredientsToEvent}
           />
           <Route
             exact
-            path='/events/eventForUser/userChoicesCards'
+            path="/events/eventForUser/userChoicesCards"
             component={UserChoicesCards}
           />
-          <Route exact path='/events/eventForUser' component={EventForUser} />
+          <Route exact path="/events/eventForUser" component={EventForUser} />
           <Route
             exact
-            path='/events/eventForUser/updateUserChoice'
+            path="/events/eventForUser/updateUserChoice"
             component={UpdateUserChoice}
           />
           <Route
-            path='/events/eventForCreator/creatorChoices'
+            path="/events/eventForCreator/creatorChoices"
             component={ChoicesCreatorTabComponent}
           />
           <Route
             exact
-            path='/events/eventForCreator'
+            path="/events/eventForCreator"
             component={EventForCreator}
           />
           <Route
             exact
-            path='/events/eventForCreator/editEvent'
+            path="/events/eventForCreator/editEvent"
             component={EditEvent}
           />
           <Route
             exact
-            path='/events/eventForCreator/editEvent/editIngredients'
+            path="/events/eventForCreator/editEvent/editIngredients"
             component={EditIngredients}
           />
           <Route
             exact
-            path='/events/eventForCreator/updateCreatorChoice'
+            path="/events/eventForCreator/updateCreatorChoice"
             component={UpdateCreatorChoice}
           />
           <Route
             exact
-            path='/events/eventForCreator/CreatorChoicesCards'
+            path="/events/eventForCreator/CreatorChoicesCards"
             component={CreatorChoicesCards}
           />
           <Route
             exact
-            path='/events/eventForCreator/ingredientList'
+            path="/events/eventForCreator/ingredientList"
             component={IngredientList}
           />
           <Route
             exact
-            path='/events/eventForCreator/allChoices'
+            path="/events/eventForCreator/allChoices"
             component={AllChoices}
           />
           <Route
             exact
-            path='/events/addUserToEvent'
+            path="/events/addUserToEvent"
             component={AddUserToEvent}
           />
-          <Route path='/' component={FrontPage} />
+          <Route
+            exact
+            path="/normal_redirect"
+            render={() => {
+              window.location.href = "/desktop.html";
+            }}
+          />
+          <Route path="/" component={FrontPage} />
         </Switch>
       );
     }
 
     return (
-      <div className='App'>
+      <div className="App">
+        {/* {redirect} */}
         <Layout>{routes}</Layout>
       </div>
     );

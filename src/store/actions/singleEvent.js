@@ -346,3 +346,40 @@ export const editEvent = (eventId, eventDetails, image) => {
       });
   };
 };
+
+export const removeUserFromEventStart = () => ({
+  type: actionTypes.EDIT_EVENT_START
+});
+
+export const removeUserFromEventSuccess = event => ({
+  type: actionTypes.EDIT_EVENT_SUCCESS,
+  payload: {
+    event: event
+  }
+});
+
+export const removeUserFromEventFail = error => ({
+  type: actionTypes.EDIT_EVENT_FAIL,
+  payload: {
+    error: error
+  }
+});
+
+export const removeUserFromEvent = (eventId, userId) => {
+  return dispatch => {
+    dispatch(removeUserFromEventStart());
+    const data = {
+      eventId: eventId,
+      userId: userId
+    }
+    axios
+      .post('/removeUserFromEvent', data)
+      .then(response => {
+        console.log(response);
+        // dispatch(editEventSuccess(response.data.event));
+      })
+      .catch(error => {
+        dispatch(editEventFail(error.response.data.message));
+      });
+  };
+};

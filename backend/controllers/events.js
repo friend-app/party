@@ -3,10 +3,9 @@ const Link = require("../models/Link");
 const uniqid = require("uniqid");
 const upload = require("../uploads/storage_model/Storage");
 
-
 module.exports.fetchCreatedEvents = function(req, res) {
   Event.find({ creatorId: req.user.id })
-  .populate("users.user", "-password")
+    .populate("users.user", "-password")
     .then(events => {
       res.status(201).json({
         message: "Events Found!",
@@ -23,7 +22,7 @@ module.exports.fetchCreatedEvents = function(req, res) {
 
 module.exports.fetchUserEvents = function(req, res) {
   Event.find({ "users.user": req.user.id })
-  .populate("users.user", "-password")
+    .populate("users.user", "-password")
     .then(events => {
       res.status(201).json({
         message: "Events Found!",
@@ -40,7 +39,10 @@ module.exports.fetchUserEvents = function(req, res) {
 
 module.exports.fetchSingleCreatedEvent = async function(req, res, next) {
   try {
-    const event = await Event.findById(req.params.eventId).populate("users.user", "-password");
+    const event = await Event.findById(req.params.eventId).populate(
+      "users.user",
+      "-password"
+    );
 
     if (event) {
       const link = await Link.findOne({ eventId: req.params.eventId });
@@ -101,26 +103,26 @@ module.exports.fetchSingleUserEvent = function(req, res, next) {
 };
 
 module.exports.createEvent = function(req, res) {
-  upload(req,res,function(err) {
-    if(err) {
+  upload(req, res, function(err) {
+    if (err) {
       console.log(err);
       return res.end("Error uploading file.");
     }
     const preEvent = JSON.parse(req.body.jsonKeys);
-    if(req.file) {
+    if (req.file) {
       preEvent.photo = req.file.filename;
-    } else{
-      preEvent.photo = 'default.event.jpg';
+    } else {
+      preEvent.photo = "default.event.jpg";
     }
     const event = new Event(preEvent);
     event
-        .save()
-        .then(() => {
-          console.log('Event OK!')
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      .save()
+      .then(() => {
+        console.log("Event OK!");
+      })
+      .catch(error => {
+        console.log(error);
+      });
 
     res.status(201).json({
       message: "Event Saved!",
@@ -130,38 +132,37 @@ module.exports.createEvent = function(req, res) {
 };
 
 module.exports.updateCreatedEvent = function(req, res) {
-
-  upload(req,res,function(err) {
-    if(err) {
+  upload(req, res, function(err) {
+    if (err) {
       console.log(err);
       return res.end("Error uploading file.");
     }
     const preEvent = JSON.parse(req.body.jsonKeys);
     const eventId = JSON.parse(req.body.eventId);
-    if(req.file) {
+    if (req.file) {
       preEvent.photo = req.file.filename;
-    } 
-  Event.findOneAndUpdate(
-    {
-      _id: eventId
-    },
-    {
-      $set: preEvent
-    },
-    { new: true, useFindAndModify: false }
-  )
-    .then(event => {
-      res.status(201).json({
-        message: "Ingredients Added",
-        event: event
+    }
+    Event.findOneAndUpdate(
+      {
+        _id: eventId
+      },
+      {
+        $set: preEvent
+      },
+      { new: true, useFindAndModify: false }
+    )
+      .then(event => {
+        res.status(201).json({
+          message: "Ingredients Added",
+          event: event
+        });
+      })
+      .catch(error => {
+        res.status(404).json({
+          error: error,
+          message: "Ingredients Failed"
+        });
       });
-    })
-    .catch(error => {
-      res.status(404).json({
-        error: error,
-        message: "Ingredients Failed"
-      });
-    });
   });
 };
 
@@ -197,46 +198,40 @@ module.exports.addIngredientsToEvent = function(req, res) {
     });
 };
 
-
-
 module.exports.editEvent = function(req, res) {
-
-  upload(req,res,function(err) {
-    if(err) {
+  upload(req, res, function(err) {
+    if (err) {
       console.log(err);
       return res.end("Error uploading file.");
     }
     const preEvent = JSON.parse(req.body.jsonKeys);
     const eventId = JSON.parse(req.body.eventId);
-    if(req.file) {
+    if (req.file) {
       preEvent.photo = req.file.filename;
-    } 
-  Event.findOneAndUpdate(
-    {
-      _id: eventId
-    },
-    {
-      $set: preEvent
-    },
-    { new: true, useFindAndModify: false }
-  )
-    .then(event => {
-      res.status(201).json({
-        message: "Ingredients Added",
-        event: event
+    }
+    Event.findOneAndUpdate(
+      {
+        _id: eventId
+      },
+      {
+        $set: preEvent
+      },
+      { new: true, useFindAndModify: false }
+    )
+      .then(event => {
+        res.status(201).json({
+          message: "Ingredients Added",
+          event: event
+        });
+      })
+      .catch(error => {
+        res.status(404).json({
+          error: error,
+          message: "Ingredients Failed"
+        });
       });
-    })
-    .catch(error => {
-      res.status(404).json({
-        error: error,
-        message: "Ingredients Failed"
-      });
-    });
   });
 };
-
-
-
 
 module.exports.addFoodChoices = function(req, res) {
   const foodChoice = req.body.foodChoice;
@@ -329,8 +324,6 @@ module.exports.updateUserChoice = function(req, res) {
     eventId: req.body.eventId
   };
   const updateKey = "users.$." + req.body.type;
-  console.log("blya", data);
-  console.log("shluha", updateKey);
   Event.findOneAndUpdate(
     {
       _id: data.eventId,
@@ -434,7 +427,7 @@ module.exports.addUserToEvent = async function(req, res) {
       });
       if (event) {
         res.status(200).json({
-          message: 'user already exist in event',
+          message: "user already exist in event",
           eventId: event._id
         });
       } else {
@@ -452,12 +445,12 @@ module.exports.addUserToEvent = async function(req, res) {
           if (updatedEvent) {
             res.status(200).json({
               eventId: updatedEvent._id,
-              message: 'user added to event'
+              message: "user added to event"
             });
           }
         } catch (err) {
           // console.log('user', req.user._id, err);
-          console.log('event', link.eventId, err);
+          console.log("event", link.eventId, err);
           res.status(409).json({
             error: err
           });
@@ -468,5 +461,29 @@ module.exports.addUserToEvent = async function(req, res) {
         error: err
       });
     }
+  }
+};
+
+module.exports.removeUserFromEvent = async function(req, res) {
+  try {
+    const event = await Event.updateOne(
+      {
+        _id: req.body.eventId,
+        'users.user': req.body.userId
+      },
+      { $pull: { 'users.$.user._id':  req.body.userId }} ,
+      { new: true, useFindAndModify: false }
+    );
+    if (event) {
+      console.log(event);
+      res.status(200).json({
+        event: event,
+        message: "User was Removes Succesfully"
+      });
+    }
+  } catch (err) {
+    res.status(409).json({
+      error: err
+    });
   }
 };

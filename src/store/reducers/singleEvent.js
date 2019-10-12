@@ -140,6 +140,15 @@ export default (state = initialState, { type, payload }) => {
     case actionTypes.EDIT_EVENT_FAIL:
       return { ...state, ...payload };
 
+    case actionTypes.REMOVE_USER_FROM_EVENT_START:
+      return { ...state, loading: true };
+
+    case actionTypes.REMOVE_USER_FROM_EVENT_SUCCESS:
+      return { ...state, event: payload.event, loading: false };
+
+    case actionTypes.REMOVE_USER_FROM_EVENT_FAIL:
+      return { ...state, ...payload };
+
     default:
       return state;
   }

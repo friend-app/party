@@ -7,6 +7,11 @@
   border-bottom: 1px solid #ccc;
 }
 
+.EveryUserChoiceItemWrapper .Title{
+  max-width: 80%;
+  text-align: left;
+}
+
 .EveryUserChoiceItemWrapper:last-child{
   border-bottom: none;
 }
