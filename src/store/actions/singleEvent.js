@@ -376,7 +376,7 @@ export const removeUserFromEvent = (eventId, userId) => {
       .post('/removeUserFromEvent', data)
       .then(response => {
         console.log(response);
-        // dispatch(editEventSuccess(response.data.event));
+        dispatch(editEventSuccess(response.data.event));
       })
       .catch(error => {
         dispatch(editEventFail(error.response.data.message));

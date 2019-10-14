@@ -11,7 +11,7 @@ const Creator = props => {
       <span>{props.userName}</span>
       <span className={classes.Spacer}></span>
       {props.userId !== props.creatorId ? (
-        <span onClick={() => props.clicked(props.eventId, props.userId)}>
+        <span className={classes.RemoveUser}onClick={() => props.clicked(props.eventId, props.userId)}>
           x
         </span>
       ) : null}

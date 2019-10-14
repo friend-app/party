@@ -34,6 +34,11 @@ class EventForUser extends Component {
         pathname: '/'
       });
     }
+    // if (
+    //   window.innerWidth > 767 &&
+    // ) {
+    //   window.location.href = "/desktop.html";
+    // }
   }
 
   render() {

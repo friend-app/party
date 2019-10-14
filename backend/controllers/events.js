@@ -466,14 +466,13 @@ module.exports.addUserToEvent = async function(req, res) {
 
 module.exports.removeUserFromEvent = async function(req, res) {
   try {
-    const event = await Event.updateOne(
+    const event = await Event.findByIdAndUpdate(
       {
         _id: req.body.eventId,
-        'users.user': req.body.userId
       },
-      { $pull: { 'users.$.user._id':  req.body.userId }} ,
-      { new: true, useFindAndModify: false }
-    );
+      { $pull: { users: {user: req.body.userId}}},
+      { new: true, useFindAndModify: false, multi: true }
+    ).populate("users.user", "-password");
     if (event) {
       console.log(event);
       res.status(200).json({

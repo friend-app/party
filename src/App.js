@@ -30,9 +30,13 @@ import EditIngredients from "./containers/PartyEvents/EventForCreator/EditEvent/
 class App extends Component {
   componentDidMount() {
     this.props.onAuthCheckState();
-    if (window.innerWidth > 767) {
+    if (
+      window.innerWidth > 767 &&
+      !window.location.href.includes("/events/addUserToEvent?eventCode")
+    ) {
       window.location.href = "/desktop.html";
-    } // window.location.href = "/allEvents"
+    }
+    // console.log(window.location.href);
     // this.setupBeforeUnloadListener();
   }
 

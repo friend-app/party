@@ -152,6 +152,30 @@
   margin-right: 15px;
 }
 
+.ConfirmDialogue {
+  font-family: Arial, Helvetica, sans-serif;
+    width: 250px;
+    padding: 10px 30px 30px 30px;
+    text-align: center;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+    color: #666;
+}
+
+.ConfirmDialogue button {
+  outline: none;
+    background: #333;
+    border: none;
+    display: inline-block;
+    padding: 6px 18px;
+    color: #eee;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 @media (max-width: 676px) {
   .ImgBox {
     max-height: 140px;

@@ -14,6 +14,8 @@ import CreatorUsersList from "../../../components/EventSwitcher/CreatorUsersList
 import editImg from "../../../assests/edit.png";
 import InsideCreatorMenu from "../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
 import { UPLOADS_BASE_URL, BASE_URL_WITHOUT_PORT } from "../../../shared/URLS";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 class EventForCreator extends Component {
   componentDidMount() {
@@ -52,136 +54,165 @@ class EventForCreator extends Component {
     });
   };
 
+  removeUserFromEvent = (eventId, userId) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className={classes.ConfirmDialogue}>
+            <h2>Did you think well?</h2>
+            <button
+              onClick={() => {
+                this.props.onUserRemove(eventId, userId)
+                onClose();
+              }}
+            >
+              Yes, Delete it!
+            </button>
+            <button onClick={onClose}>No</button>
+          </div>
+        );
+      }
+    });
+  }
+
   render() {
     let eventInfo = <Spinner />;
     let choicesAmount = null;
 
     if (this.props.event && this.props.loading === false) {
-      const creator = this.props.event.users.find(
-        user => user.user._id === this.props.event.creatorId
-      );
+      if (this.props.event.users.length < 1) {
 
-      choicesAmount = creator.foodChoices.length + creator.drinksChoices.length;
-
-      const date = new Date(this.props.event.date);
-
-      const updatedDate =
-        date.getDate() +
-        " " +
-        date.toLocaleString("default", { month: "short" }) +
-        ", " +
-        date.toLocaleString("default", { year: "2-digit" });
-
-      const options = {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-        timeZone: "Asia/Jerusalem"
-      };
-
-      let publishButton = (
-        <Button btnType="PublishEvent" clicked={this.publishEvent}>
-          Publish event
-        </Button>
-      );
-
-      let shareWhatsappButton = null;
-      let shareLinkButton = null;
-      if (this.props.link) {
-        shareWhatsappButton = (
-          <WhatsappShareButton
-            className={classes.WhatsappShare}
-            url={
-              "Join to " +
-              this.props.event.title +
-              " " +
-              BASE_URL_WITHOUT_PORT +
-              "events/addUserToEvent?eventCode=" +
-              this.props.link
-            }
-          >
-            <WhatsappIcon size={32} round={true} />
-            <span>Share throught Whatsapp</span>
-          </WhatsappShareButton>
+        this.props.history.push({
+          pathname: "/events"
+        });
+      } else {
+        const creator = this.props.event.users.find(
+          user => user.user._id === this.props.event.creatorId
         );
-        shareLinkButton = (
-          <CopyToClipboard
-            text={
-              BASE_URL_WITHOUT_PORT +
-              "events/addUserToEvent?eventCode=" +
-              this.props.link
-            }
-            onCopy={() => this.setState({ copied: true })}
-          >
-            <div className={classes.ShareButton}>
-              <span>
-                <img src={inviteImg} alt="icon" />
-              </span>
-              <span>Copy Link</span>
+  
+        choicesAmount = creator.foodChoices.length + creator.drinksChoices.length;
+  
+        const date = new Date(this.props.event.date);
+  
+        const updatedDate =
+          date.getDate() +
+          " " +
+          date.toLocaleString("default", { month: "short" }) +
+          ", " +
+          date.toLocaleString("default", { year: "2-digit" });
+  
+        const options = {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+          timeZone: "Asia/Jerusalem"
+        };
+  
+        let publishButton = (
+          <Button btnType="PublishEvent" clicked={this.publishEvent}>
+            Publish event
+          </Button>
+        );
+  
+        let shareWhatsappButton = null;
+        let shareLinkButton = null;
+        if (this.props.link) {
+          shareWhatsappButton = (
+            <WhatsappShareButton
+              className={classes.WhatsappShare}
+              url={
+                "Join to " +
+                this.props.event.title +
+                " " +
+                BASE_URL_WITHOUT_PORT +
+                "events/addUserToEvent?eventCode=" +
+                this.props.link
+              }
+            >
+              <WhatsappIcon size={32} round={true} />
+              <span>Share throught Whatsapp</span>
+            </WhatsappShareButton>
+          );
+          shareLinkButton = (
+            <CopyToClipboard
+              text={
+                BASE_URL_WITHOUT_PORT +
+                "events/addUserToEvent?eventCode=" +
+                this.props.link
+              }
+              onCopy={() => this.setState({ copied: true })}
+            >
+              <div className={classes.ShareButton}>
+                <span>
+                  <img src={inviteImg} alt="icon" />
+                </span>
+                <span>Copy Link</span>
+              </div>
+            </CopyToClipboard>
+          );
+        }
+  
+        eventInfo = (
+          <Aux>
+            <div className={classes.ImgBox}>
+              <img src={UPLOADS_BASE_URL + this.props.event.photo} alt="event" />
             </div>
-          </CopyToClipboard>
+            <div className={classes.MainInfo}>
+              <div className={classes.Title}>
+                <h2>{this.props.event.title}</h2>
+                <img
+                  src={editImg}
+                  alt="editIcon"
+                  onClick={() => this.editEventRedirect()}
+                />
+              </div>
+              <div className={classes.Creator}>
+                <img
+                  src={UPLOADS_BASE_URL + creator.user.photo}
+                  alt="creatorPhoto"
+                />
+                <p>{creator.user.nickname}</p>
+              </div>
+              <div className={classes.DateAndTime}>
+                <p className={classes.DateBox}>
+                  <span className={classes.DateTitle}>date: </span>
+                  {updatedDate}
+                </p>
+                <p className={classes.TimeBox}>
+                  <span className={classes.DateTitle}>time: </span>
+                  {new Date(this.props.event.date).toLocaleTimeString(
+                    "us-Us",
+                    options
+                  )}
+                </p>
+              </div>
+              <div className={classes.Place}>
+                <p className={classes.PlaceTitle}>Place: </p>
+                <p className={classes.PlaceDesc}>{this.props.event.address}</p>
+              </div>
+              <div className={classes.Decription}>
+                <p>{this.props.event.description}</p>
+              </div>
+            </div>
+            <p />
+            <div className={classes.UsersInfo}>
+              <div className={classes.UserBox}>
+                <CreatorIcons users={this.props.event.users} />
+              </div>
+              {shareWhatsappButton}
+              {shareLinkButton}
+              <CreatorUsersList
+                creatorId={this.props.event.creatorId}
+                eventId={this.props.event._id}
+                usersInfo={this.props.event.users}
+                clicked={this.removeUserFromEvent}
+              />
+            </div>
+            {!this.props.link ? publishButton : null}
+          </Aux>
         );
       }
 
-      eventInfo = (
-        <Aux>
-          <div className={classes.ImgBox}>
-            <img src={UPLOADS_BASE_URL + this.props.event.photo} alt="event" />
-          </div>
-          <div className={classes.MainInfo}>
-            <div className={classes.Title}>
-              <h2>{this.props.event.title}</h2>
-              <img
-                src={editImg}
-                alt="editIcon"
-                onClick={() => this.editEventRedirect()}
-              />
-            </div>
-            <div className={classes.Creator}>
-              <img
-                src={UPLOADS_BASE_URL + creator.user.photo}
-                alt="creatorPhoto"
-              />
-              <p>{creator.user.nickname}</p>
-            </div>
-            <div className={classes.DateAndTime}>
-              <p className={classes.DateBox}>
-                <span className={classes.DateTitle}>date: </span>
-                {updatedDate}
-              </p>
-              <p className={classes.TimeBox}>
-                <span className={classes.DateTitle}>time: </span>
-                {new Date(this.props.event.date).toLocaleTimeString(
-                  "us-Us",
-                  options
-                )}
-              </p>
-            </div>
-            <div className={classes.Place}>
-              <p className={classes.PlaceTitle}>Place: </p>
-              <p className={classes.PlaceDesc}>{this.props.event.address}</p>
-            </div>
-            <div className={classes.Decription}>
-              <p>{this.props.event.description}</p>
-            </div>
-          </div>
-          <p />
-          <div className={classes.UsersInfo}>
-            <div className={classes.UserBox}>
-              <CreatorIcons users={this.props.event.users} />
-            </div>
-            {shareWhatsappButton}
-            {shareLinkButton}
-            <CreatorUsersList
-              creatorId={this.props.event.creatorId}
-              eventId={this.props.event._id}
-              usersInfo={this.props.event.users}
-              clicked={this.props.onUserRemove}
-            />
-          </div>
-          {!this.props.link ? publishButton : null}
-        </Aux>
-      );
     }
 
     return (
