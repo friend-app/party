@@ -13,7 +13,8 @@ export {
   singleEventReset,
   updateChoiceReset,
   publishEvent,
-  editEvent
+  editEvent,
+  removeUserFromEvent
 } from './singleEvent';
 
 export { addUserToEvent } from './addUserToEvent';

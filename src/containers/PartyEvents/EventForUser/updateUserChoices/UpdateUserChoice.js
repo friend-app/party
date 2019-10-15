@@ -79,6 +79,8 @@ class UpdateUserChoice extends Component {
       <Redirect to='/events/eventForUser/userChoicesCards' />
     ) : null;
     let disabledMin = null;
+    let choicesAmount = null;
+
     if (typeof this.props.location.state !== 'undefined') {
       disabledMin = {
         ...this.props[this.props.location.state.type]
@@ -90,6 +92,13 @@ class UpdateUserChoice extends Component {
     }
     let event = <Spinner />;
     if (this.state.event) {
+
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
+
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
+
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
           <EventControls
@@ -113,7 +122,7 @@ class UpdateUserChoice extends Component {
     return (
       <div>
         {redirect}
-        <InsideUserMenu>{event}</InsideUserMenu>
+        <InsideUserMenu choicesAmount={choicesAmount}>{event}</InsideUserMenu>
       </div>
     );
   }

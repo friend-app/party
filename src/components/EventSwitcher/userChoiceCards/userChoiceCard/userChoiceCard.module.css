@@ -25,6 +25,8 @@
   flex-direction: row;
   border-bottom: 1px solid #eee;
   padding: 15px 24px;
+  max-width: 80%;
+  text-align: left;
 }
 
 .UserChoiceCards .Spacer {

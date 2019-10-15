@@ -299,11 +299,6 @@ class EditIngredients extends Component {
   };
 
   render() {
-    // if (!this.props.event) {
-    //   return <Redirect to='' />;
-    // }
-
-    console.log(this.state);
 
     const formFoodIngElements = this.state.foodControls.map((formEl, index) => (
       <div key={formEl.elementType + index} className={classes.InputWrapper}>
@@ -378,6 +373,7 @@ class EditIngredients extends Component {
     let form = <Spinner />;
 
     if (!this.props.loading) {
+      
       form = (
         <form onSubmit={this.onSubmitHandler}>
           <div className={classes.EditIngsWrapper}>

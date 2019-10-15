@@ -6,6 +6,8 @@ import CreatorChoiceCards from "../../../../components/EventSwitcher/userChoiceC
 import Spinner from "../../../../components/UI/Spinner/Spinner";
 import Aux from "../../../../hoc/Auxillary/Auxillary";
 import InsideCreatorMenu from "../../../../hoc/InsideCreatorMenu/InsideCreatorMenu";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 class CreatorChoicesCards extends Component {
   componentDidMount() {
@@ -46,31 +48,52 @@ class CreatorChoicesCards extends Component {
   };
 
   onDelete = (locationId, choiceId, type) => {
-    const choicesById = this.props.event.users.find(
-      user => user._id === locationId
-    );
-    choicesById[type].map((choice, index) => {
-      if (choice._id === choiceId) {
-        choicesById[type].splice(index, 1);
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className={classes.ConfirmDialogue}>
+            <h2>Did you think well?</h2>
+            <button
+              onClick={() => {
+                const choicesById = this.props.event.users.find(
+                  user => user._id === locationId
+                );
+                choicesById[type].map((choice, index) => {
+                  if (choice._id === choiceId) {
+                    choicesById[type].splice(index, 1);
+                  }
+                  return choicesById[type];
+                });
+                const updatedChoices = choicesById[type];
+                this.props.onUpdateUserChoice(
+                  updatedChoices,
+                  type,
+                  locationId,
+                  this.props.event._id
+                );
+                onClose();
+              }}
+            >
+              Yes, Delete it!
+            </button>
+            <button onClick={onClose}>No</button>
+          </div>
+        );
       }
-      return choicesById[type];
     });
-    const updatedChoices = choicesById[type];
-    this.props.onUpdateUserChoice(
-      updatedChoices,
-      type,
-      locationId,
-      this.props.event._id
-    );
   };
 
   render() {
     let foodCards = null;
     let drinksCards = null;
+    let choicesAmount = null;
+
     if (this.props.event) {
       const user = this.props.event.users.find(
         user => user.user._id === this.props.userId
       );
+
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
 
       foodCards = (
         <CreatorChoiceCards
@@ -98,7 +121,7 @@ class CreatorChoicesCards extends Component {
     );
 
     return (
-      <InsideCreatorMenu>
+      <InsideCreatorMenu choicesAmount={choicesAmount}>
         <div className={classes.UserCardsWrapper}>
           {this.props.loading ? <Spinner /> : allCards}
         </div>

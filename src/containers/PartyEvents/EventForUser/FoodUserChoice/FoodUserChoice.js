@@ -75,7 +75,7 @@ class FoodUserChoice extends Component {
 
     return (
       <div>
-        <InsideUserMenu choicesAmount={choicesAmount}>{event}</InsideUserMenu>
+        <InsideUserMenu choicesAmount={choicesAmount}> {this.props.loading ? <Spinner /> : event}</InsideUserMenu>
       </div>
     );
   }

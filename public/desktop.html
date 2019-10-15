@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        if (window.innerWidth < 767) {
+            window.location.href = "/allEvents";
+        }
+    </script>
+    <style>
+        iframe {
+            border: 3px solid #ccc;
+        }
+
+        .desktop-frame {
+            display: flex;
+            flex-direction: row;
+            padding: 25px;
+        }
+
+        .left-frame {
+            width: 30%;
+            padding-right: 25px;
+        }
+
+        .right-frame {
+            text-align: left;
+
+        }
+
+        .desktop-frame h3 {
+            margin: 0;
+
+        }
+    </style>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="desktop-frame">
+        <div class="left-frame">
+            <h2>Welcome to PARTIER demostration page</h2>
+            <h3>This is a mobile use mostly app, so the design
+                made only for mobile devices, and here is just
+                a demostration of how it looks on mobile
+            </h3>
+            <br>
+            <h3>Your test user:</h3>
+            <p>Login: test@test.com</p>
+            <p>Password: 12345</p>
+        </div>
+        <div class="right-frame">
+            <iframe height="667px" width="375px" src="http://localhost:3000">
+            </iframe>
+        </div>
+    </div>
+</body>
+
+</html>

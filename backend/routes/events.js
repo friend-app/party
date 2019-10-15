@@ -93,4 +93,11 @@ router.post(
   controller.addUserToEvent
 );
 
+// localhost:4000/api/events/removeUserFromEvent
+router.post(
+  '/removeUserFromEvent',
+  passport.authenticate('jwt', { session: false }),
+  controller.removeUserFromEvent
+);
+
 module.exports = router;

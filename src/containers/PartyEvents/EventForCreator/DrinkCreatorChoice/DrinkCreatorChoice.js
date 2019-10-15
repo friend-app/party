@@ -63,6 +63,7 @@ class DrinkCreatorChoice extends Component {
     };
 
     let disableButton = true;
+    let choicesAmount = null;
 
     for (let key in this.props.drinkIngs) {
       if (disabledMin[key] > 0) {
@@ -74,6 +75,10 @@ class DrinkCreatorChoice extends Component {
     let event = <Spinner />;
 
     if (this.props.event) {
+      const user = this.props.event.users.find(
+        user => user.user._id === this.props.userId
+      );
+      choicesAmount = user.foodChoices.length + user.drinksChoices.length;
 
       event = (
         <div className={classes.EventWrapper} onClick={this.props.clicked}>
@@ -99,7 +104,7 @@ class DrinkCreatorChoice extends Component {
 
     return (
       <div>
-        <InsideCreatorMenu>{event}</InsideCreatorMenu>
+        <InsideCreatorMenu choicesAmount={choicesAmount}>{this.props.loading ? <Spinner /> : event}</InsideCreatorMenu>
       </div>
     );
   }

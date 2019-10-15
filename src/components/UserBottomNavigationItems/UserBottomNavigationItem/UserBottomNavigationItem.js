@@ -6,7 +6,7 @@ const UserBottomNavigationItem = props => {
   return (
     <div className={classes.NavigationItem}>
       {props.choicesAmount ?
-      <div className={classes.count}>
+      <div className={classes.ChoicesAmount}>
         {props.choicesAmount}
         </div>
          : null}

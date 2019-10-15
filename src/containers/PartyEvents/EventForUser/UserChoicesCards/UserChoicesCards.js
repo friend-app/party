@@ -1,21 +1,23 @@
-import React, { Component } from 'react';
-import classes from './UserChoicesCards.module.css';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import * as actions from '../../../../store/actions/index';
-import UserChoiceCards from '../../../../components/EventSwitcher/userChoiceCards/userChoiceCards';
-import Spinner from '../../../../components/UI/Spinner/Spinner';
-import Aux from '../../../../hoc/Auxillary/Auxillary';
-import InsideUserMenu from '../../../../hoc/InsideUserMenu/InsideUserMenu';
+import React, { Component } from "react";
+import classes from "./UserChoicesCards.module.css";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import * as actions from "../../../../store/actions/index";
+import UserChoiceCards from "../../../../components/EventSwitcher/userChoiceCards/userChoiceCards";
+import Spinner from "../../../../components/UI/Spinner/Spinner";
+import Aux from "../../../../hoc/Auxillary/Auxillary";
+import InsideUserMenu from "../../../../hoc/InsideUserMenu/InsideUserMenu";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 class UserChoicesCards extends Component {
   componentDidMount() {
-    if (!this.props.event && localStorage.getItem('eventId')) {
-      this.props.onFetchSingleUserEvent(localStorage.getItem('eventId'));
+    if (!this.props.event && localStorage.getItem("eventId")) {
+      this.props.onFetchSingleUserEvent(localStorage.getItem("eventId"));
     }
-    if (!localStorage.getItem('eventId')) {
+    if (!localStorage.getItem("eventId")) {
       this.props.history.push({
-        pathname: '/events'
+        pathname: "/events"
       });
     }
   }
@@ -23,18 +25,18 @@ class UserChoicesCards extends Component {
   onUpdate = (userChoice, choiceLocationId, type) => {
     let convertedType = null;
     switch (type) {
-      case 'foodChoices':
-        convertedType = 'foodIngredients';
+      case "foodChoices":
+        convertedType = "foodIngredients";
         break;
-      case 'drinksChoices':
-        convertedType = 'drinkIngredients';
+      case "drinksChoices":
+        convertedType = "drinkIngredients";
         break;
       default:
         return null;
     }
 
     return this.props.history.push({
-      pathname: '/events/eventForUser/updateUserChoice',
+      pathname: "/events/eventForUser/updateUserChoice",
       state: {
         convertedType: convertedType,
         choiceType: type,
@@ -48,30 +50,47 @@ class UserChoicesCards extends Component {
   };
 
   onDelete = (locationId, choiceId, type) => {
-    const choicesById = this.props.event.users.find(
-      user => user._id === locationId
-    );
-    choicesById[type].map((choice, index) => {
-      if (choice._id === choiceId) {
-        choicesById[type].splice(index, 1);
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className={classes.ConfirmDialogue}>
+            <h2>Did you think well?</h2>
+            <button
+              onClick={() => {
+                const choicesById = this.props.event.users.find(
+                  user => user._id === locationId
+                );
+                choicesById[type].map((choice, index) => {
+                  if (choice._id === choiceId) {
+                    choicesById[type].splice(index, 1);
+                  }
+                  return choicesById[type];
+                });
+                const updatedChoices = choicesById[type];
+                this.props.onUpdateUserChoice(
+                  updatedChoices,
+                  type,
+                  locationId,
+                  this.props.event._id
+                );
+                onClose();
+              }}
+            >
+              Yes, Delete it!
+            </button>
+            <button onClick={onClose}>No</button>
+          </div>
+        );
       }
-      return choicesById[type];
     });
-    const updatedChoices = choicesById[type];
-    this.props.onUpdateUserChoice(
-      updatedChoices,
-      type,
-      locationId,
-      this.props.event._id
-    );
   };
 
   onRedirect = () => {
-    if (!localStorage.getItem('token') || !localStorage.getItem('eventId')) {
+    if (!localStorage.getItem("token") || !localStorage.getItem("eventId")) {
       return (
         <Redirect
           to={{
-            pathname: '/login'
+            pathname: "/login"
           }}
         />
       );
@@ -91,7 +110,7 @@ class UserChoicesCards extends Component {
       foodCards = (
         <UserChoiceCards
           user={user}
-          choiceType='foodChoices'
+          choiceType="foodChoices"
           onDelete={this.onDelete}
           clicked={this.onUpdate}
         />
@@ -99,7 +118,7 @@ class UserChoicesCards extends Component {
       drinksCards = (
         <UserChoiceCards
           user={user}
-          choiceType='drinksChoices'
+          choiceType="drinksChoices"
           onDelete={this.onDelete}
           clicked={this.onUpdate}
         />
